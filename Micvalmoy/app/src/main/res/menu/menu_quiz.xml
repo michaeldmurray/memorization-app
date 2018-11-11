@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="csc472.depaul.edu.micvalmoy.MainActivity">
+
+    <item
+        android:id="@+id/change_class"
+        android:title="Change Class"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/delete_quiz"
+        android:title="Delete"
+        app:showAsAction="never"/>
+
+</menu>

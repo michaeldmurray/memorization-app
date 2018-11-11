@@ -1,44 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="csc472.depaul.edu.micvalmoy.MainActivity"
-android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="csc472.depaul.edu.micvalmoy.MainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quizzes.com"
-        android:id="@+id/tvLblQuizizzUrl"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search for quizzes on any topic"
-        android:id="@+id/tvLblQuizizzSrchParm"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etQuizizzSrchParm"
-        android:layout_width="234dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/etQuizizzSrchParm" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MicValMoy"
+            android:textAlignment="center"
+            android:textSize="36sp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/btnSearchQuizizz"
-        android:layout_below="@+id/etQuizizzSrchParm"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp" />
+        <ImageView
+            android:id="@+id/logo_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Memorization"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/go_to_classes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Classes" />
+
+        <Button
+            android:id="@+id/go_to_quizzes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quizzes" />
+
+        <!--TODO Remove button below when no longer needed-->
+        <Button
+            android:id="@+id/temp_quiz_search_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="to get back to Moya's original mainactivity"
+            android:text="(to quiz search)" />
+
+        <Button
+            android:id="@+id/temp_quiz_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="(hardcoded quiz)" />
+    </LinearLayout>
 
 </LinearLayout>
-

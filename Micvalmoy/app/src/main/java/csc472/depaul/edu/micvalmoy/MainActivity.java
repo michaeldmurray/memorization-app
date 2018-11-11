@@ -18,19 +18,21 @@ public class MainActivity extends AppCompatActivity {
         final Button classesButton = findViewById(R.id.go_to_classes);
         final Button quizzesButton = findViewById(R.id.go_to_quizzes);
 
-        // TODO remove button below when no longer needed
-        final Button tempButton = findViewById(R.id.temp_quiz_search_button);
+        if (classesButton != null) { classesButton.setOnClickListener(onClickClasses); }
+        if (quizzesButton != null) { quizzesButton.setOnClickListener(onClickQuizzes); }
 
-        if (tempButton != null) {
-            tempButton.setOnClickListener(onClickTemp);
-        }
+        // TODO remove buttons below when no longer needed
+        final Button tempButton = findViewById(R.id.temp_quiz_search_button);
+        if (tempButton != null) { tempButton.setOnClickListener(onClickTemp); }
+
+        final Button quizButton = findViewById(R.id.temp_quiz_button);
+        if (quizButton != null) { quizButton.setOnClickListener(onClickQuiz); }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //To add additional options to the overflow settings, add items in the correct menu xml file
         // and handle them in the onOptionsItemSelected below.
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -47,12 +49,37 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO remove listener when no longer needed
+    private View.OnClickListener onClickClasses = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), ClassesActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener onClickQuizzes = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), QuizizzActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    //TODO remove listeners below when no longer needed
     private View.OnClickListener onClickTemp = new View.OnClickListener() {
 
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), QuizSearch.class);
+            startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener onClickQuiz = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), QuizActivity.class);
             startActivity(intent);
         }
     };

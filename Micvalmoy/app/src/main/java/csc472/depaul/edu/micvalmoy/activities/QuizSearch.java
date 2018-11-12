@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy;
+package csc472.depaul.edu.micvalmoy.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import csc472.depaul.edu.micvalmoy.BuildConfig;
+import csc472.depaul.edu.micvalmoy.R;
+import csc472.depaul.edu.micvalmoy.TimberDebugTree;
 import timber.log.Timber;
 
 

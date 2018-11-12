@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy;
+package csc472.depaul.edu.micvalmoy.activities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import csc472.depaul.edu.micvalmoy.R;
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
 import timber.log.Timber;
 

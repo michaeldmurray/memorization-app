@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy;
+package csc472.depaul.edu.micvalmoy.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import csc472.depaul.edu.micvalmoy.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override

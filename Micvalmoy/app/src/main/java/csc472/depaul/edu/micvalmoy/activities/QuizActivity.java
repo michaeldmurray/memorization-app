@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy;
+package csc472.depaul.edu.micvalmoy.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.Toolbar;
+
+import csc472.depaul.edu.micvalmoy.R;
 
 public class QuizActivity extends AppCompatActivity {
     @Override

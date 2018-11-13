@@ -1,5 +1,6 @@
 package csc472.depaul.edu.micvalmoy.dao;
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -8,13 +9,16 @@ import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import csc472.depaul.edu.micvalmoy.mock.LiveDataTestUtil;
 import csc472.depaul.edu.micvalmoy.db.AppDatabase;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
+import csc472.depaul.edu.micvalmoy.mock.FakeQuizData;
 
 import static org.junit.Assert.*;
 
@@ -26,12 +30,24 @@ public class QuizDaoTest {
     private CategoryDao categoryDao;
     private AppDatabase db;
 
+    FakeQuizData fakeQuizData;
+
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
+
+
     @Before
     public void setUp() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
-        quizDao = db.QuizDao();
+        db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class)
+                .allowMainThreadQueries()
+                .build();
+
+        quizDao     = db.QuizDao();
         categoryDao = db.CategoryDao();
+
+        fakeQuizData = new FakeQuizData();
     }
 
     @After
@@ -50,6 +66,52 @@ public class QuizDaoTest {
         assertNotNull(categoryDao);
     }
 
+    //Testing live data
+    //------------------------------------------------------------------
+    @Test
+    public void onFetchingQuizzes_shouldGetEmptyList_IfTable_IsEmpty() throws InterruptedException {
+        List < Quiz > quizList = LiveDataTestUtil.getValue(quizDao.fetchAll());
+        assertTrue(quizList.isEmpty());
+    }
+
+    @Test
+    public void onInsertingQuizzes_checkIf_RowCountIsCorrect() throws InterruptedException {
+        List < Quiz > quizList = fakeQuizData.getFakeQuizzes(5);
+        for (Quiz quiz: quizList) {
+            quizDao.insert(quiz);
+        }
+        assertEquals(5, LiveDataTestUtil.getValue(quizDao.fetchAll()).size());
+    }
+
+    @Test
+    public void onUpdatingAQuiz_checkIf_UpdateHappensCorrectly() throws InterruptedException {
+        Quiz quiz = fakeQuizData.fetchFakeQuiz();
+        quizDao.insert(quiz);
+        quiz.setName(fakeQuizData.FAKE_UPDATED_TITLE);
+        quizDao.update(quiz);
+        assertEquals(1, LiveDataTestUtil.getValue(quizDao.fetchAll()).size());
+        assertEquals(fakeQuizData.FAKE_UPDATED_TITLE,
+                LiveDataTestUtil.getValue(quizDao.fetchById(quiz.getId())).getName());
+    }
+
+    @Test
+    public void onQuizDeletion_CheckIf_QuizIsDeletedFromTable() throws InterruptedException {
+        List < Quiz > quizList = fakeQuizData.getFakeQuizzes(5);
+        for (Quiz quiz: quizList) {
+            quizDao.insert(quiz);
+        }
+
+        quizDao.delete(quizList.get(2));
+        assertNull(LiveDataTestUtil.getValue(quizDao.fetchById(quizList.get(2).getId())));
+    }
+    //------------------------------------------------------------------
+
+
+
+
+
+
+
     @Test
     public void shouldInsertQuiz() {
         Quiz quiz = new Quiz();
@@ -64,6 +126,17 @@ public class QuizDaoTest {
         assertEquals(quiz.getDescription(), dbQuiz.getDescription());
         assertEquals(new Long(1), dbQuiz.getId());
     }
+
+    @Test
+    public void shouldInsertQuizAutoGenerateID() {
+        Quiz quiz = new Quiz();
+        quiz.setName("name auto generated quiz");
+        quiz.setDescription("description1");
+        Long quizID = quizDao.insert(quiz);
+
+        assertNotNull(quizID);
+    }
+
 
     @Test
     public void shouldInsertTwoQuizzes() {

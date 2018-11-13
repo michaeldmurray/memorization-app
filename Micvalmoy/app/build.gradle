@@ -57,8 +57,12 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
+
+
+
 
     // 20181016 - custom dependencies
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -68,6 +72,7 @@ dependencies {
     // 20181030 -  Room for simple persistence with an ORM
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
+    // Test helpers for Room
     androidTestImplementation "android.arch.persistence.room:testing:$roomVersion"
 
     // 20181101 - ViewModel and LiveData
@@ -75,4 +80,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
+
+    //2018112 - Test helpers for LiveData
+    androidTestImplementation "android.arch.core:core-testing:1.1.0"
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TableRow;
 
 import csc472.depaul.edu.micvalmoy.R;
+import csc472.depaul.edu.micvalmoy.activities.Question.QuestionActivity;
 
 public class QuizResultActivity extends DescendantActivity {
     @Override
@@ -34,8 +35,9 @@ public class QuizResultActivity extends DescendantActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), QuestionActivity.class);
                 Bundle questionBundle = new Bundle();
-                questionBundle.putString(QuestionActivity.MODE, QuestionActivity.mode.RESULT.name());
+                questionBundle.putString(QuestionActivity.MODE, QuestionActivity.Mode.RESULT.name());
                 questionBundle.putInt(QuestionActivity.ID, questionID);
+                intent.putExtras(questionBundle);
                 startActivity(intent);
             }
         };

@@ -20,7 +20,7 @@
         <activity android:name=".activities.QuizActivity"></activity>
         <activity android:name=".activities.QuizResultsActivity"></activity>
         <activity android:name=".activities.QuizResultActivity"></activity>
-        <activity android:name=".activities.QuestionActivity"></activity>
+        <activity android:name=".activities.Question.QuestionActivity"></activity>
         <activity android:name=".activities.QuizSearch"></activity>
     </application>
 

@@ -11,7 +11,8 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
-import csc472.depaul.edu.micvalmoy.entity.QuizWithCategory;
+
+
 
 @Dao
 public interface ExamDetailDao {
@@ -51,6 +52,8 @@ public interface ExamDetailDao {
     @Query("SELECT COUNT(*) FROM exam_details")
     public int getCount();
 
+    //------------------------------
+
     @Insert
     void insertAll(Quiz... exam_details);
 
@@ -64,37 +67,17 @@ public interface ExamDetailDao {
 
 /*
 
-    @Query("SELECT ed.name , ed.description, cat.id as category_id, cat.name as category_name " +
+    @Query("SELECT ed.id, ed.name ed.description, cat.id as category_id, cat.name as category_name " +
             "FROM exam_details ed " +
-            "JOIN quiz_categories cat on (q.quiz_id = ed.id) " +
+            "JOIN user_answers ua on (ed.user_id = ed.id) " +
             "JOIN categories cat on (cat.id = q.category_id) ")
     public List<QuizWithCategory> getCategoryexam_details();
 
     @Query("SELECT  * " +
             "FROM exam_details q " +
-            "JOIN Quiz q on (q.quiz_id = ed.id) " +
+            "JOIN quiz q on (q.quiz_id = ed.id) " +
             "JOIN categories cat on (cat.id = q.category_id) " +
             "WHERE ed.id = :quizId")
     public QuizWithCategory getCategoryQuiz(Long quizId);
 */
-
-
-
-/*  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-  @Query("SELECT quiz.id, quiz.name, quiz.description " +
-          "FROM exam_details quiz " +
-          "LEFT JOIN categories cat ON quiz.id = cat.id")
-  public List<QuizWithCategory> getCategoryexam_details();
-
-
-    @Query("quiz.id, quiz.name, quiz.description, quiz.category_id " +
-            "FROM exam_details quiz " +
-            "LEFT JOIN categories cat ON quiz.category_id = cat.id " +
-            "WHERE quiz.id = :quizId")
-    QuizWithCategory getCategoryQuiz(long quizId);*/
-
-
-
-
-
 }

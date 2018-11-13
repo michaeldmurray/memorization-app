@@ -60,11 +60,11 @@ CREATE TABLE user_answers (
                 @Index(value="user_id"),
                 @Index(value="exam_id"),                
                 @Index(value="question_id"),
-                @Index(value="option_id"),
+                @Index(value="option_id")
         }
 )
 
-public class ExamDetailDao {
+public class UserAnswer{
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
     private Long id;

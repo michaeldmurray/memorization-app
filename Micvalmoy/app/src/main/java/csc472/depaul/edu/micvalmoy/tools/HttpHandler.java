@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy;
+package csc472.depaul.edu.micvalmoy.tools;
 
 
 import java.io.BufferedInputStream;

@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Micvalmoy</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="load_quiz">Load Quizzes</string>
+
+    <string name="edit_quiz">Edit quiz</string>
+    <string name="quiz_title">quiz title</string>
+    <string name="quiz_content">quiz content</string>
+    <string name="save_quiz">Save quiz</string>
+    <string name="new_category_name">New category name</string>
+    <string name="create_new_category">Create new category</string>
+    <string name="choose_cat_spinner_title">Choose categories</string>
+    <string name="memorization">Memorization</string>
+    <string name="course">Course</string>
+    <string name="courses">Courses</string>
+    <string name="quiz">Quiz</string>
+    <string name="quizzes">Quizzes</string>
 </resources>

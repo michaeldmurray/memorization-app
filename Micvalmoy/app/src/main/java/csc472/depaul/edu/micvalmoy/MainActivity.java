@@ -9,16 +9,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import csc472.depaul.edu.micvalmoy.quizizz.QuizizzSearchActivity;
+
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button classesButton = findViewById(R.id.go_to_classes);
+        final Button coursesButton = findViewById(R.id.go_to_courses);
         final Button quizzesButton = findViewById(R.id.go_to_quizzes);
 
-        if (classesButton != null) { classesButton.setOnClickListener(onClickClasses); }
+        if (coursesButton != null) { coursesButton.setOnClickListener(onClickCourses); }
         if (quizzesButton != null) { quizzesButton.setOnClickListener(onClickQuizzes); }
 
         // TODO remove buttons below when no longer needed
@@ -49,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private View.OnClickListener onClickClasses = new View.OnClickListener() {
+    private View.OnClickListener onClickCourses = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(view.getContext(), ClassesActivity.class);
+            Intent intent = new Intent(view.getContext(), CoursesActivity.class);
             startActivity(intent);
         }
     };
@@ -61,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(view.getContext(), QuizizzActivity.class);
+            Intent intent = new Intent(view.getContext(), QuizListActivity.class);
             startActivity(intent);
+            /*Intent intent = new Intent(view.getContext(), QuizizzActivity.class);
+            startActivity(intent);*/
         }
     };
 
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(view.getContext(), QuizSearch.class);
+            Intent intent = new Intent(view.getContext(), QuizizzSearchActivity.class);
             startActivity(intent);
         }
     };

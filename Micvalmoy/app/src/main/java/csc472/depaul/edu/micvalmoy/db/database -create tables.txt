@@ -1,0 +1,266 @@
+
+-- http://sqlfiddle.com/#!5/c8a94
+-- https://sqliteonline.com/#fiddle-5be2de947493f51ljo75q3d7
+
+
+--  https://stackoverflow.com/questions/33190526/database-structure-for-multiple-choice-examination
+--  https://stackoverflow.com/questions/7102521/database-design-for-developing-quiz-web-application-using-php-and-mysql
+--  https://alvinalexander.com/android/sqlite-autoincrement-serial-identity-primary-key
+--  http://www.sqlitetutorial.net/sqlite-autoincrement/
+--  http://www.sqlitetutorial.net/download-install-sqlite/
+
+
+DROP TABLE IF EXISTS quiz_categories;
+DROP TABLE IF EXISTS quiz_courses;
+DROP TABLE IF EXISTS quiz_questions;
+DROP TABLE IF EXISTS question_correct_answers;
+DROP TABLE IF EXISTS question_answer_options;
+DROP TABLE IF EXISTS user_answers;
+DROP TABLE IF EXISTS exam_details;
+
+
+
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS courses;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS quizzes;
+DROP TABLE IF EXISTS categories;
+
+
+-- ---------------------------------------------------------
+CREATE TABLE users(
+id INTEGER primary key AUTOINCREMENT,
+  username VARCHAR(45) NOT NULL ,
+  password VARCHAR(45) NOT NULL ,
+  enabled INTEGER NOT NULL DEFAULT 1 --  Boolean values are stored as INTEGERs 0 (false) and 1 (true)
+);
+
+-- ---------------------------------------------------------
+CREATE TABLE courses (
+id INTEGER primary key AUTOINCREMENT,
+  name VARCHAR(325) NOT NULL
+);
+
+-- ---------------------------------------------------------
+CREATE TABLE categories (
+id INTEGER primary key AUTOINCREMENT,
+  name VARCHAR(325) NOT NULL
+);
+
+
+
+CREATE TABLE quizzes (
+id INTEGER primary key AUTOINCREMENT,
+  name VARCHAR(325) NOT NULL
+);
+
+
+CREATE TABLE questions (
+    id INTEGER primary key AUTOINCREMENT,
+    text VARCHAR(1000) NOT NULL,
+    hint VARCHAR(800),
+    type VARCHAR(10) NOT NULL,  -- multiple, truefalse, termdef
+    nonce VARCHAR(100),
+    createdAt date not null,
+    updatedAt date not null
+);
+
+
+-- A quiz belongs to a course
+CREATE  TABLE quiz_courses (
+  quiz_id INTEGER REFERENCES quizzes,
+  course_id INTEGER REFERENCES courses,
+  PRIMARY KEY (quiz_id,course_id)
+);
+
+-- A quiz belongs to a category
+CREATE  TABLE quiz_categories (
+  quiz_id INTEGER REFERENCES quizzes,
+  category_id INTEGER REFERENCES categories,
+
+  PRIMARY KEY (quiz_id,category_id)
+);
+
+
+-- A question belongs to a quiz, A quiz belongs to a course
+CREATE TABLE quiz_questions (
+  quiz_id INTEGER REFERENCES quizzes,
+  question_id INTEGER REFERENCES questions,
+  sort_index INTEGER,
+  enabled INTEGER NOT NULL DEFAULT 1, --  Boolean values are stored as INTEGERs 0 (false) and 1 (true)
+  PRIMARY KEY (quiz_id, question_id)
+);
+
+
+CREATE TABLE question_answer_options (
+id INTEGER primary key AUTOINCREMENT,
+    question_id INTEGER NOT NULL references questions(id),
+    text varchar(150) NOT NULL
+);
+
+
+CREATE TABLE question_correct_answers (
+    question_id INTEGER NOT NULL references questions(id),
+    option_id INTEGER NOT NULL references question_answer_options(id),
+    PRIMARY KEY (question_id,option_id)
+);
+
+
+CREATE TABLE exam_details (
+    id INTEGER primary key AUTOINCREMENT,
+    quiz_id INTEGER REFERENCES quizzes,
+    username varchar(45) NOT NULL references users(username),
+    date_of_exam date not null,
+    exam_result varchar(10) NOT NULL, -- PASS/FAIL
+    exam_score INTEGER NOT NULL,      -- e.g. 40
+    no_of_questions INTEGER NOT NULL  -- total no. of questions in the test
+);
+
+
+CREATE TABLE user_answers (
+id INTEGER primary key AUTOINCREMENT,
+    user_id INTEGER NOT NULL references users(id),
+    question_id INTEGER NOT NULL references questions(id),
+    answer_id INTEGER NOT NULL references question_answer_options(id)
+);
+
+
+--- ================================================================
+--- ================================================================
+insert into courses (name) values ("Learn PHP");
+insert into courses (name) values ("Android development");
+
+insert into users(username, password, enabled) values("moya" , "sdwerwed" , 1 );
+insert into users(username, password, enabled) values("tony" , "aaawded" , 1 );
+
+
+insert into quizzes (name) values ("Android development chapter 8");
+insert into quizzes (name) values ("PHP Beginners");
+
+
+insert into quiz_courses (quiz_id, course_id) values (1,1) ;
+insert into quiz_courses (quiz_id, course_id) values (2,2);
+
+
+insert into categories (name) values ("PHP arrays");
+insert into categories (name) values ("Android");
+insert into categories (name) values ("Beginners");
+
+insert into quiz_categories (quiz_id, category_id) values (1,1) ;
+insert into quiz_categories (quiz_id, category_id) values (1,3) ;
+insert into quiz_categories (quiz_id, category_id) values (2,2) ;
+insert into quiz_categories (quiz_id, category_id) values (2,3) ;
+
+
+
+ -- =============================================================================
+ -- =============================================================================
+
+insert into questions(text,hint,type,nonce,createdAt,updatedAt) values(
+"question text 1",
+"",
+"truefalse",
+"dfgdaliogdgbgf",
+"2018-01-01 10:20:05.123",
+"2018-01-01 10:20:05.123"
+);
+
+
+-- Add question to quiz
+insert into quiz_questions (quiz_id, question_id)
+values(1,1);
+
+
+
+
+
+-- Question 1 options
+insert into question_answer_options (question_id,text)
+values(1,"true");
+
+insert into question_answer_options (question_id,text)
+values(1,"false");
+
+-- Question 1 anwser is false
+insert into question_correct_answers (question_id,option_id )
+values(1,2);
+
+ -- =============================================================================
+
+
+
+
+
+ -- =============================================================================
+ -- =============================================================================
+
+insert into questions(text,hint,type,nonce,createdAt,updatedAt) values(
+"question text 2",
+"",
+"truefalse",
+"awhghfkutjjjyw",
+"2018-01-01 10:22:05.123",
+"2018-01-01 10:22:05.123"
+);
+
+
+-- Add question to quiz
+insert into quiz_questions (quiz_id, question_id)
+values(1,2);
+
+
+-- Question 2 options
+insert into question_answer_options (question_id,text)
+values(2,"true");
+
+insert into question_answer_options (question_id,text)
+values(2,"false");
+
+
+
+
+-- Question 2 anwser is false
+insert into question_correct_answers (question_id,option_id)
+values(2,4);
+
+
+ -- =============================================================================
+
+
+
+
+ -- =============================================================================
+ -- =============================================================================
+insert into questions(text,hint,type,nonce,createdAt,updatedAt) values(
+"Q3 - What does PHP stand for?",
+"",
+"multiple",
+"sddfrtfgbgfhtyw",
+"2018-01-01 10:22:05.123",
+"2018-01-01 10:22:05.123"
+);
+
+
+-- Add question to quiz
+insert into quiz_questions (quiz_id, question_id)
+values(2,3);
+
+
+-- Question 3 options
+insert into question_answer_options (question_id,text)
+values(3,"Private Home Page");
+
+insert into question_answer_options (question_id,text)
+values(3,"PHP: Hypertext Preprocessor");
+
+insert into question_answer_options (question_id,text)
+values(3,"Personal Hypertext Processor");
+
+
+
+-- Question 3 anwser is "PHP: Hypertext Preprocessor"
+insert into question_correct_answers (question_id,option_id)
+values(3,6);
+
+-- =============================================================================
+

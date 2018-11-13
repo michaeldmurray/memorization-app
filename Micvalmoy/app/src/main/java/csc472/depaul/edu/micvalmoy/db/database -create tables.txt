@@ -108,20 +108,22 @@ CREATE TABLE question_correct_answers (
 
 CREATE TABLE exam_details (
     id INTEGER primary key AUTOINCREMENT,
+    user_id INTEGER references users(id),    
     quiz_id INTEGER REFERENCES quizzes,
-    username varchar(45) NOT NULL references users(username),
-    date_of_exam date not null,
+    start_date date not null,
+    end_date date not null,
+    duration INTEGER,
     exam_result varchar(10) NOT NULL, -- PASS/FAIL
     exam_score INTEGER NOT NULL,      -- e.g. 40
-    no_of_questions INTEGER NOT NULL  -- total no. of questions in the test
+    total_questions INTEGER NOT NULL  -- total no. of questions in the test
 );
 
-
 CREATE TABLE user_answers (
-id INTEGER primary key AUTOINCREMENT,
+    id INTEGER primary key AUTOINCREMENT,
     user_id INTEGER NOT NULL references users(id),
+    exam_id INTEGER NOT NULL references exam_details(id),    
     question_id INTEGER NOT NULL references questions(id),
-    answer_id INTEGER NOT NULL references question_answer_options(id)
+    option_id INTEGER NOT NULL references question_answer_options(id),
 );
 
 

@@ -1,0 +1,102 @@
+SELECT * FROM users;
+
+SELECT * FROM courses;
+
+SELECT * FROM categories;
+
+SELECT * FROM quizzes;
+
+SELECT * FROM quizz_categories;
+SELECT * FROM quizz_courses;
+
+SELECT * FROM questions;
+
+SELECT * FROM quiz_questions;
+
+SELECT * FROM question_answer_options;
+SELECT * FROM question_correct_answers;
+
+SELECT * FROM user_answers;
+SELECT * FROM exam_details;
+
+
+
+-- //-----------  quiz info  ---------------------------------------------
+
+-- get course and  quiz and all possible answers for questions 
+
+
+SELECT q.id as quiz_id, q.name as  quiz_name, crse.id as course_id, crse.name as course_name
+FROM quizzes q
+JOIN quiz_courses qcrse on (qcrse.quiz_id = q.id) 
+JOIN courses crse on (crse.id = qcrse.course_id) 
+;
+
+
+
+-- get quiz category info
+SELECT q.id as quiz_id, q.name as  quiz_name, cat.id as category_id, cat.name as category_name
+FROM quizzes q
+JOIN quiz_categories qcat on (qcat.quiz_id = q.id) 
+JOIN categories cat on (cat.id = qcat.category_id) 
+;
+
+
+-- //-----------  quiz and questions ---------------------------------------------
+
+-- get all questions and all possible answers for questions 
+
+SELECT q.id, q.name, ques.id, ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qao.id as "answer_option_id" ,qao.text as "answer_text" 
+FROM quizzes q 
+JOIN quiz_questions qq on (qq.question_id = q.id)
+JOIN questions ques on (ques.id = qq.question_id)
+JOIN question_answer_options qao on (qao.question_id = qq.question_id)
+;
+
+
+
+
+-- //----------- questions and answers ---------------------------------------------
+
+-- get all questions all possible answers
+SELECT ques.id, ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qao.id as "answer_option_id" ,qao.text as "answer_text"   
+FROM questions ques 
+JOIN question_answer_options qao on (qao.question_id = ques.id);
+
+
+-- get all questions and all their correct answers
+SELECT ques.id, ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qca.option_id as "answer_option_id" , qao.text as "answer_text"  
+FROM questions ques 
+JOIN question_correct_answers qca on (qca.question_id = ques.id)
+JOIN question_answer_options qao on (qao.id = qca.option_id);
+
+
+-- get correct answers,answer text, question id
+SELECT qca.option_id, text, qca.question_id 
+FROM question_correct_answers qca
+JOIN question_answer_options qao on (qao.id = qca.option_id)
+;
+
+-- get question and all possible answers by question id 
+SELECT ques.id, ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qao.id as "answer_option_id" ,qao.text as "answer_text"   
+FROM questions ques 
+JOIN question_answer_options qao on (qao.question_id = ques.id)
+WHERE qao.question_id  = 2
+;
+
+
+-- get question and all correct answers by question id 
+SELECT qca.option_id, text, qca.question_id 
+FROM question_correct_answers qca
+JOIN question_answer_options qao on (qao.id = qca.option_id)
+WHERE qca.question_id  = 2
+;
+
+
+
+-- get correct answers by question id 
+SELECT qca.option_id, text, qca.question_id 
+FROM question_correct_answers qca
+JOIN question_answer_options qao on (qao.id = qca.option_id)
+WHERE qca.question_id  = 2
+;

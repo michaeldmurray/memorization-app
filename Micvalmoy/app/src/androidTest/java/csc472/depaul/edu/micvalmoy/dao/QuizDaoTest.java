@@ -114,7 +114,7 @@ public class QuizDaoTest {
         for (Quiz quiz: quizList) {
             quizDao.insert(quiz);
         }
-        assertEquals(5, LiveDataTestUtil.getValue(quizDao.fetchAll()).size());
+        assertEquals(5, (int) LiveDataTestUtil.getValue(quizDao.fetchAll()).size());
     }
 
     @Test
@@ -129,9 +129,9 @@ public class QuizDaoTest {
         quiz.setName(fakeQuizData.FAKE_UPDATED_TITLE);
 
         quizDao.update(quiz);
-        assertEquals(1, LiveDataTestUtil.getValue(quizDao.fetchAll()).size());
+        assertEquals(1, (int)LiveDataTestUtil.getValue(quizDao.fetchAll()).size());
         assertEquals(fakeQuizData.FAKE_UPDATED_TITLE,
-                LiveDataTestUtil.getValue(quizDao.fetchById(quizID)).getName());
+                (String)LiveDataTestUtil.getValue(quizDao.fetchById(quizID)).getName());
     }
 
     @Test
@@ -142,7 +142,7 @@ public class QuizDaoTest {
         }
 
         quizDao.delete(quizList.get(2));
-        assertNull(LiveDataTestUtil.getValue(quizDao.fetchById(quizList.get(2).getId())));
+        assertNull((Quiz)LiveDataTestUtil.getValue(quizDao.fetchById(quizList.get(2).getId())));
     }
     //------------------------------------------------------------------
 

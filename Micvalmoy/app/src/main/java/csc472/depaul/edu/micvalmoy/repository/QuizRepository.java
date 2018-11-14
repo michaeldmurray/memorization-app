@@ -149,15 +149,31 @@ public class QuizRepository {
         return appDatabase.CategoryDao().fetchAll();
     }
 
-    public void saveQuiz(QuizWithCategory quizWithCategory){
-        Quiz quiz = new Quiz();
-        quiz.setName("Dummy quiz 1");
-        quiz.setDescription(" quiz 1 This quiz has dummy data, delete it soon-");
+ /*   public void saveQuiz(Quiz quiz){
 
-        long quizId = appDatabase.QuizDao().insert(quiz);
-        //Let's add some dummy data to the database.
+        //long quizId = appDatabase.QuizDao().insert(quiz);
+
+    }*/
+
+
+    public Long saveQuiz(Quiz quiz) {
+        Long quizId = null;
+        if (quiz.getId() > 0) {
+           appDatabase.QuizDao().update(quiz);
+
+        } else {
+            quizId = appDatabase.QuizDao().insert(quiz);
+        }
+        return quizId;
     }
 
-
-
+    public Long saveCategory(Category category) {
+        Long categoryId = null;
+        if (category.getId() > 0) {
+            appDatabase.CategoryDao().update(category);
+        } else {
+            categoryId = appDatabase.CategoryDao().insert(category);
+        }
+        return categoryId;
+    }
 }

@@ -10,7 +10,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import csc472.depaul.edu.micvalmoy.entity.Quiz;
+import csc472.depaul.edu.micvalmoy.entity.Exam;
 
 
 
@@ -18,19 +18,19 @@ import csc472.depaul.edu.micvalmoy.entity.Quiz;
 public interface ExamDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public Long insert(Quiz quiz);
+    public Long insert(Exam exam);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long> insertAll(List<Quiz> exam_details);
+    List<Long> insertAll(List<Exam> exam_details);
 
     @Update
-    public int update(Quiz quiz);
+    public int update(Exam exam);
 
     @Update
-    public int updateAll(Quiz... quiz);
+    public int updateAll(Exam... exam);
 
     @Delete
-    public void delete(Quiz quiz);
+    public void delete(Exam exam);
 
     @Query("DELETE FROM exams where id=:id")
     public int deleteById(Long id);
@@ -39,15 +39,15 @@ public interface ExamDao {
     public int deleteByIds(Long... ids);
 
     @Query("SELECT * FROM exams WHERE id =:id")
-    public LiveData<Quiz> fetchById(Long id);
+    public LiveData<Exam> fetchById(Long id);
 
 
     @Query("SELECT * FROM exams WHERE id IN (:ids)")
-    public LiveData<Quiz> fetchByIds(Long... ids);
+    public LiveData<Exam> fetchByIds(Long... ids);
 
 
     @Query("SELECT * FROM exams")
-    public LiveData<List<Quiz>> fetchAll();
+    public LiveData<List<Exam>> fetchAll();
 
     @Query("SELECT COUNT(*) FROM exams")
     public int getCount();
@@ -55,12 +55,12 @@ public interface ExamDao {
     //------------------------------
 
     @Insert
-    void insertAll(Quiz... exam_details);
+    void insertAll(Exam... exam_details);
 
 
-    @Query("SELECT * FROM exams quiz")
-    public List<Quiz> getAll();
+    @Query("SELECT * FROM exams")
+    public List<Exam> getAll();
 
     @Delete
-    public void deleteAll(Quiz... exam_details);
+    public void deleteAll(Exam... exam_details);
 }

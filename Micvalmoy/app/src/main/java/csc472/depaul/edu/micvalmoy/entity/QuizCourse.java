@@ -67,4 +67,12 @@ public class QuizCourse {
         public Long getQuizId() {
                 return quizId;
         }
+
+        @Override
+        public String toString() {
+                return "QuizCourse{" +
+                        "courseId=" + courseId +
+                        ", quizId=" + quizId +
+                        '}';
+        }
 }

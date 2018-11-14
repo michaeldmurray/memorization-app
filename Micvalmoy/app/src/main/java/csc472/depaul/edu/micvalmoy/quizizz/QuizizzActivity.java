@@ -9,6 +9,7 @@ package csc472.depaul.edu.micvalmoy.quizizz;
         import csc472.depaul.edu.micvalmoy.R;
         import csc472.depaul.edu.micvalmoy.TimberDebugTree;
         import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
+        import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
         import timber.log.Timber;
 
 
@@ -16,7 +17,6 @@ public class QuizizzActivity extends AppCompatActivity  implements QuizizzRecycl
 
     String quizizzSearchParm = null;
 
-    public static final String EXTRA_SEARCH_PARAMETER = "QuizizzSearchParameter";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +34,20 @@ public class QuizizzActivity extends AppCompatActivity  implements QuizizzRecycl
         //**************************************************************
 
         if(savedInstanceState != null) {
-            quizizzSearchParm = savedInstanceState.getString(EXTRA_SEARCH_PARAMETER);
+            quizizzSearchParm = savedInstanceState.getString(IntentUtil.EXTRA_SEARCH_PARAMETER);
         }else{
 
             Intent intent = getIntent();
             Bundle bd = intent.getExtras();
 
-            if (intent.hasExtra(EXTRA_SEARCH_PARAMETER)) {
-                quizizzSearchParm = (String) bd.get("QuizizzSearchParameter").toString();
+            if (intent.hasExtra(IntentUtil.EXTRA_SEARCH_PARAMETER)) {
+                quizizzSearchParm = (String) bd.get(IntentUtil.EXTRA_SEARCH_PARAMETER).toString();
 
             }
             /*
 
-            if (intent.hasExtra(EXTRA_SEARCH_PARAMETER)) {
-                quizizzSearchParm =  intent.getStringExtra(EXTRA_SEARCH_PARAMETER);
+            if (intent.hasExtra(IntentUtil.EXTRA_SEARCH_PARAMETER)) {
+                quizizzSearchParm =  intent.getStringExtra(IntentUtil.EXTRA_SEARCH_PARAMETER);
             }*/
         }
 

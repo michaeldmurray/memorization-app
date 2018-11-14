@@ -7,13 +7,15 @@ package csc472.depaul.edu.micvalmoy;
         import android.os.Bundle;
         import android.widget.Toast;
 
+        import csc472.depaul.edu.micvalmoy.entity.Quiz;
+        import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
         import timber.log.Timber;
 
 public class EditQuizActivity extends AppCompatActivity {
 
     private EditQuizViewModel viewModelEditQuiz;
 
-    public static final String EXTRA_QUIZ_ID = "EXTRA_QUIZ_ID";
+    Quiz quiz = null;
     Long quizId = null;
 
     @Override
@@ -29,14 +31,34 @@ public class EditQuizActivity extends AppCompatActivity {
 
             Timber.plant(new TimberDebugTree());
         }
-        //TODO: Add a crash analytics tool for production
         //**************************************************************
+
+
+        //---------------------------------------------------------------------------------
+        /**
+         * make sure there is information in the Bundle or the restored state
+         * when the activity is newly created, in the onCreate(Bundle savedInstanceState) method, the bundle savedInstanceState is null.
+         * if it is null get the information from Intent;
+         */
+
+        if (savedInstanceState != null) {
+            //** Restore  data after rotation from the savedInstanceState bundle
+            quiz = savedInstanceState.getParcelable(IntentUtil.BUNDLE_KEY_QUIZ_OBJ);
+        }
+        else{
+            //** extract data from the intent bundle
+            Intent intent = getIntent();
+            quiz = intent.getParcelableExtra(IntentUtil.BUNDLE_KEY_QUIZ_OBJ);
+        }
+
+
+
 
 
         Intent intent = getIntent();
         Bundle bd = intent.getExtras();
-        if(bd != null && intent.hasExtra(EXTRA_QUIZ_ID)){
-            quizId = bd.getLong(EXTRA_QUIZ_ID);
+        if(bd != null && intent.hasExtra(IntentUtil.EXTRA_QUIZ_ID)){
+            quizId = bd.getLong(IntentUtil.EXTRA_QUIZ_ID);
         }
 
         if(quizId != null) {

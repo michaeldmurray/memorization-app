@@ -27,33 +27,23 @@ public class QuizListFragment extends Fragment implements View.OnClickListener{
 
 
     private QuizViewModel viewModel;
-    String quizListParm = null;
 
-    public static final String EXTRA_QUIZ_ID = "EXTRA_QUIZ_ID";
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param quizListParameter The search argument.
      * @return A new instance of fragment QuizListFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static QuizListFragment newInstance(String quizListParameter) {
+
+    public static QuizListFragment newInstance() {
         QuizListFragment fragment = new QuizListFragment();
-        Bundle args = new Bundle();
-        args.putString("QuizListParameter", quizListParameter);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            quizListParm = getArguments().getString("QuizListParameter");
-        }
     }
 
 
@@ -86,15 +76,13 @@ public class QuizListFragment extends Fragment implements View.OnClickListener{
             // Set up your view model
             viewModel = ViewModelProviders.of(this).get(QuizViewModel.class);
 
-
             //TODO setup quiz recycler view
             //**************************************************************************************
             // Observe the view model
             viewModel.getQuizzes().observe(this, new Observer<List<Quiz>>() {
                 @Override
                 public void onChanged(List<Quiz> quizzes) {
-
-
+                    
                     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.quizListRecyclerView);
                     RecyclerView.LayoutManager quizRecyclerLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                     recyclerView.setLayoutManager(quizRecyclerLayoutManager);
@@ -128,7 +116,7 @@ public class QuizListFragment extends Fragment implements View.OnClickListener{
 /*            case R.id.btnLoadQuiz:
                 EditText etQuizEdit = (EditText) v.findViewById(R.id.etQuizEdit);
                 Intent intent = new Intent(getActivity(), QuizActivity.class);
-                intent.putExtra(EXTRA_QUIZ_ID, etQuizLoad.getText());
+                intent.putExtra(IntentUtil.EXTRA_QUIZ_LIST_ID, etQuizLoad.getText());
                 startActivity(intent);
 
                 break;
@@ -136,7 +124,7 @@ public class QuizListFragment extends Fragment implements View.OnClickListener{
             case R.id.btnEditQuiz:
                 EditText etQuizEdit = (EditText) v.findViewById(R.id.etQuizEdit);
                 Intent intent = new Intent(getActivity(), EditQuizActivity.class);
-                intent.putExtra(EXTRA_QUIZ_ID, etQuizEdit.getText());
+                intent.putExtra(IntentUtil.EXTRA_QUIZ_LIST_ID, etQuizEdit.getText());
                 startActivity(intent);
 
                 break;*/

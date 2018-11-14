@@ -83,21 +83,21 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
         /**
          * check position , if position is zero we put space on top of list of spinner
          */
-        if ((position == 0))
+/*        if ((position == 0))
             text = oneSpace;
-        /**
+        *//**
          * check position , if position is one we put cross mark before text to show that position used to be for clear all selected items on spinner
-         */
+         *//*
         else if ((position == 1))
             text = "  " + String.valueOf((char) crossMarkAroundBox) + " " + itemsList.get(position).getName();
-        /**
+        *//**
          * check position , if position is two we put check mark before text to show that position used to be for select all items on spinner
-         */
+         *//*
         else if ((position == 2))
             text = "  " + String.valueOf((char) tikMarkAroundBox) + " " + itemsList.get(position).getName();
-        /**
+        *//**
          * check position , if position is bigger than two we have to check that position is selected before or not and put check mark or dash before text
-         */
+         *//*
         else
         {
             if (itemsList.get(position).isSelected())
@@ -108,7 +108,9 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
             {
                 text = "  " + String.valueOf(dash) + " " + itemsList.get(position).getName();
             }
-        }
+        }*/
+
+        text = itemsList.get(position).getName();
         holder.name.setText(text);
         holder.name.setTag(position);
 
@@ -132,18 +134,19 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
                  * if clicked position is one
                  * that means you want clear all select item in list
                  */
-                if (getPosition == 1)
+          /*      if (getPosition == 1)
                 {
                     clearList();
                 }
+                */
                 /**
                  * if clicked position is two
                  * that means you want select all item in list
                  */
-                else if (getPosition == 2)
+  /*              else if (getPosition == 2)
                 {
                     fillList();
-                }
+                }*/
             }
         });
         return convertView;

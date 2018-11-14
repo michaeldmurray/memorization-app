@@ -10,11 +10,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
 
+import timber.log.Timber;
+
 public class QuizActivity extends DescendantActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        //Enable timber for logging
+        if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("withlog")) {
+            //Remove all planted trees.
+            Timber.uprootAll();
+
+            Timber.plant(new TimberDebugTree());
+        }
+        //TODO: Add a crash analytics tool for production
+        //**************************************************************
+
+
 
         // Set up body
         final Button takeQuizButton = findViewById(R.id.button_take_quiz);

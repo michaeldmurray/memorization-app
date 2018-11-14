@@ -2,7 +2,13 @@ package csc472.depaul.edu.micvalmoy.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 
@@ -15,7 +21,7 @@ id INTEGER primary key AUTOINCREMENT,
  */
 
 @Entity(tableName = "quizzes")
-public class Quiz {
+public class Quiz implements Parcelable {
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
     private Long id;
@@ -26,6 +32,23 @@ public class Quiz {
     @ColumnInfo
     private String description;
 
+    public Quiz( ) {
+    }
+
+    //---------------------------------------------------------------------------------
+    @Ignore
+    public List<Question> questionList = new ArrayList<>();
+
+    @Ignore
+    public List<Category> categoryList = new ArrayList<>();
+
+    @Ignore
+    public List<Course> courseList = new ArrayList<>();
+    //---------------------------------------------------------------------------------
+
+    /**
+     * Basic getters /setters
+     */
     public Long getId() {
         return id;
     }
@@ -50,12 +73,76 @@ public class Quiz {
         this.description = description;
     }
 
+
+
+
+    public List<Question> getQuestionList() {
+        return questionList;
+    }
+
+    public void setQuestionList(List<Question> questionList) {
+        this.questionList = questionList;
+    }
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
+
+
+//---------------------------------------------------------------------------------
     /**
-     * Basic getters /setters
+     * Implemented parcelable
      */
+    //---------------------------------------------------------------------------------
 
 
-    
+
+    public static Creator<Quiz> getCREATOR() {
+        return CREATOR;
+    }
+    public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
+        @Override
+        public Quiz createFromParcel(Parcel in) {
+            return new Quiz(in);
+        }
+
+        @Override
+        public Quiz[] newArray(int size) {
+            return new Quiz[size];
+        }
+    };
+
+
+    @Ignore
+    protected Quiz(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        description = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(description);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
     //------------------------------------------
 
     @Override
@@ -64,6 +151,9 @@ public class Quiz {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", questionList=" + questionList.toString() +
+                ", categoryList=" + categoryList.toString() +
+                ", courseList=" + courseList.toString() +
                 '}';
     }
 }

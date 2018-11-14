@@ -15,6 +15,7 @@ import csc472.depaul.edu.micvalmoy.BuildConfig;
 import csc472.depaul.edu.micvalmoy.R;
 import csc472.depaul.edu.micvalmoy.TimberDebugTree;
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
 
@@ -29,24 +30,23 @@ public class QuizizzSearchFragment extends Fragment implements View.OnClickListe
     private QuizizzViewModel viewModel;
     QuizizzRepository quizizzRepository = QuizizzRepository.getInstance();
 
-    public static final String EXTRA_PARM1 = "QuizizzSearchParameter";
-    String quizizzSearchParm = null;
 
+    String quizizzSearchParm = null;
 
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param searchParameter The search parameter used to get quizzes from quizzizz.com.
      * @return A new instance of fragment QuizizzSearchFragment.
      */
 
-    public static QuizizzSearchFragment newInstance(String param1) {
+    public static QuizizzSearchFragment newInstance(String searchParameter) {
         QuizizzSearchFragment fragment = new QuizizzSearchFragment();
         Bundle args = new Bundle();
         if (args != null) {
-            args.putString(EXTRA_PARM1, param1);
+            args.putString(IntentUtil.EXTRA_SEARCH_PARAMETER, searchParameter);
             fragment.setArguments(args);
         }
         return fragment;
@@ -57,7 +57,7 @@ public class QuizizzSearchFragment extends Fragment implements View.OnClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            quizizzSearchParm = getArguments().getString(EXTRA_PARM1);
+            quizizzSearchParm = getArguments().getString(IntentUtil.EXTRA_SEARCH_PARAMETER);
         }
 
         Timber.d("quizizzSearchParm:  %s", quizizzSearchParm);
@@ -142,13 +142,13 @@ public class QuizizzSearchFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnSearchQuizizz:
+  /*          case R.id.btnCategoryEdit:
 
-/*                Intent intent = new Intent(getActivity(), QuizizzActivity.class);
+                Intent intent = new Intent(getActivity(), QuizizzActivity.class);
                 intent.putExtra("QuizizzSearchParameter", etQuizizzSrchParm.getText());
-                startActivity(intent);*/
+                startActivity(intent);
 
-                break;
+                break;*/
             default:
                 break;
         }

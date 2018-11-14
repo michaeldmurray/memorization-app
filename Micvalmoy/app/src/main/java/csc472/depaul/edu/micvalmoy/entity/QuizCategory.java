@@ -70,4 +70,13 @@ public class QuizCategory {
     public Long getQuizId() {
         return quizId;
     }
+
+
+    @Override
+    public String toString() {
+        return "QuizCategory{" +
+                "categoryId=" + categoryId +
+                ", quizId=" + quizId +
+                '}';
+    }
 }

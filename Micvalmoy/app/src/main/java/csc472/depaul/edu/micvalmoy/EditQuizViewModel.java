@@ -39,7 +39,7 @@ public class EditQuizViewModel extends AndroidViewModel {
         return repo.insertQuiz(quiz);
     }
 
-    public void saveQuiz(final QuizWithCategory quizWithCategory) {
-        repo.saveQuiz(quizWithCategory);
+    public void saveQuiz(final Quiz quiz) {
+        repo.saveQuiz(quiz);
     }
 }

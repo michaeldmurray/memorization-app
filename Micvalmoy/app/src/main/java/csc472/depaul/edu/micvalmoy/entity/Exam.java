@@ -4,6 +4,7 @@ package csc472.depaul.edu.micvalmoy.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -80,10 +81,11 @@ public class Exam {
     private int examScore;
 
     public Exam() {
-
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    @Ignore
     public Exam(OffsetDateTime startDate, OffsetDateTime endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -156,5 +158,20 @@ public class Exam {
 
     public void setExamScore(int examScore) {
         this.examScore = examScore;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Exam{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", quizId=" + quizId +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", duration=" + duration +
+                ", examResult=" + examResult +
+                ", examScore=" + examScore +
+                '}';
     }
 }

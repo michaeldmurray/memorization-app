@@ -67,53 +67,68 @@ public interface QuizDao {
     @Delete
     public void deleteAll(Quiz... quizzes);
 
+/*
 
 
-    @Query("SELECT q.id, q.name,q.description, cat.id as category_id, cat.name as category_name " +
+    @Query("SELECT * " +
             "FROM quizzes q " +
             "JOIN quiz_categories qcat on (qcat.quiz_id = q.id) " +
             "JOIN categories cat on (cat.id = qcat.category_id) ")
     public List<QuizWithCategory> getCategoryQuizzes();
 
-    @Query("SELECT q.id, q.name,q.description, cat.id as category_id, cat.name as category_name " +
+    @Query("SELECT * " +
             "FROM quizzes q " +
             "JOIN quiz_categories qcat on (qcat.quiz_id = q.id) " +
             "JOIN categories cat on (cat.id = qcat.category_id) " +
             "WHERE q.id = :quizId")
     public QuizWithCategory getCategoryQuiz(Long quizId);
-
-/*
-
-    @Query("SELECT q.id, q.name,q.description, quest.id as question_id, quest.text as question_name " +
-            "FROM quizzes q " +
-            "JOIN quiz_questions qquest on (qquest.quiz_id = q.id) " +
-            "JOIN questions quest on (quest.id = qquest.question_id) ")
-    public List<QuizWithQuestion> getQuestionQuizzes();
-
-    @Query("SELECT q.id, q.name,q.description, quest.id as question_id, quest.text as question_name " +
-            "FROM quizzes q " +
-            "JOIN quiz_questions qquest on (qquest.quiz_id = q.id) " +
-            "JOIN questions quest on (quest.id = qquest.question_id) " +
-            "WHERE q.id = :quizId")
-    public QuizWithQuestion getQuestionQuiz(Long quizId);
 */
 
 
-
-    @Query("SELECT * " +
+    @Query("SELECT " +
+            "q.id, " +
+            "q.name, " +
+            "q.description, " +
+            "quest.id as question_id, " +
+            "quest.text as question_text , " +
+            "quest.hint as question_hint, " +
+            "quest.type as question_type, " +
+            "quest.nonce as question_nonce, " +
+            "quest.createdAt as question_createdAt, " +
+            "quest.updatedAt as question_updatedAt " +
             "FROM quizzes q " +
             "JOIN quiz_questions qquest on (qquest.quiz_id = q.id) " +
             "JOIN questions quest on (quest.id = qquest.question_id) ")
     public List<QuizWithQuestion> getQuizQuestions();
 
-    @Query("SELECT * " +
+    @Query("SELECT " +
+            "q.id, " +
+            "q.name, " +
+            "q.description, " +
+            "quest.id as question_id, " +
+            "quest.text as question_text , " +
+            "quest.hint as question_hint, " +
+            "quest.type as question_type, " +
+            "quest.nonce as question_nonce, " +
+            "quest.createdAt as question_createdAt, " +
+            "quest.updatedAt as question_updatedAt " +
             "FROM quizzes q " +
             "JOIN quiz_questions qquest on (qquest.quiz_id = q.id) " +
             "JOIN questions quest on (quest.id = qquest.question_id) " +
             "WHERE q.id = :quizId")
     public QuizWithQuestion getQuizQuestionByQuizId(Long quizId);
 
-    @Query("SELECT * " +
+    @Query("SELECT " +
+            "q.id, " +
+            "q.name, " +
+            "q.description, " +
+            "quest.id as question_id, " +
+            "quest.text as question_text , " +
+            "quest.hint as question_hint, " +
+            "quest.type as question_type, " +
+            "quest.nonce as question_nonce, " +
+            "quest.createdAt as question_createdAt, " +
+            "quest.updatedAt as question_updatedAt " +
             "FROM quizzes q " +
             "JOIN quiz_questions qquest on (qquest.quiz_id = q.id) " +
             "JOIN questions quest on (quest.id = qquest.question_id) " +

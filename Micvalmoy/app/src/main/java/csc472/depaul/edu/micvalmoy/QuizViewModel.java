@@ -35,6 +35,10 @@ public class QuizViewModel extends AndroidViewModel {
     public LiveData<Long> insertQuiz(final Quiz quiz) {
         return repo.insertQuiz(quiz);
     }
+    public void saveQuiz(final Quiz quiz) {
+      repo.saveQuiz(quiz);
+    }
+
 
     public LiveData<List<Category>> getCategories() {
         return repo.getCategories();

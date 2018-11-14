@@ -10,12 +10,23 @@ import android.view.View;
 import android.widget.Button;
 
 import csc472.depaul.edu.micvalmoy.quizizz.QuizizzSearchActivity;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Enable timber for logging
+        if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("withlog")) {
+            //Remove all planted trees.
+            Timber.uprootAll();
+
+            Timber.plant(new TimberDebugTree());
+        }
+        //TODO: Add a crash analytics tool for production
+        //**************************************************************
 
         final Button coursesButton = findViewById(R.id.go_to_courses);
         final Button quizzesButton = findViewById(R.id.go_to_quizzes);

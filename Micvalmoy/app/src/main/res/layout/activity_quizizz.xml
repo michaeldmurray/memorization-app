@@ -3,11 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="csc472.depaul.edu.micvalmoy.QuizizzActivity">
+    tools:context="csc472.depaul.edu.micvalmoy.quizizz.QuizizzActivity">
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+    <FrameLayout
+        android:id="@+id/searchQuizizzFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+
+
 </RelativeLayout>
 

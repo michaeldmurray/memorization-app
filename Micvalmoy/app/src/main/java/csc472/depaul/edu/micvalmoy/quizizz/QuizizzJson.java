@@ -1,6 +1,5 @@
 package csc472.depaul.edu.micvalmoy.quizizz;
 
-import android.util.Log;
 //import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -17,7 +16,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import csc472.depaul.edu.micvalmoy.HttpHandler;
+import csc472.depaul.edu.micvalmoy.tools.HttpHandler;
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Option;
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Query;
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Quizizz;

@@ -1,0 +1,111 @@
+package csc472.depaul.edu.micvalmoy;
+
+
+import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+import java.util.List;
+ 
+import android.content.Context;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+ 
+
+//-- https://www.androidbegin.com/tutorial/android-delete-multiple-selected-items-listview-tutorial/
+
+public class AdapterTagSpinnerItem extends ArrayAdapter<TagListSimpleSearch> {
+	// Declare Variables
+	Context context;
+	LayoutInflater inflater;
+
+	List<TagListSimpleSearch> itemsList;
+    private List<TagListSimpleSearch> listState;
+
+	private SparseBooleanArray mSelectedItemsIds;
+ 
+	public Spinner mySpinner = null;
+
+	public AdapterTagSpinnerItem(Context context, int resourceId,List<TagListSimpleSearch> itemsList,Spinner mySpinner) {
+		super(context, resourceId, itemsList);
+		mSelectedItemsIds = new SparseBooleanArray();
+		this.context = context;
+		this.itemsList = itemsList;
+        this.listState = itemsList;
+		inflater = LayoutInflater.from(context);
+
+		this.mySpinner = mySpinner;
+	}
+ 
+	private class ViewHolder {
+		TextView name;
+/*		TextView rank;
+		TextView country;
+		TextView population;
+		ImageView flag;*/
+	}
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent)
+    {
+        return getCustomView(position, convertView, parent);
+    }
+
+
+	public View getView(int position, View view, ViewGroup parent) {
+		final ViewHolder holder;
+		if (view == null) {
+			holder = new ViewHolder();
+			view = inflater.inflate(R.layout.item_quiz_category, null);
+			/*        
+			mInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view      = mInflater.inflate(R.layout.item_quiz_category, null, false);
+			*/
+			holder.name = (TextView) view.findViewById(R.id.tvSpinnerItem);
+
+			view.setTag(holder);
+		} else {
+			holder = (ViewHolder) view.getTag();
+		}
+
+		holder.name.setText(itemsList.get(position).getName());
+
+		return view;
+	}
+ 
+	@Override
+	public void remove(TagListSimpleSearch object) {
+		itemsList.remove(object);
+		notifyDataSetChanged();
+	}
+ 
+	public List<TagListSimpleSearch> getTagListSimpleSearch() {
+		return itemsList;
+	}
+ 
+	public void toggleSelection(int position) {
+		selectView(position, !mSelectedItemsIds.get(position));
+	}
+ 
+	public void removeSelection() {
+		mSelectedItemsIds = new SparseBooleanArray();
+		notifyDataSetChanged();
+	}
+ 
+	public void selectView(int position, boolean value) {
+		if (value)
+			mSelectedItemsIds.put(position, value);
+		else
+			mSelectedItemsIds.delete(position);
+		notifyDataSetChanged();
+	}
+ 
+	public int getSelectedCount() {
+		return mSelectedItemsIds.size();
+	}
+ 
+	public SparseBooleanArray getSelectedIds() {
+		return mSelectedItemsIds;
+	}
+}

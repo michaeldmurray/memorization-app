@@ -15,22 +15,39 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import csc472.depaul.edu.micvalmoy.entity.Question;
+import csc472.depaul.edu.micvalmoy.entity.QuizQuestion;
+import csc472.depaul.edu.micvalmoy.entity.QuizWithQuestion;
 import csc472.depaul.edu.micvalmoy.mock.LiveDataTestUtil;
 import csc472.depaul.edu.micvalmoy.db.AppDatabase;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 import csc472.depaul.edu.micvalmoy.mock.FakeQuizData;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
 
 @RunWith(AndroidJUnit4.class)
 public class QuizDaoTest {
-
-    private QuizDao quizDao;
-    private CategoryDao categoryDao;
-    private AppDatabase db;
-
+    private AppDatabase appDatabase;
     FakeQuizData fakeQuizData;
+
+    CategoryDao categoryDao;
+    CourseDao courseDao;
+    UserDao userDao;
+    QuestionDao questionDao;
+    QuestionAnswerOptionDao questionAnswerOptionDao;
+    QuestionCorrectAnswerDao questionCorrectAnswerDao;
+    QuizDao                  quizDao;
+    QuizCategoryDao quizCategoryDao;
+    QuizCourseDao quizCourseDao;
+    QuizQuestionDao quizQuestionDao;
+    UserAnswerDao userAnswerDao;
+    ExamDao examDao;
+
+
+
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
@@ -39,25 +56,42 @@ public class QuizDaoTest {
 
     @Before
     public void setUp() throws Exception {
+        fakeQuizData = new FakeQuizData();
+
         Context context = InstrumentationRegistry.getTargetContext();
-        db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class)
+        appDatabase = Room.inMemoryDatabaseBuilder(context, AppDatabase.class)
                 .allowMainThreadQueries()
                 .build();
 
-        quizDao     = db.QuizDao();
-        categoryDao = db.CategoryDao();
+        courseDao                = appDatabase.CourseDao();
+        categoryDao              = appDatabase.CategoryDao();
 
-        fakeQuizData = new FakeQuizData();
+
+        questionDao              = appDatabase.QuestionDao();
+        questionAnswerOptionDao  = appDatabase.QuestionAnswerOptionDao();
+        questionCorrectAnswerDao = appDatabase.QuestionCorrectAnswerDao();
+
+        quizDao                  = appDatabase.QuizDao();
+        quizCategoryDao          = appDatabase.QuizCategoryDao();
+        quizCourseDao            = appDatabase.QuizCourseDao();
+        quizQuestionDao          = appDatabase.QuizQuestionDao();
+
+        userDao                  = appDatabase.UserDao();
+        userAnswerDao            = appDatabase.UserAnswerDao();
+        examDao            = appDatabase.ExamDao();
+
+
+
     }
 
     @After
     public void tearDown() throws Exception {
-        db.close();
+        appDatabase.close();
     }
 
     @Test
     public void shouldCreateDatabase() {
-        assertNotNull(db);
+        assertNotNull(appDatabase);
     }
 
     @Test
@@ -70,13 +104,13 @@ public class QuizDaoTest {
     //------------------------------------------------------------------
     @Test
     public void onFetchingQuizzes_shouldGetEmptyList_IfTable_IsEmpty() throws InterruptedException {
-        List < Quiz > quizList = LiveDataTestUtil.getValue(quizDao.fetchAll());
+        List < Quiz > quizList = (List < Quiz >)LiveDataTestUtil.getValue(quizDao.fetchAll());
         assertTrue(quizList.isEmpty());
     }
 
     @Test
     public void onInsertingQuizzes_checkIf_RowCountIsCorrect() throws InterruptedException {
-        List < Quiz > quizList = fakeQuizData.getFakeQuizzes(5);
+        List < Quiz > quizList = fakeQuizData.getFakeQuizList(5);
         for (Quiz quiz: quizList) {
             quizDao.insert(quiz);
         }
@@ -96,7 +130,7 @@ public class QuizDaoTest {
 
     @Test
     public void onQuizDeletion_CheckIf_QuizIsDeletedFromTable() throws InterruptedException {
-        List < Quiz > quizList = fakeQuizData.getFakeQuizzes(5);
+        List < Quiz > quizList = fakeQuizData.getFakeQuizList(5);
         for (Quiz quiz: quizList) {
             quizDao.insert(quiz);
         }
@@ -137,6 +171,64 @@ public class QuizDaoTest {
         assertNotNull(quizID);
     }
 
+    @Test
+    public void add_a_new_quiz_then_add_questions_for_that_quiz() {
+        Quiz quiz = new Quiz();
+        quiz.setName("name auto generated quiz");
+        quiz.setDescription("add_new_quiz_add_questions_for_quiz");
+
+        //Insert into database table "quizzes" - add Quiz into database
+        Long quizID = quizDao.insert(quiz);
+
+        //Create questions
+        List<Question> fakeQuestions = fakeQuizData.getFakeQuestionList(5);
+
+        assertNull(fakeQuestions.get(0).getId());
+
+        //Convert List to Array so that the list can be added to the database
+        Question[] arr_questions = fakeQuestions.toArray(new Question[fakeQuestions.size()]);
+
+        //Insert into database table "questions" - Add questions
+        List<Long> insertedQuestionIds =  questionDao.insertAll(arr_questions);
+
+        assertThat("original question has null id before it is passed to the database, there the database created the id", fakeQuestions.get(0).getId(), is(not(insertedQuestionIds.get(0))));
+
+
+
+        //Query database- get list of the inserted questions back from the database, uses getByIds to get the raw data instead of fetchById() which returns LiveData
+        List<Question> dbQuestions = questionDao.getByIds(insertedQuestionIds.toArray(new Long[insertedQuestionIds.size()]));
+
+
+        //------------------------------------------------------------
+        //Link all the questions with the quiz
+
+        int index = 0;
+        for (Long dbQuestionId: insertedQuestionIds) {
+
+            //Insert into database- link each question to quiz
+            QuizQuestion quizQuestion = new QuizQuestion();
+            quizQuestion.setQuizId(quizID);
+            quizQuestion.setQuestionId(dbQuestionId);
+            quizQuestion.setSortIndex(index);
+            quizQuestion.setEnabled(true); //quiz is enabled by default
+
+            quizQuestionDao.insert(quizQuestion);
+
+            //Doing a loop to add the new ids to the original list of questions
+            fakeQuestions.get(index).setId(dbQuestionId);
+
+            index++;
+        }
+
+        assertEquals(dbQuestions.get(0).getText(), fakeQuestions.get(0).getText());
+
+        //** get the quiz and its question from the data
+        //------------------------------------------------------------
+        List<QuizWithQuestion> quizWithQuestion = quizDao.getQuizQuestions();
+
+        //Test to make sure data added successfully
+        assertEquals(quizID, quizWithQuestion.get(0).getId());
+    }
 
     @Test
     public void shouldInsertTwoQuizzes() {

@@ -15,13 +15,13 @@ import csc472.depaul.edu.micvalmoy.entity.Quiz;
 
 
 @Dao
-public interface ExamDetailDao {
+public interface ExamDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public Long insert(Quiz quiz);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Quiz> exam_details);
+    List<Long> insertAll(List<Quiz> exam_details);
 
     @Update
     public int update(Quiz quiz);
@@ -32,24 +32,24 @@ public interface ExamDetailDao {
     @Delete
     public void delete(Quiz quiz);
 
-    @Query("DELETE FROM exam_details where id=:id")
+    @Query("DELETE FROM exams where id=:id")
     public int deleteById(Long id);
 
-    @Query("DELETE FROM exam_details where id in (:ids)")
+    @Query("DELETE FROM exams where id in (:ids)")
     public int deleteByIds(Long... ids);
 
-    @Query("SELECT * FROM exam_details WHERE id =:id")
+    @Query("SELECT * FROM exams WHERE id =:id")
     public LiveData<Quiz> fetchById(Long id);
 
 
-    @Query("SELECT * FROM exam_details WHERE id IN (:ids)")
+    @Query("SELECT * FROM exams WHERE id IN (:ids)")
     public LiveData<Quiz> fetchByIds(Long... ids);
 
 
-    @Query("SELECT * FROM exam_details")
+    @Query("SELECT * FROM exams")
     public LiveData<List<Quiz>> fetchAll();
 
-    @Query("SELECT COUNT(*) FROM exam_details")
+    @Query("SELECT COUNT(*) FROM exams")
     public int getCount();
 
     //------------------------------
@@ -58,26 +58,9 @@ public interface ExamDetailDao {
     void insertAll(Quiz... exam_details);
 
 
-    @Query("SELECT * FROM exam_details quiz")
+    @Query("SELECT * FROM exams quiz")
     public List<Quiz> getAll();
 
     @Delete
     public void deleteAll(Quiz... exam_details);
-
-
-/*
-
-    @Query("SELECT ed.id, ed.name ed.description, cat.id as category_id, cat.name as category_name " +
-            "FROM exam_details ed " +
-            "JOIN user_answers ua on (ed.user_id = ed.id) " +
-            "JOIN categories cat on (cat.id = q.category_id) ")
-    public List<QuizWithCategory> getCategoryexam_details();
-
-    @Query("SELECT  * " +
-            "FROM exam_details q " +
-            "JOIN quiz q on (q.quiz_id = ed.id) " +
-            "JOIN categories cat on (cat.id = q.category_id) " +
-            "WHERE ed.id = :quizId")
-    public QuizWithCategory getCategoryQuiz(Long quizId);
-*/
 }

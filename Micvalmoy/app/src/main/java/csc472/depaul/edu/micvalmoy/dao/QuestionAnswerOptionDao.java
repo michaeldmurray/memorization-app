@@ -29,7 +29,7 @@ public interface QuestionAnswerOptionDao {
     public Long insert(QuestionAnswerOption option);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<QuestionAnswerOption> options);
+    List<Long>  insertAll(List<QuestionAnswerOption> options);
 
     @Update
     public int update(QuestionAnswerOption option);

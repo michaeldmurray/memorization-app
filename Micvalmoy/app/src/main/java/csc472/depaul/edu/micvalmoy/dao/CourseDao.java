@@ -29,7 +29,7 @@ public interface CourseDao {
     public Long insert(Course course);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Course> courses);
+    List<Long>  insertAll(List<Course> courses);
 
     @Update
     public int update(Course course);

@@ -19,7 +19,7 @@ public interface QuizCategoryDao {
     public Long insert(QuizCategory quizCategory);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<QuizCategory> quizCategory);
+    List<Long>  insertAll(List<QuizCategory> quizCategory);
 
     @Update
     public int update(QuizCategory quizCategory);

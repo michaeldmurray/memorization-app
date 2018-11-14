@@ -8,6 +8,7 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
@@ -31,7 +32,7 @@ CREATE TABLE exam_details (
 
 
 @Entity(
-        tableName="exam_details",
+        tableName="exams",
         foreignKeys={
                 @ForeignKey(
                         entity=User.class,
@@ -49,11 +50,10 @@ CREATE TABLE exam_details (
         indices={
                 @Index(value="user_id"),
                 @Index(value="quiz_id"),
-                @Index(value="question_id"),
         }
 )
 
-public class ExamDetail {
+public class Exam {
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
     private Long id;
@@ -64,16 +64,11 @@ public class ExamDetail {
     @ColumnInfo(name = "quiz_id")
     private Long quizId;
 
-
-    @ColumnInfo(name = "question_id")
-    private Long questionId;
-
-
     @ColumnInfo(name = "start_date")
-    private Date startDate;
+    private OffsetDateTime startDate;
 
     @ColumnInfo(name = "end_date")
-    private Date endDate;
+    private OffsetDateTime endDate;
 
     @ColumnInfo(name = "duration")
     private int duration;
@@ -84,10 +79,17 @@ public class ExamDetail {
     @ColumnInfo(name = "exam_score")
     private int examScore;
 
-    @ColumnInfo(name = "total_questions")
-    private int totalQuestions;
+    public Exam() {
 
-    
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+    public Exam(OffsetDateTime startDate, OffsetDateTime endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+
 
     /**
      * Basic getters /setters
@@ -116,27 +118,19 @@ public class ExamDetail {
         this.quizId = quizId;
     }
 
-    public Long getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
-    }
-
-    public Date getStartDate() {
+    public OffsetDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(OffsetDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public OffsetDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(OffsetDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -162,13 +156,5 @@ public class ExamDetail {
 
     public void setExamScore(int examScore) {
         this.examScore = examScore;
-    }
-
-    public int getTotalQuestions() {
-        return totalQuestions;
-    }
-
-    public void setTotalQuestions(int totalQuestions) {
-        this.totalQuestions = totalQuestions;
     }
 }

@@ -19,7 +19,7 @@ public interface QuestionCorrectAnswerDao {
     public Long insert(QuestionCorrectAnswer questionCorrectAnswer);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<QuestionCorrectAnswer> questionCorrectAnswer);
+    List<Long>  insertAll(List<QuestionCorrectAnswer> questionCorrectAnswer);
 
     @Update
     public int update(QuestionCorrectAnswer questionCorrectAnswer);

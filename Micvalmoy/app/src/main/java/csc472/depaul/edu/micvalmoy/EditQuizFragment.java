@@ -25,6 +25,7 @@ import csc472.depaul.edu.micvalmoy.entity.Category;
 import csc472.depaul.edu.micvalmoy.entity.QuizWithCategory;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 
+import csc472.depaul.edu.micvalmoy.mock.FakeQuizData;
 import csc472.depaul.edu.micvalmoy.repository.QuizRepository;
 import timber.log.Timber;
 
@@ -162,8 +163,8 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
 
         setDemoCategories();
 
-
-/*        viewModel.getCategories().observe(this, new Observer<List<Category>>() {
+        /*
+        viewModel.getCategories().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(@Nullable List<Category>categories) {
                 setCategories(categories);
@@ -176,43 +177,9 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
 
     private void setDemoCategories() {
 
-
-        List<Category> tagsNames = new ArrayList<>();
-        Category tagSpecific=new Category();
-        tagSpecific.setId(new Long("0"));
-        tagSpecific.setName(" ");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("1"));
-        tagSpecific.setName("Remove All Items");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("2"));
-        tagSpecific.setName("Select All Items");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("0"));
-        tagSpecific.setName("Item 0");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("1"));
-        tagSpecific.setName("Item 1");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("2"));
-        tagSpecific.setName("Item 2");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("3"));
-        tagSpecific.setName("Item 3");
-        tagsNames.add(tagSpecific);
-
+        //TODO - delete soon this is fake category data
+        FakeQuizData fakeQuizData = new FakeQuizData();
+        List<Category> tagsNames = fakeQuizData.getFakeCategoryList(8);
 
         adapterCategorySpinnerItem = new AdapterCategorySpinnerItem(getActivity().getApplicationContext(), 0, tagsNames,categorySpinner);
         categorySpinner.setAdapter(adapterCategorySpinnerItem);

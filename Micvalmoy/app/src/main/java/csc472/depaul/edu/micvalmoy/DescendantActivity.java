@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy.activities;
+package csc472.depaul.edu.micvalmoy;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

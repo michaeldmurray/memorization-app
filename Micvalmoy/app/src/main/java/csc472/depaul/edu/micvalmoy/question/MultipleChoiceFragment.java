@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy.activities.Question;
+package csc472.depaul.edu.micvalmoy.question;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

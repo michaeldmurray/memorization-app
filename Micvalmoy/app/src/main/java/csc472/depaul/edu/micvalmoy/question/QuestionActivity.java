@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy.activities.Question;
+package csc472.depaul.edu.micvalmoy.question;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,11 +6,8 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.text.Format;
-import java.util.Map;
-
 import csc472.depaul.edu.micvalmoy.R;
-import csc472.depaul.edu.micvalmoy.activities.DescendantActivity;
+import csc472.depaul.edu.micvalmoy.DescendantActivity;
 
 public class QuestionActivity extends DescendantActivity {
 

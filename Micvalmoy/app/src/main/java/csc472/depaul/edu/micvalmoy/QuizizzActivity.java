@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy.activities;
+package csc472.depaul.edu.micvalmoy;
 
         import android.content.Intent;
         import android.os.AsyncTask;
@@ -11,9 +11,6 @@ package csc472.depaul.edu.micvalmoy.activities;
 
         import java.util.ArrayList;
 
-        import csc472.depaul.edu.micvalmoy.BuildConfig;
-        import csc472.depaul.edu.micvalmoy.R;
-        import csc472.depaul.edu.micvalmoy.TimberDebugTree;
         import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
         import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Quizizz;
         import csc472.depaul.edu.micvalmoy.quizizz.QuizizzJson;

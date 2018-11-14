@@ -1,12 +1,10 @@
-package csc472.depaul.edu.micvalmoy.activities;
+package csc472.depaul.edu.micvalmoy;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TableRow;
-
-import csc472.depaul.edu.micvalmoy.R;
 
 public class QuizResultsActivity extends DescendantActivity {
     @Override

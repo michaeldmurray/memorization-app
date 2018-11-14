@@ -9,19 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ClassesActivity"></activity>
-        <activity android:name=".activities.QuizizzActivity"></activity>
-        <activity android:name=".activities.QuizActivity"></activity>
-        <activity android:name=".activities.QuizResultsActivity"></activity>
-        <activity android:name=".activities.QuizResultActivity"></activity>
-        <activity android:name=".activities.Question.QuestionActivity"></activity>
-        <activity android:name=".activities.QuizSearch"></activity>
+        <activity android:name=".ClassesActivity"></activity>
+        <activity android:name=".QuizizzActivity"></activity>
+        <activity android:name=".QuizActivity"></activity>
+        <activity android:name=".QuizResultsActivity"></activity>
+        <activity android:name=".QuizResultActivity"></activity>
+        <activity android:name=".question.QuestionActivity"></activity>
+        <activity android:name=".QuizSearch"></activity>
     </application>
 
     <!--Enable connection to the internet -->

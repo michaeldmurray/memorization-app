@@ -104,7 +104,7 @@ public class QuizDaoTest {
     //------------------------------------------------------------------
     @Test
     public void onFetchingQuizzes_shouldGetEmptyList_IfTable_IsEmpty() throws InterruptedException {
-        List < Quiz > quizList = (List < Quiz >)LiveDataTestUtil.getValue(quizDao.fetchAll());
+        List <Quiz> quizList = (List<Quiz>)LiveDataTestUtil.getValue(quizDao.fetchAll());
         assertTrue(quizList.isEmpty());
     }
 
@@ -120,12 +120,18 @@ public class QuizDaoTest {
     @Test
     public void onUpdatingAQuiz_checkIf_UpdateHappensCorrectly() throws InterruptedException {
         Quiz quiz = fakeQuizData.fetchFakeQuiz();
-        quizDao.insert(quiz);
+
+        //Insert into database table "quizzes" - add Quiz into database
+        Long quizID = quizDao.insert(quiz);
+
+        //id is autoincrement in the database, add it to original object
+        quiz.setId(quizID);
         quiz.setName(fakeQuizData.FAKE_UPDATED_TITLE);
+
         quizDao.update(quiz);
         assertEquals(1, LiveDataTestUtil.getValue(quizDao.fetchAll()).size());
         assertEquals(fakeQuizData.FAKE_UPDATED_TITLE,
-                LiveDataTestUtil.getValue(quizDao.fetchById(quiz.getId())).getName());
+                LiveDataTestUtil.getValue(quizDao.fetchById(quizID)).getName());
     }
 
     @Test

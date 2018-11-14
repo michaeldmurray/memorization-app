@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/background_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/answer_a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:saveEnabled="true"
+            android:selectAllOnFocus="true"
+            android:text="A"
+            android:textIsSelectable="true" />
+
+        <RadioButton
+            android:id="@+id/answer_b"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:saveEnabled="true"
+            android:selectAllOnFocus="true"
+            android:text="B"
+            android:textIsSelectable="true" />
+
+        <RadioButton
+            android:id="@+id/answer_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:saveEnabled="true"
+            android:selectAllOnFocus="true"
+            android:text="C"
+            android:textIsSelectable="true" />
+    </RadioGroup>
+</android.support.constraint.ConstraintLayout>

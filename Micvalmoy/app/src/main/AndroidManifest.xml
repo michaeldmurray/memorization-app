@@ -20,13 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".QuizResultsActivity"/>
+        <activity android:name=".QuizResultActivity"/>
+        <activity android:name=".question.QuestionActivity"/>
         <activity android:name=".CoursesActivity" />
         <activity android:name=".quizizz.QuizizzActivity" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".quizizz.QuizizzSearchActivity" />
         <activity android:name=".QuizListActivity" />
         <activity android:name=".quizizz.EditQuizizzActivity" />
-        <activity android:name=".tools.EditQuizActivity"></activity>
+        <activity android:name=".EditQuizActivity"/>
     </application>
 
 </manifest>

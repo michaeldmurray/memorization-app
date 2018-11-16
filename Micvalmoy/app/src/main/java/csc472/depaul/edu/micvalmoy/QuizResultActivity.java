@@ -23,9 +23,6 @@ public class QuizResultActivity extends DescendantActivity {
 
         final TableRow questionRow3 = findViewById(R.id.row_quiz_result3);
         if (questionRow3 != null) { questionRow3.setOnClickListener(buildOnClickQuestionRow(3));}
-
-        final TableRow questionRow4 = findViewById(R.id.row_quiz_result4);
-        if (questionRow4 != null) { questionRow4.setOnClickListener(buildOnClickQuestionRow(4));}
     }
 
     private View.OnClickListener buildOnClickQuestionRow(final int questionID) {

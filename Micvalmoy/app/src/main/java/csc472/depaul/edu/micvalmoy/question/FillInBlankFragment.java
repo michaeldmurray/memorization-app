@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import csc472.depaul.edu.micvalmoy.R;
 
+/*Not supporting this question type for MVP
+* */
 public class FillInBlankFragment extends Fragment {
     @Nullable
     @Override

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import csc472.depaul.edu.micvalmoy.quizizz.QuizizzSearchActivity;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), QuizActivity.class);
+            intent.putExtra(IntentUtil.EXTRA_QUIZ_ID,(long) 7);
             startActivity(intent);
         }
     };

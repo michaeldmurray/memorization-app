@@ -21,16 +21,18 @@ public class QuestionActivity extends DescendantActivity {
 
     public enum Mode {
         QUIZ,
-        PRACTICE,
         RESULT
+//      MVP not supporting this mode
+//        , PRACTICE
     }
 
     //TODO replace this with question format from Question model
     private enum Format {
         TRUE_FALSE,
         MULTI_CHOICE,
-        MULTI_ANSWER,
-        FILL_IN_THE_BLANK
+        MULTI_ANSWER
+        //MVP not supporting this type
+//        , FILL_IN_THE_BLANK
     }
 
     //TODO replace this with actual analysis of Question instance
@@ -42,8 +44,6 @@ public class QuestionActivity extends DescendantActivity {
                 return Format.MULTI_CHOICE;
             case 3:
                 return Format.MULTI_ANSWER;
-            case 4:
-                return Format.FILL_IN_THE_BLANK;
             default:
                 Log.e("QuestionFormat","This should not be reached. returning T/F");
                 return Format.TRUE_FALSE;
@@ -58,8 +58,9 @@ public class QuestionActivity extends DescendantActivity {
                 return "Multiple Choice";
             case MULTI_ANSWER:
                 return "Multiple Answer";
-            case FILL_IN_THE_BLANK:
-                return "Fill in the Blank";
+            // MVP not supporting this type
+//            case FILL_IN_THE_BLANK:
+//                return "Fill in the Blank";
             default:
                 return "ERROR";
         }
@@ -105,9 +106,10 @@ public class QuestionActivity extends DescendantActivity {
     private void addAnswersFragment(Mode mode, Format format,int containerID) {
         Fragment firstFragment = null;
 
-        if (mode == Mode.PRACTICE) {
-            // TODO add practice button fragment
-        }
+//        MVP not supporting this mode
+//        if (mode == Mode.PRACTICE) {
+//            // add practice button fragment
+//        }
 
         switch(format) {
             case TRUE_FALSE:
@@ -119,10 +121,9 @@ public class QuestionActivity extends DescendantActivity {
                 //TODO add MA fragment
                 firstFragment = new MultipleAnswerFragment();
                 break;
-            case FILL_IN_THE_BLANK:
-                //TODO add FillInTheBlank fragment
-                firstFragment = new FillInBlankFragment();
-                break;
+//            MVP not supporting this type
+//            case FILL_IN_THE_BLANK:
+//                break;
         }
 
         if (firstFragment != null) {

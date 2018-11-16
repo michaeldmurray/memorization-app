@@ -9,14 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
+import android.widget.TextView;
 
+import csc472.depaul.edu.micvalmoy.entity.Question;
+import csc472.depaul.edu.micvalmoy.entity.Quiz;
+import csc472.depaul.edu.micvalmoy.stub.StubQuiz;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
 public class QuizActivity extends DescendantActivity {
+    Quiz quiz;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+
 
         //Enable timber for logging
         if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("withlog")) {
@@ -27,15 +33,30 @@ public class QuizActivity extends DescendantActivity {
         }
         //TODO: Add a crash analytics tool for production
         //**************************************************************
+        if (savedInstanceState != null) { return;}
 
+        setContentView(R.layout.activity_quiz);
+
+        // get Quiz from ID
+        long quizId = getIntent().getLongExtra(IntentUtil.EXTRA_QUIZ_ID,0);
+        if (quizId == 0) {
+            Log.e("QuestionActivity", "Missing question ID");
+            return;
+        }
+        quiz = StubQuiz.getQuiz(quizId);
+
+        // Set up header
+        this.setTitle("Quiz " + quizId + ": " + quiz.getName());
+        setQuestionCount(quiz.getQuestionList().size());
 
 
         // Set up body
         final Button takeQuizButton = findViewById(R.id.button_take_quiz);
         if (takeQuizButton != null) { takeQuizButton.setOnClickListener(onClickTake);}
 
-        final Button practiceButton = findViewById(R.id.button_practice);
-        if (practiceButton != null) { practiceButton.setOnClickListener(onClickPractice);}
+        //NOT supported for MVP
+//        final Button practiceButton = findViewById(R.id.button_practice);
+//        if (practiceButton != null) { practiceButton.setOnClickListener(onClickPractice);}
 
         final Button attemptsButton = findViewById(R.id.button_attempts);
         if (attemptsButton != null) {
@@ -61,7 +82,6 @@ public class QuizActivity extends DescendantActivity {
                 return true;
             case R.id.delete_quiz:
                 // TODO set up "delete quiz" behavior
-//                Log.d("Quiz","Delete clicked");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -75,12 +95,12 @@ public class QuizActivity extends DescendantActivity {
         }
     };
 
-    private View.OnClickListener onClickPractice = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            //TODO launch Practice mode
-        }
-    };
+//    private View.OnClickListener onClickPractice = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            // launch Practice mode
+//        }
+//    };
 
     private View.OnClickListener onClickAttempts = new View.OnClickListener() {
         @Override
@@ -97,4 +117,12 @@ public class QuizActivity extends DescendantActivity {
             //TODO launch Class view
         }
     };
+
+
+    private void setQuestionCount(int count) {
+        TextView textView = findViewById(R.id.value_questions_count);
+        if (textView != null) {
+            textView.setText(String.valueOf(count));
+        }
+    }
 }

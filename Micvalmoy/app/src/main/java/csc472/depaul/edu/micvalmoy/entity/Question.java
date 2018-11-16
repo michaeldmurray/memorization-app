@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import java.sql.Date;
+import java.time.OffsetDateTime;
 
 /*
 
@@ -47,11 +48,17 @@ public class Question{
     private String nonce;
 
     @ColumnInfo
-    private Date createdAt;
+    private OffsetDateTime createdAt;
 
     @ColumnInfo
-    private Date updatedAt;
+    private OffsetDateTime updatedAt;
 
+
+    public Question() {
+        OffsetDateTime date = OffsetDateTime.now();
+        this.createdAt = date;
+        this.updatedAt = date;
+    }
 
     /**
      * Basic getters /setters
@@ -98,19 +105,33 @@ public class Question{
         this.nonce = nonce;
     }
 
-    public Date getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", hint='" + hint + '\'' +
+                ", type='" + type + '\'' +
+                ", nonce='" + nonce + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

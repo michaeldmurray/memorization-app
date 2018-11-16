@@ -62,29 +62,31 @@ public class QuizQuestion {
     private Integer sortIndex;
 
     @NonNull
-    private Integer enabled;
+    private boolean enabled;
 
     public QuizQuestion() {
         this.sortIndex = 0;
-        this.enabled = 1;
+        this.enabled = true;
     }
 
     /**
      * Basic getters /setters
      */
+    @NonNull
     public Long getQuizId() {
         return quizId;
     }
 
-    public void setQuizId(Long quizId) {
+    public void setQuizId(@NonNull Long quizId) {
         this.quizId = quizId;
     }
 
+    @NonNull
     public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Long questionId) {
+    public void setQuestionId(@NonNull Long questionId) {
         this.questionId = questionId;
     }
 
@@ -97,11 +99,11 @@ public class QuizQuestion {
     }
 
     @NonNull
-    public Integer getEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(@NonNull Integer enabled) {
+    public void setEnabled(@NonNull boolean enabled) {
         this.enabled = enabled;
     }
 }

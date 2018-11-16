@@ -19,7 +19,7 @@ public interface QuizCourseDao {
     public Long insert(QuizCourse quizCourse);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<QuizCourse> quizCourse);
+    List<Long>  insertAll(List<QuizCourse> quizCourse);
 
     @Update
     public int update(QuizCourse quizCourse);

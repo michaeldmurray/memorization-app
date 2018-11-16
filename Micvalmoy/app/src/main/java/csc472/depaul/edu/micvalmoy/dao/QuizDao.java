@@ -12,6 +12,7 @@ import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 import csc472.depaul.edu.micvalmoy.entity.QuizWithCategory;
+import csc472.depaul.edu.micvalmoy.entity.QuizWithQuestion;
 
 
 @Dao
@@ -21,7 +22,7 @@ public interface QuizDao {
     public Long insert(Quiz quiz);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Quiz> quizzes);
+    List<Long>  insertAll(List<Quiz> quizzes);
 
     @Update
     public int update(Quiz quiz);
@@ -60,28 +61,79 @@ public interface QuizDao {
     void insertAll(Quiz... quizzes);
 
 
-    @Query("SELECT * FROM quizzes quiz")
+    @Query("SELECT * FROM quizzes")
     public List<Quiz> getAll();
 
     @Delete
     public void deleteAll(Quiz... quizzes);
 
+/*
 
 
-    @Query("SELECT q.id, q.name,q.description, cat.id as category_id, cat.name as category_name " +
+    @Query("SELECT * " +
             "FROM quizzes q " +
             "JOIN quiz_categories qcat on (qcat.quiz_id = q.id) " +
             "JOIN categories cat on (cat.id = qcat.category_id) ")
     public List<QuizWithCategory> getCategoryQuizzes();
 
-    @Query("SELECT q.id, q.name,q.description, cat.id as category_id, cat.name as category_name " +
+    @Query("SELECT * " +
             "FROM quizzes q " +
             "JOIN quiz_categories qcat on (qcat.quiz_id = q.id) " +
             "JOIN categories cat on (cat.id = qcat.category_id) " +
             "WHERE q.id = :quizId")
     public QuizWithCategory getCategoryQuiz(Long quizId);
+*/
 
 
+    @Query("SELECT " +
+            "q.id, " +
+            "q.name, " +
+            "q.description, " +
+            "quest.id as question_id, " +
+            "quest.text as question_text , " +
+            "quest.hint as question_hint, " +
+            "quest.type as question_type, " +
+            "quest.nonce as question_nonce, " +
+            "quest.createdAt as question_createdAt, " +
+            "quest.updatedAt as question_updatedAt " +
+            "FROM quizzes q " +
+            "JOIN quiz_questions qquest on (qquest.quiz_id = q.id) " +
+            "JOIN questions quest on (quest.id = qquest.question_id) ")
+    public List<QuizWithQuestion> getQuizQuestions();
+
+    @Query("SELECT " +
+            "q.id, " +
+            "q.name, " +
+            "q.description, " +
+            "quest.id as question_id, " +
+            "quest.text as question_text , " +
+            "quest.hint as question_hint, " +
+            "quest.type as question_type, " +
+            "quest.nonce as question_nonce, " +
+            "quest.createdAt as question_createdAt, " +
+            "quest.updatedAt as question_updatedAt " +
+            "FROM quizzes q " +
+            "JOIN quiz_questions qquest on (qquest.quiz_id = q.id) " +
+            "JOIN questions quest on (quest.id = qquest.question_id) " +
+            "WHERE q.id = :quizId")
+    public QuizWithQuestion getQuizQuestionByQuizId(Long quizId);
+
+    @Query("SELECT " +
+            "q.id, " +
+            "q.name, " +
+            "q.description, " +
+            "quest.id as question_id, " +
+            "quest.text as question_text , " +
+            "quest.hint as question_hint, " +
+            "quest.type as question_type, " +
+            "quest.nonce as question_nonce, " +
+            "quest.createdAt as question_createdAt, " +
+            "quest.updatedAt as question_updatedAt " +
+            "FROM quizzes q " +
+            "JOIN quiz_questions qquest on (qquest.quiz_id = q.id) " +
+            "JOIN questions quest on (quest.id = qquest.question_id) " +
+            "WHERE quest.id = :question_id")
+    public QuizWithQuestion getQuizQuestionByQuestionID(Long question_id);
 
 /*  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
   @Query("SELECT quiz.id, quiz.name, quiz.description " +

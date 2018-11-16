@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import timber.log.Timber;
+
 
 /**This activity houses logic to include a back button within the Action Bar that will navigate
  * to the previous activity, rather than the default "Up" functionality.
@@ -16,6 +18,16 @@ public class DescendantActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Enable timber for logging
+        if (BuildConfig.DEBUG || BuildConfig.FLAVOR.equals("withlog")) {
+            //Remove all planted trees.
+            Timber.uprootAll();
+
+            Timber.plant(new TimberDebugTree());
+        }
+        //TODO: Add a crash analytics tool for production
+        //**************************************************************
 
         // Set up header
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

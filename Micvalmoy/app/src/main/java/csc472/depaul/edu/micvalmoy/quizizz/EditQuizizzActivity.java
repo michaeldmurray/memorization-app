@@ -7,16 +7,16 @@ import android.os.Bundle;
 import csc472.depaul.edu.micvalmoy.BuildConfig;
 import csc472.depaul.edu.micvalmoy.R;
 import csc472.depaul.edu.micvalmoy.TimberDebugTree;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
 public class EditQuizizzActivity extends AppCompatActivity {
-    public static final String EXTRA_QUIZINFO_ID = "EXTRA_QUIZINFO_ID";
 
     String quizinfoId = null;
 
     public static Bundle newInstanceBundle(String quizinfoId) {
         Bundle bundle = new Bundle();
-        bundle.putString(EXTRA_QUIZINFO_ID, quizinfoId);
+        bundle.putString(IntentUtil.EXTRA_QUIZINFO_ID, quizinfoId);
         return bundle;
     }
 
@@ -36,8 +36,8 @@ public class EditQuizizzActivity extends AppCompatActivity {
         //**************************************************************
 
         Intent intent = getIntent();
-        if (intent.hasExtra(EXTRA_QUIZINFO_ID)) {
-            quizinfoId = intent.getStringExtra(EXTRA_QUIZINFO_ID);
+        if (intent.hasExtra(IntentUtil.EXTRA_QUIZINFO_ID)) {
+            quizinfoId = intent.getStringExtra(IntentUtil.EXTRA_QUIZINFO_ID);
         }
 
         Timber.d("quizizz quiz id:  %s", quizinfoId);

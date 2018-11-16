@@ -7,6 +7,17 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
+import csc472.depaul.edu.micvalmoy.dao.CategoryDao;
+import csc472.depaul.edu.micvalmoy.dao.CourseDao;
+import csc472.depaul.edu.micvalmoy.dao.ExamDao;
+import csc472.depaul.edu.micvalmoy.dao.QuestionAnswerOptionDao;
+import csc472.depaul.edu.micvalmoy.dao.QuestionCorrectAnswerDao;
+import csc472.depaul.edu.micvalmoy.dao.QuestionDao;
+import csc472.depaul.edu.micvalmoy.dao.QuizCategoryDao;
+import csc472.depaul.edu.micvalmoy.dao.QuizCourseDao;
+import csc472.depaul.edu.micvalmoy.dao.QuizQuestionDao;
+import csc472.depaul.edu.micvalmoy.dao.UserAnswerDao;
+import csc472.depaul.edu.micvalmoy.dao.UserDao;
 import csc472.depaul.edu.micvalmoy.db.AppDatabase;
 
 import csc472.depaul.edu.micvalmoy.entity.QuizWithCategory;
@@ -19,12 +30,38 @@ public class QuizRepository {
     private AppDatabase appDatabase;
     // Note the use of MutableLiveData, this allows changes to be made
 
-    QuizDao quizDao;
+    CategoryDao categoryDao;
+    CourseDao courseDao;
+    UserDao userDao;
+    QuestionDao questionDao;
+    QuestionAnswerOptionDao questionAnswerOptionDao;
+    QuestionCorrectAnswerDao questionCorrectAnswerDao;
+    QuizDao                  quizDao;
+    QuizCategoryDao quizCategoryDao;
+    QuizCourseDao quizCourseDao;
+    QuizQuestionDao quizQuestionDao;
+    UserAnswerDao userAnswerDao;
+    ExamDao examDao;
 
     public QuizRepository(Context context) {
         appDatabase = AppDatabase.getDatabase(context);
 
-        quizDao = appDatabase.QuizDao();
+        courseDao                = appDatabase.CourseDao();
+        categoryDao              = appDatabase.CategoryDao();
+
+
+        questionDao              = appDatabase.QuestionDao();
+        questionAnswerOptionDao  = appDatabase.QuestionAnswerOptionDao();
+        questionCorrectAnswerDao = appDatabase.QuestionCorrectAnswerDao();
+        quizDao                  = appDatabase.QuizDao();
+        quizCategoryDao          = appDatabase.QuizCategoryDao();
+        quizCourseDao            = appDatabase.QuizCourseDao();
+        quizQuestionDao          = appDatabase.QuizQuestionDao();
+
+        userDao                  = appDatabase.UserDao();
+        userAnswerDao            = appDatabase.UserAnswerDao();
+        examDao                  = appDatabase.ExamDao();
+
     }
 
     private static QuizRepository instance;
@@ -108,20 +145,35 @@ public class QuizRepository {
         return appDatabase.QuizDao().fetchById(quizId);
     }
 
-
     public LiveData<List<Category>> getCategories( ) {
         return appDatabase.CategoryDao().fetchAll();
     }
 
-    public void saveQuiz(QuizWithCategory quizWithCategory){
-        Quiz quiz = new Quiz();
-        quiz.setName("Dummy quiz 1");
-        quiz.setDescription(" quiz 1 This quiz has dummy data, delete it soon-");
+ /*   public void saveQuiz(Quiz quiz){
 
-        long quizId = appDatabase.QuizDao().insert(quiz);
-        //Let's add some dummy data to the database.
+        //long quizId = appDatabase.QuizDao().insert(quiz);
+
+    }*/
+
+
+    public Long saveQuiz(Quiz quiz) {
+        Long quizId = null;
+        if (quiz.getId() > 0) {
+           appDatabase.QuizDao().update(quiz);
+
+        } else {
+            quizId = appDatabase.QuizDao().insert(quiz);
+        }
+        return quizId;
     }
 
-
-
+    public Long saveCategory(Category category) {
+        Long categoryId = null;
+        if (category.getId() > 0) {
+            appDatabase.CategoryDao().update(category);
+        } else {
+            categoryId = appDatabase.CategoryDao().insert(category);
+        }
+        return categoryId;
+    }
 }

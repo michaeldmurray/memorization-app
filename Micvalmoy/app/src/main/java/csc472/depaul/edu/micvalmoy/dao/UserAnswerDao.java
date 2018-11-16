@@ -20,7 +20,7 @@ public interface UserAnswerDao {
     public Long insert(UserAnswer quiz);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<UserAnswer> user_answers);
+    List<Long>  insertAll(List<UserAnswer> user_answers);
 
     @Update
     public int update(UserAnswer quiz);

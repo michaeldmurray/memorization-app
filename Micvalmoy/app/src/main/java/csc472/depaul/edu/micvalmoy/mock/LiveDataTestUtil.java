@@ -7,6 +7,13 @@ import android.support.annotation.Nullable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This is a test ultility function that changes an asynchronous livedata to synchronous so that
+ * we can get the value back immediately.
+ *
+ * --- use with JUNIT testing
+ *
+ */
 public class LiveDataTestUtil {
     public static <T> T getValue(final LiveData<T> liveData) throws InterruptedException {
         final Object[] data = new Object[1];

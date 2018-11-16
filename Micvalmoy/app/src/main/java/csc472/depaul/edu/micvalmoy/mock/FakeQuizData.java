@@ -1,7 +1,7 @@
 package csc472.depaul.edu.micvalmoy.mock;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.Category;
@@ -21,9 +21,12 @@ public class FakeQuizData {
 
     public  String FAKE_UPDATED_TITLE = "FAKE UPDATED TITLE";
 
-    int quizCounter = 0;
 
-    public List<Quiz> getFakeQuizzes(int size) {
+
+    int quizCounter = 0;
+    int questionCounter = 0;  
+
+    public List<Quiz> getFakeQuizList(int size) {
         List<Quiz> quizList = new ArrayList<>();
         for(int i = 1; i <= size; i++ ) {
             Quiz quiz = new Quiz();
@@ -34,9 +37,18 @@ public class FakeQuizData {
         }
         return quizList;
     }
+    
+    public Quiz fetchFakeQuiz() {
+        Quiz quiz = new Quiz();
 
+        quiz.setName(FAKE_TITLE + String.valueOf(quizCounter));
+        quiz.setDescription(FAKE_DESC + System.currentTimeMillis());
 
-    public List<Category> getFakeCategories(int size) {
+        quizCounter++;
+        return quiz;
+    }
+
+    public List<Category> getFakeCategoryList(int size) {
         List<Category> categoryList = new ArrayList<>();
         for(int i = 1; i <= size; i++ ) {
             Category category = new Category();
@@ -46,7 +58,7 @@ public class FakeQuizData {
         return categoryList;
     }
 
-    public List<Course> getFakeCourses(int size) {
+    public List<Course> getFakeCourseList(int size) {
         List<Course> courseList = new ArrayList<>();
         for(int i = 1; i <= size; i++ ) {
             Course course = new Course();
@@ -56,7 +68,7 @@ public class FakeQuizData {
         return courseList;
     }
 
-    public List<User> getFakeUsers(int size) {
+    public List<User> getFakeUserList(int size) {
         List<User> userList = new ArrayList<>();
         for(int i = 1; i <= size; i++ ) {
             User user = new User();
@@ -67,32 +79,37 @@ public class FakeQuizData {
         return userList;
     }
 
-    public List<Question> getFakeQuestion(int size) {
+    public List<Question> getFakeQuestionList(int size) {
         List<Question> questionList = new ArrayList<>();
         for(int i = 1; i <= size; i++ ) {
             Question question = new Question();
-            question.setText(FAKE_TITLE + " - Question " + i);
+            question.setText(FAKE_QUESTION + " - " + i);
             question.setHint(FAKE_HINT + " - Question " + i);
             question.setType("Fake type" + " - Question " + i);
             question.setNonce(i + "sdfxdfqwqesfdfg--" + i);
 
-            Long date = System.currentTimeMillis();
-            question.setCreatedAt(new Date(date));
-            question.setUpdatedAt(new Date(date));
+            OffsetDateTime date = OffsetDateTime.now();
+            question.setCreatedAt(date);
+            question.setUpdatedAt(date);
 
             questionList.add(question);
         }
         return questionList;
     }
 
+    public Question fetchFakeQuestion() {
+        Question question = new Question();
+        question.setText(FAKE_TITLE + " - " + questionCounter);
+        question.setHint(FAKE_HINT + " - Question  " + questionCounter);
+        question.setType("Fake type" + " - Question " + questionCounter);
+        question.setNonce("dfsdfffqwqesfdfg--" + questionCounter);
 
-    public Quiz fetchFakeQuiz() {
-        Quiz quiz = new Quiz();
+        OffsetDateTime date = OffsetDateTime.now();
+        question.setCreatedAt(date);
+        question.setUpdatedAt(date);
 
-        quiz.setName(FAKE_TITLE + String.valueOf(quizCounter));
-        quiz.setDescription(FAKE_DESC + System.currentTimeMillis());
 
-        quizCounter++;
-        return quiz;
+        questionCounter++;
+        return question;
     }
 }

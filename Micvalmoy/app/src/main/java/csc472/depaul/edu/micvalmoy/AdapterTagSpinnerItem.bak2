@@ -39,13 +39,7 @@ public class AdapterTagSpinnerItem extends ArrayAdapter<TagListSimpleSearch> {
 		this.mySpinner = mySpinner;
 	}
  
-	private class ViewHolder {
-		TextView name;
-/*		TextView rank;
-		TextView country;
-		TextView population;
-		ImageView flag;*/
-	}
+
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent)
     {
@@ -108,4 +102,9 @@ public class AdapterTagSpinnerItem extends ArrayAdapter<TagListSimpleSearch> {
 	public SparseBooleanArray getSelectedIds() {
 		return mSelectedItemsIds;
 	}
+
+	private class ViewHolder {
+		TextView name;
+	}
+
 }

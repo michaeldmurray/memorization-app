@@ -29,7 +29,7 @@ public interface CategoryDao {
     public Long insert(Category category);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Category> categories);
+    List<Long>  insertAll(List<Category> categories);
 
     @Update
     public int update(Category category);

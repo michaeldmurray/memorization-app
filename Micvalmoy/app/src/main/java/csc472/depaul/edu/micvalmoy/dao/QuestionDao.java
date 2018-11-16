@@ -18,8 +18,11 @@ public interface QuestionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public Long insert(Question question);
 
+/*    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<Question> questions);*/
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Question> questions);
+    public List<Long> insertAll(Question... question);
 
     @Update
     public int update(Question question);
@@ -53,5 +56,11 @@ public interface QuestionDao {
     //------------------------------
     @Query("SELECT * FROM questions ORDER BY text asc")
     public LiveData<List<Question>> fetchAllSortByText();
+
+    @Query("SELECT * FROM questions")
+    public List<Question> getAll();
+
+    @Query("SELECT * FROM questions WHERE id IN (:ids)")
+    public List<Question> getByIds(Long... ids);
 
 }

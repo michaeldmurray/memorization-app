@@ -25,12 +25,13 @@ import csc472.depaul.edu.micvalmoy.entity.Category;
 import csc472.depaul.edu.micvalmoy.entity.QuizWithCategory;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 
+import csc472.depaul.edu.micvalmoy.mock.FakeQuizData;
 import csc472.depaul.edu.micvalmoy.repository.QuizRepository;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
 public class EditQuizFragment extends Fragment implements OnClickListener, OnItemSelectedListener {
 
-    public static final String EXTRA_QUIZ_ID = "EXTRA_QUIZ_ID";
     private Long quizId;
     private Quiz quiz;
 
@@ -51,7 +52,7 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
 
     public static Bundle newInstanceBundle(long quizId) {
         Bundle bundle = new Bundle();
-        bundle.putLong(EXTRA_QUIZ_ID, quizId);
+        bundle.putLong(IntentUtil.EXTRA_QUIZ_ID, quizId);
         return bundle;
     }
 
@@ -59,7 +60,7 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
         EditQuizFragment fragment = new EditQuizFragment();
         Bundle args = new Bundle();
         if (args != null) {
-            args.putLong(EXTRA_QUIZ_ID, quizId);
+            args.putLong(IntentUtil.EXTRA_QUIZ_ID, quizId);
             fragment.setArguments(args);
         }
         return fragment;
@@ -69,7 +70,7 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            quizId = getArguments().getLong(EXTRA_QUIZ_ID);
+            quizId = getArguments().getLong(IntentUtil.EXTRA_QUIZ_ID);
         }
 
         Timber.d("quizId:  %s", quizId);
@@ -162,8 +163,8 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
 
         setDemoCategories();
 
-
-/*        viewModel.getCategories().observe(this, new Observer<List<Category>>() {
+        /*
+        viewModel.getCategories().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(@Nullable List<Category>categories) {
                 setCategories(categories);
@@ -176,43 +177,9 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
 
     private void setDemoCategories() {
 
-
-        List<Category> tagsNames = new ArrayList<>();
-        Category tagSpecific=new Category();
-        tagSpecific.setId(new Long("0"));
-        tagSpecific.setName(" ");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("1"));
-        tagSpecific.setName("Remove All Items");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("2"));
-        tagSpecific.setName("Select All Items");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("0"));
-        tagSpecific.setName("Item 0");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("1"));
-        tagSpecific.setName("Item 1");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("2"));
-        tagSpecific.setName("Item 2");
-        tagsNames.add(tagSpecific);
-
-        tagSpecific=new Category();
-        tagSpecific.setId(new Long("3"));
-        tagSpecific.setName("Item 3");
-        tagsNames.add(tagSpecific);
-
+        //TODO - delete soon this is fake category data
+        FakeQuizData fakeQuizData = new FakeQuizData();
+        List<Category> tagsNames = fakeQuizData.getFakeCategoryList(8);
 
         adapterCategorySpinnerItem = new AdapterCategorySpinnerItem(getActivity().getApplicationContext(), 0, tagsNames,categorySpinner);
         categorySpinner.setAdapter(adapterCategorySpinnerItem);
@@ -224,8 +191,10 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
     }
 
     private void saveQuiz(){
-        QuizWithCategory quizWithCategory = new QuizWithCategory();
-        List<csc472.depaul.edu.micvalmoy.entity.Category> categories = quizWithCategory.getCategories();
+        Quiz quiz     = new Quiz();
+        Category categoryObj = new Category();
+
+        List<Category> categories = quiz.getCategoryList();
         List<Category> selectedCategories = new ArrayList<>();
 
 
@@ -237,28 +206,31 @@ public class EditQuizFragment extends Fragment implements OnClickListener, OnIte
         SparseBooleanArray selectedCategoryIds = adapterCategorySpinnerItem.getSelectedIds();
 
         selectedCategories = adapterCategorySpinnerItem.getSelectedItems();
+        quiz.setCategoryList(selectedCategories);
 
         Timber.d("countCatSelected:  %s", countCatSelected);
         Timber.d("selectedCategories id:  %s", selectedCategoryIds);
         Timber.d("selectedCategories  %s",selectedCategories);
 
-/*
+        /*
         Category selectedCategory = adapterCategorySpinnerItem.getItem(categorySpinner.getSelectedItemPosition());
         final Long selectedCategoryId = (selectedCategory == null || selectedCategory.getId() <= 0 || selectedCategory.getId()==null) ? null : selectedCategory.getId();
-*/
 
 
-        quizWithCategory.setName(quizName);
-        quizWithCategory.setDescription(quizDescription);
+        for (Long dbCatId: selectedCategories) {
+        }
+         quiz.setName(quizName);
+        quiz.setDescription(quizDescription);
 
-        csc472.depaul.edu.micvalmoy.entity.Category categoryObj = new csc472.depaul.edu.micvalmoy.entity.Category();
         //categoryObj.setId(selectedCategoryId);
         categoryObj.setName(categoryName);
         categoryObj.setSelected(true);
 
-        quizWithCategory.addCategory(categoryObj);
+        quiz.getCategoryList().add(categoryObj);
+        */
 
-        Timber.d("quiz data:  %s", quizWithCategory);
-        //viewModel.saveQuiz(quizWithCategory);
+
+        Timber.d("quiz data:  %s", quiz);
+        viewModel.saveQuiz(quiz);
     }
 }

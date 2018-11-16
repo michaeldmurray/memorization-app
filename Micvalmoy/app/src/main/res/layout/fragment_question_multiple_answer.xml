@@ -11,34 +11,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/answer_a"
+        <CheckBox
+            android:id="@+id/D"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:saveEnabled="true"
-            android:selectAllOnFocus="true"
-            android:text="A"
+            android:text="D"
             android:textIsSelectable="true" />
 
-        <RadioButton
-            android:id="@+id/answer_b"
+        <CheckBox
+            android:id="@+id/E"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:saveEnabled="true"
-            android:selectAllOnFocus="true"
-            android:text="B"
+            android:text="E"
             android:textIsSelectable="true" />
 
-        <RadioButton
-            android:id="@+id/answer_c"
+        <CheckBox
+            android:id="@+id/F"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:saveEnabled="true"
-            android:selectAllOnFocus="true"
-            android:text="C"
+            android:text="F"
             android:textIsSelectable="true" />
     </RadioGroup>
 </android.support.constraint.ConstraintLayout>

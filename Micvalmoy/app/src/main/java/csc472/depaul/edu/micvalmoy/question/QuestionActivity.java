@@ -111,17 +111,17 @@ public class QuestionActivity extends DescendantActivity {
 
         switch(format) {
             case TRUE_FALSE:
-                //TODO add True/False fragment
-                break;
+                // Assuming this can use multiple choice fragment
             case MULTI_CHOICE:
-                //TODO add MC fragment
                 firstFragment = new MultipleChoiceFragment();
                 break;
             case MULTI_ANSWER:
                 //TODO add MA fragment
+                firstFragment = new MultipleAnswerFragment();
                 break;
             case FILL_IN_THE_BLANK:
                 //TODO add FillInTheBlank fragment
+                firstFragment = new FillInBlankFragment();
                 break;
         }
 

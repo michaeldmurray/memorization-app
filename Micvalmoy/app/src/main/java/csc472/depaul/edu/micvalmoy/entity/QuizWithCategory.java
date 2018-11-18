@@ -16,7 +16,7 @@ public class QuizWithCategory{
     @ColumnInfo(name = "quiz_id")
     public Long quizId;
 
-    @Embedded(prefix = "qz_")
+    @Embedded(prefix = "q_")
     public Quiz quiz;
 
     @Embedded(prefix = "cat_")
@@ -27,18 +27,36 @@ public class QuizWithCategory{
     /**
      * Basic getters /setters
      */
+    @NonNull
+    public Long getCategoryId() {
+        return categoryId;
+    }
 
+    public void setCategoryId(@NonNull Long categoryId) {
+        this.categoryId = categoryId;
+    }
 
-    //------------------------------------
-  /*   @Override
-   public String toString() {
-        return "Quiz{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                '}'+
-                "QuizWithCategory{" +
-                "categories=" + categories.toString() +
-                '}';
-    }*/
+    public Long getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

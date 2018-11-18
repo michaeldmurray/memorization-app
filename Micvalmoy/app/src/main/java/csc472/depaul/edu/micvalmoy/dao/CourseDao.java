@@ -29,7 +29,7 @@ public interface CourseDao {
     public Long insert(Course course);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long>  insertAll(List<Course> courses);
+    List<Long> insertAll(Course... course);
 
     @Update
     public int update(Course course);
@@ -38,7 +38,14 @@ public interface CourseDao {
     public int updateAll(Course... course);
 
     @Delete
-    public void delete(Course course);
+    public int delete(Course course);
+
+
+    //-------------------------------------------------
+
+    @Delete
+    int deleteAll(Course... courses);
+
 
     @Query("DELETE FROM courses where id=:id")
     public int deleteById(Long id);
@@ -46,24 +53,29 @@ public interface CourseDao {
     @Query("DELETE FROM courses where id in (:ids)")
     public int deleteByIds(Long... ids);
 
+    //-------------------------------------------------
+
+    @Query("SELECT * FROM courses")
+    List<Course> getAll();
+
+    @Query("SELECT * FROM courses")
+    public LiveData<List<Course>> fetchAll();
+
+
     @Query("SELECT * FROM courses WHERE id =:id")
     public LiveData<Course> fetchById(Long id);
 
 
     @Query("SELECT * FROM courses WHERE id IN (:ids)")
-    public LiveData<Course> fetchByIds(Long... ids);
+    public LiveData<List<Course>> fetchByIds(Long... ids);
 
+    //-------------------------------------------------
 
-    @Query("SELECT * FROM courses")
-    public LiveData<List<Course>> fetchAll();
+    @Query("SELECT * FROM courses ORDER BY name asc")
+    public LiveData<List<Course>> fetchAllSortByName();
+
 
     @Query("SELECT COUNT(*) FROM courses")
     public int getCount();
 
-    //------------------------------
-    @Query("SELECT * FROM courses ORDER BY name asc")
-    public LiveData<List<Course>> fetchAllSortByName();
-
 }
-
-

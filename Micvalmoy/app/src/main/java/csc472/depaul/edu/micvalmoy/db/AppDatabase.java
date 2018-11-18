@@ -11,12 +11,10 @@ import csc472.depaul.edu.micvalmoy.dao.CategoryDao;
 import csc472.depaul.edu.micvalmoy.dao.CourseDao;
 import csc472.depaul.edu.micvalmoy.dao.ExamDao;
 import csc472.depaul.edu.micvalmoy.dao.QuestionAnswerOptionDao;
-import csc472.depaul.edu.micvalmoy.dao.QuestionCorrectAnswerDao;
 import csc472.depaul.edu.micvalmoy.dao.QuestionDao;
 import csc472.depaul.edu.micvalmoy.dao.QuizCategoryDao;
 import csc472.depaul.edu.micvalmoy.dao.QuizCourseDao;
 import csc472.depaul.edu.micvalmoy.dao.QuizDao;
-import csc472.depaul.edu.micvalmoy.dao.QuizQuestionDao;
 import csc472.depaul.edu.micvalmoy.dao.UserAnswerDao;
 import csc472.depaul.edu.micvalmoy.dao.UserDao;
 import csc472.depaul.edu.micvalmoy.entity.Category;
@@ -24,13 +22,12 @@ import csc472.depaul.edu.micvalmoy.entity.Course;
 import csc472.depaul.edu.micvalmoy.entity.Exam;
 import csc472.depaul.edu.micvalmoy.entity.Question;
 import csc472.depaul.edu.micvalmoy.entity.QuestionAnswerOption;
-import csc472.depaul.edu.micvalmoy.entity.QuestionCorrectAnswer;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 import csc472.depaul.edu.micvalmoy.entity.QuizCategory;
 import csc472.depaul.edu.micvalmoy.entity.QuizCourse;
-import csc472.depaul.edu.micvalmoy.entity.QuizQuestion;
 import csc472.depaul.edu.micvalmoy.entity.User;
 import csc472.depaul.edu.micvalmoy.entity.UserAnswer;
+import csc472.depaul.edu.micvalmoy.tools.Converters;
 
 /**
  * bump version number if your schema changes
@@ -53,11 +50,9 @@ import csc472.depaul.edu.micvalmoy.entity.UserAnswer;
         Exam.class,
         Question.class,
         QuestionAnswerOption.class,
-        QuestionCorrectAnswer.class,
         Quiz.class,
         QuizCategory.class,
         QuizCourse.class,
-        QuizQuestion.class,
         User.class,
         UserAnswer.class
 }, version=1)
@@ -73,14 +68,13 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract CategoryDao CategoryDao();
     public abstract CourseDao CourseDao();
 
-    public abstract QuestionDao QuestionDao();
-    public abstract QuestionAnswerOptionDao QuestionAnswerOptionDao();
-    public abstract QuestionCorrectAnswerDao QuestionCorrectAnswerDao();
 
     public abstract QuizDao QuizDao();
     public abstract QuizCategoryDao QuizCategoryDao();
     public abstract QuizCourseDao QuizCourseDao();
-    public abstract QuizQuestionDao QuizQuestionDao();
+
+    public abstract QuestionDao QuestionDao();
+    public abstract QuestionAnswerOptionDao QuestionAnswerOptionDao();
 
     public abstract UserDao UserDao();
     public abstract UserAnswerDao UserAnswerDao();

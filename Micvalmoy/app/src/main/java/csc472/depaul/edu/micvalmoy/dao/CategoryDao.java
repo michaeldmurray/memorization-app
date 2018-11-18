@@ -29,7 +29,7 @@ public interface CategoryDao {
     public Long insert(Category category);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long>  insertAll(List<Category> categories);
+    List<Long> insertAll(Category... category);
 
     @Update
     public int update(Category category);
@@ -38,12 +38,13 @@ public interface CategoryDao {
     public int updateAll(Category... category);
 
     @Delete
-    public void delete(Category category);
+    public int delete(Category category);
 
 
+    //-------------------------------------------------
 
     @Delete
-    void deleteAll(Category... categories);
+    int deleteAll(Category... categories);
 
 
     @Query("DELETE FROM categories where id=:id")
@@ -52,28 +53,38 @@ public interface CategoryDao {
     @Query("DELETE FROM categories where id in (:ids)")
     public int deleteByIds(Long... ids);
 
-    @Query("SELECT * FROM categories WHERE id =:id")
-    public LiveData<Category> fetchById(Long id);
+    //-------------------------------------------------
 
-
-    @Query("SELECT * FROM categories WHERE id IN (:ids)")
-    public LiveData<Category> fetchByIds(Long... ids);
-
+    @Query("SELECT * FROM categories")
+    List<Category> getAll();
 
     @Query("SELECT * FROM categories")
     public LiveData<List<Category>> fetchAll();
 
 
+    @Query("SELECT * FROM categories WHERE id =:id")
+    public LiveData<Category> fetchById(Long id);
+
+
+    @Query("SELECT * FROM categories WHERE id IN (:ids)")
+    public LiveData<List<Category>> fetchByIds(Long... ids);
+
+    //-------------------------------------------------
+
+    @Query("SELECT * FROM categories ORDER BY name asc")
+    public LiveData<List<Category>> fetchAllSortByName();
+
 
     @Query("SELECT COUNT(*) FROM categories")
     public int getCount();
 
-    //------------------------------
-    @Query("SELECT * FROM categories ORDER BY name asc")
-    public LiveData<List<Category>> fetchAllSortByName();
 
-    @Query("SELECT * FROM categories")
-    List<Category> getAll();
+
+
+
+
+
+
 
 }
 

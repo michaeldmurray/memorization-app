@@ -82,7 +82,7 @@ public class Exam {
 
     public Exam() {
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.endDate   = endDate;
     }
 
     @Ignore

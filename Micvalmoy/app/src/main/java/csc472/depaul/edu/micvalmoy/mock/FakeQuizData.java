@@ -7,6 +7,7 @@ import java.util.List;
 import csc472.depaul.edu.micvalmoy.entity.Category;
 import csc472.depaul.edu.micvalmoy.entity.Course;
 import csc472.depaul.edu.micvalmoy.entity.Question;
+import csc472.depaul.edu.micvalmoy.entity.QuestionAnswerOption;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 import csc472.depaul.edu.micvalmoy.entity.User;
 
@@ -18,13 +19,27 @@ public class FakeQuizData {
     private String FAKE_NAME = "Fake name ";
     private String FAKE_QUESTION = "Fake Question";
     private String FAKE_HINT = "Fake hint";
+    private String FAKE_TEXT = "Fake text ";
 
     public  String FAKE_UPDATED_TITLE = "FAKE UPDATED TITLE";
 
 
 
-    int quizCounter = 0;
-    int questionCounter = 0;  
+    int quizCounter     = 0;
+    int questionCounter = 0;
+    int userCounter   = 0;
+    int optionCounter   = 0;
+
+    public User fetchFakeUser(String uname , String pw) {
+        User item = new User();
+
+        item.setUsername(uname);
+        item.setPassword(pw);
+
+        userCounter++;
+        return item;
+    }
+
 
     public List<Quiz> getFakeQuizList(int size) {
         List<Quiz> quizList = new ArrayList<>();
@@ -79,7 +94,7 @@ public class FakeQuizData {
         return userList;
     }
 
-    public List<Question> getFakeQuestionList(int size) {
+    public List<Question> getFakeQuestionList(int size, Long quiz_id) {
         List<Question> questionList = new ArrayList<>();
         for(int i = 1; i <= size; i++ ) {
             Question question = new Question();
@@ -87,6 +102,8 @@ public class FakeQuizData {
             question.setHint(FAKE_HINT + " - Question " + i);
             question.setType("Fake type" + " - Question " + i);
             question.setNonce(i + "sdfxdfqwqesfdfg--" + i);
+
+            question.setQuizId(quiz_id);
 
             OffsetDateTime date = OffsetDateTime.now();
             question.setCreatedAt(date);
@@ -112,4 +129,26 @@ public class FakeQuizData {
         questionCounter++;
         return question;
     }
+
+    public QuestionAnswerOption fetchFakeQuestionAnswerOption( Long question_id) {
+        QuestionAnswerOption option = new QuestionAnswerOption();
+
+        option.setText(FAKE_TEXT + " " + optionCounter);
+        option.setQuestionId(question_id);
+
+        optionCounter++;
+        return option;
+    }
+
+
+    public List<QuestionAnswerOption> getFakeFakeOpttionsList(int size, Long question_id) {
+        List<QuestionAnswerOption> itemList = new ArrayList<>();
+        for(int i = 1; i <= size; i++ ) {
+            QuestionAnswerOption option = fetchFakeQuestionAnswerOption(question_id);
+            itemList.add(option);
+        }
+        return itemList;
+    }
+
+
 }

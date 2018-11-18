@@ -8,70 +8,28 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.dao.CategoryDao;
-import csc472.depaul.edu.micvalmoy.dao.CourseDao;
-import csc472.depaul.edu.micvalmoy.dao.ExamDao;
-import csc472.depaul.edu.micvalmoy.dao.QuestionAnswerOptionDao;
-
-import csc472.depaul.edu.micvalmoy.dao.QuestionDao;
-import csc472.depaul.edu.micvalmoy.dao.QuizCategoryDao;
-import csc472.depaul.edu.micvalmoy.dao.QuizCourseDao;
-import csc472.depaul.edu.micvalmoy.dao.QuizDao;
-import csc472.depaul.edu.micvalmoy.dao.UserAnswerDao;
-import csc472.depaul.edu.micvalmoy.dao.UserDao;
 import csc472.depaul.edu.micvalmoy.db.AppDatabase;
 
-import csc472.depaul.edu.micvalmoy.entity.Quiz;
-import timber.log.Timber;
+import csc472.depaul.edu.micvalmoy.entity.Category;
 
 
-public class QuizRepository implements Repository<Quiz>{
+public class CategoryRepository implements Repository<Category>{
+
     private AppDatabase appDatabase;
 
-    QuizDao quizDao;
-
-    /*
     public CategoryDao categoryDao;
-    public CourseDao courseDao;
-    public UserDao userDao;
-    public QuestionDao questionDao;
-    public QuestionAnswerOptionDao questionAnswerOptionDao;
-    public QuestionCorrectAnswerDao questionCorrectAnswerDao;
 
-    public QuizCategoryDao quizCategoryDao;
-    public QuizCourseDao quizCourseDao;
-    public UserAnswerDao userAnswerDao;
-    public ExamDao examDao;
-    */
-
-
-    public QuizRepository(Context context, AppDatabase appDatabase) {
-        this.appDatabase         = appDatabase;
-        quizDao                  = appDatabase.QuizDao();
-
-        /*
-        courseDao                = appDatabase.CourseDao();
-        categoryDao              = appDatabase.CategoryDao();
-
-
-        questionDao              = appDatabase.QuestionDao();
-        questionAnswerOptionDao  = appDatabase.QuestionAnswerOptionDao();
-
-        quizCategoryDao          = appDatabase.QuizCategoryDao();
-        quizCourseDao            = appDatabase.QuizCourseDao();
-
-        userDao                  = appDatabase.UserDao();
-        userAnswerDao            = appDatabase.UserAnswerDao();
-        examDao                  = appDatabase.ExamDao();
-        */
+    public CategoryRepository(Context context, AppDatabase appDatabase) {
+        this.appDatabase  = appDatabase;
+        this.categoryDao  = appDatabase.CategoryDao();
     }
 
-
-    private static QuizRepository instance;
-    public static QuizRepository getInstance(Context context, AppDatabase appDatabase) {
+    private static CategoryRepository instance;
+    public static CategoryRepository getInstance(Context context, AppDatabase appDatabase) {
         if (instance == null) {
-            synchronized (QuizRepository.class) {
+            synchronized (CategoryRepository.class) {
                 if (instance == null) {
-                    instance = new QuizRepository(context,appDatabase);
+                    instance = new CategoryRepository(context,appDatabase);
                 }
             }
         }
@@ -79,27 +37,27 @@ public class QuizRepository implements Repository<Quiz>{
     }
 
     @Override
-    public LiveData<Quiz> fetchById(Long id) {
-        return quizDao.fetchById(id);
+    public LiveData<Category> fetchById(Long id) {
+        return categoryDao.fetchById(id);
     }
 
-    //@Override
-    public LiveData<List<Quiz>> fetchAll() {
-        return quizDao.fetchAll();
+    @Override
+    public LiveData<List<Category>> fetchAll() {
+        return categoryDao.fetchAll();
     }
 
     /**
-     * Takes in a Quiz
+     * Takes in a Category
      * returns live data --- LiveData<Long>
      */
     @Override
-    public LiveData<Long> insert(final Quiz quiz) {
+    public LiveData<Long> insert(final Category category) {
         final MutableLiveData<Long> mutableLiveData = new MutableLiveData<>();
 
-        new AsyncTask<Quiz, Void, Long>() {
+        new AsyncTask<Category, Void, Long>() {
             @Override
-            protected Long doInBackground(Quiz... quiz) {
-                return quizDao.insert(quiz[0]);
+            protected Long doInBackground(Category... category) {
+                return categoryDao.insert(category[0]);
             }
 
             @Override
@@ -107,24 +65,24 @@ public class QuizRepository implements Repository<Quiz>{
                 super.onPostExecute(aLong);
                 mutableLiveData.postValue(aLong);
             }
-        }.execute(quiz);
+        }.execute(category);
 
         return mutableLiveData;
     }
 
     /**
-     * takes in a Quiz
+     * takes in a Category
      * returns live data --- LiveData<Long>
      */
     @Override
-    public LiveData<List<Long>> insertAll(final Quiz... quizzes) {
+    public LiveData<List<Long>> insertAll(final Category... categories) {
         final MutableLiveData<List<Long>> mutableLiveData = new MutableLiveData<>();
 
-        new AsyncTask<Quiz, Void, List<Long> >() {
+        new AsyncTask<Category, Void, List<Long> >() {
 
             @Override
-            protected List<Long> doInBackground(Quiz... quiz) {
-                return quizDao.insertAll(quiz);
+            protected List<Long> doInBackground(Category... category) {
+                return categoryDao.insertAll(category);
             }
 
             @Override
@@ -132,25 +90,25 @@ public class QuizRepository implements Repository<Quiz>{
                 super.onPostExecute(aLongs);
                 mutableLiveData.postValue(aLongs);
             }
-        }.execute(quizzes);
+        }.execute(categories);
 
         return mutableLiveData;
     }
 
 
     /**
-     * takes in a Quiz
+     * takes in a Category
      * returns live data --- LiveData<Integer>
      */
     @Override
-    public LiveData<Integer> update(final Quiz quiz) {
+    public LiveData<Integer> update(final Category category) {
         final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
 
-        new AsyncTask<Quiz, Void, Integer>() {
+        new AsyncTask<Category, Void, Integer>() {
 
             @Override
-            protected Integer doInBackground(Quiz... params) {
-                return quizDao.update(params[0]);
+            protected Integer doInBackground(Category... params) {
+                return categoryDao.update(params[0]);
             }
 
             @Override
@@ -158,25 +116,25 @@ public class QuizRepository implements Repository<Quiz>{
                 super.onPostExecute(aInteger);
                 mutableLiveData.postValue(aInteger);
             }
-        }.execute(quiz);
+        }.execute(category);
 
         return mutableLiveData;
     }
 
 
     /**
-     * takes in a Quiz
+     * takes in a Category
      * returns live data --- LiveData<Integer>
      */
     @Override
-    public LiveData<Integer> updateAll(final Quiz... quizzes) {
+    public LiveData<Integer> updateAll(final Category... categories) {
         final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
 
-        new AsyncTask<Quiz, Void, Integer>() {
+        new AsyncTask<Category, Void, Integer>() {
 
             @Override
-            protected Integer doInBackground(Quiz... quiz) {
-                return quizDao.updateAll(quiz);
+            protected Integer doInBackground(Category... category) {
+                return categoryDao.updateAll(category);
             }
 
             @Override
@@ -184,7 +142,7 @@ public class QuizRepository implements Repository<Quiz>{
                 super.onPostExecute(aInteger);
                 mutableLiveData.postValue(aInteger);
             }
-        }.execute(quizzes);
+        }.execute(categories);
 
         return mutableLiveData;
     }
@@ -193,18 +151,18 @@ public class QuizRepository implements Repository<Quiz>{
     //----------------------------------------------------------------------------
 
     /**
-     * takes in a Quiz
+     * takes in a Category
      * returns live data --- LiveData<Integer>
      */
     @Override
-    public LiveData<Integer> delete(final Quiz quiz) {
+    public LiveData<Integer> delete(final Category category) {
         final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
 
-        new AsyncTask<Quiz, Void, Integer>() {
+        new AsyncTask<Category, Void, Integer>() {
 
             @Override
-            protected Integer doInBackground(Quiz... params) {
-                return quizDao.delete(params[0]);
+            protected Integer doInBackground(Category... params) {
+                return categoryDao.delete(category);
             }
 
             @Override
@@ -212,7 +170,7 @@ public class QuizRepository implements Repository<Quiz>{
                 super.onPostExecute(aInteger);
                 mutableLiveData.postValue(aInteger);
             }
-        }.execute(quiz);
+        }.execute(category);
 
         return mutableLiveData;
     }
@@ -231,7 +189,7 @@ public class QuizRepository implements Repository<Quiz>{
 
             @Override
             protected Integer doInBackground(Void... voids) {
-                return quizDao.deleteById(Id);
+                return categoryDao.deleteById(Id);
             }
 
             @Override
@@ -256,7 +214,7 @@ public class QuizRepository implements Repository<Quiz>{
 
             @Override
             protected Integer doInBackground(Void... voids) {
-                return quizDao.deleteAll();
+                return categoryDao.deleteAll();
             }
 
             @Override
@@ -268,4 +226,6 @@ public class QuizRepository implements Repository<Quiz>{
 
         return mutableLiveData;
     }
+
+
 }

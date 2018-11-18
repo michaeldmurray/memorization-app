@@ -12,28 +12,64 @@ import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.QuizCategory;
 
+
+/**
+ * Using Ellipsis to Accept Variable Number of Arguments (Var args)
+ * https://www.quora.com/Why-does-3-dot-symbol-is-used-in-varargs-Java
+ * Accepts a comma separated list of Quiz objects
+ * updateAll(q1,q2)
+ */
+
+
+
 @Dao
 public interface QuizCategoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public Long insert(QuizCategory quizCategory);
+    public Long insert(QuizCategory quiz_category);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long>  insertAll(List<QuizCategory> quizCategory);
+    List<Long> insertAll(QuizCategory... quiz_category);
 
     @Update
-    public int update(QuizCategory quizCategory);
+    public int update(QuizCategory quiz_category);
 
     @Update
-    public int updateAll(QuizCategory... quizCategory);
+    public int updateAll(QuizCategory... quiz_category);
 
     @Delete
-    public void delete(QuizCategory quizCategory);
+    public int delete(QuizCategory quiz_category);
 
+
+    //-------------------------------------------------
+
+    @Delete
+    int deleteAll(QuizCategory... quiz_categories);
+
+
+    @Query("DELETE FROM quiz_categories where quiz_id=:id")
+    public int deleteById(Long id);
+
+    @Query("DELETE FROM quiz_categories where quiz_id in (:ids)")
+    public int deleteByIds(Long... ids);
+
+    //-------------------------------------------------
+
+    @Query("SELECT * FROM quiz_categories")
+    List<QuizCategory> getAll();
 
     @Query("SELECT * FROM quiz_categories")
     public LiveData<List<QuizCategory>> fetchAll();
 
+
+    @Query("SELECT * FROM quiz_categories WHERE quiz_id =:id")
+    public LiveData<QuizCategory> fetchById(Long id);
+
+
+    @Query("SELECT * FROM quiz_categories WHERE quiz_id IN (:ids)")
+    public LiveData<List<QuizCategory>> fetchByIds(Long... ids);
+
+    //-------------------------------------------------
     @Query("SELECT COUNT(*) FROM quiz_categories")
     public int getCount();
 
@@ -47,10 +83,10 @@ public interface QuizCategoryDao {
     public int deleteByCategoryIds(Long... ids);
 
     @Query("SELECT * FROM quiz_categories WHERE quiz_id =:id")
-    public LiveData<QuizCategory> fetchByQuizId(Long id);
+    public QuizCategory fetchByQuizId(Long id);
 
 
     @Query("SELECT * FROM quiz_categories WHERE category_id =:id")
-    public LiveData<QuizCategory> fetchByCategoryId(Long id);
+    public QuizCategory fetchByCategoryId(Long id);
 
 }

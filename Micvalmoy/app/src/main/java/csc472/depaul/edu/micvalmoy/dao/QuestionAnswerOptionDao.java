@@ -11,6 +11,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.QuestionAnswerOption;
+import csc472.depaul.edu.micvalmoy.entity.QuestionAnswerOption;
 
 
 /**
@@ -25,11 +26,11 @@ import csc472.depaul.edu.micvalmoy.entity.QuestionAnswerOption;
 @Dao
 public interface QuestionAnswerOptionDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+@Insert(onConflict = OnConflictStrategy.REPLACE)
     public Long insert(QuestionAnswerOption option);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    List<Long>  insertAll(List<QuestionAnswerOption> options);
+    List<Long> insertAll(QuestionAnswerOption... option);
 
     @Update
     public int update(QuestionAnswerOption option);
@@ -38,7 +39,14 @@ public interface QuestionAnswerOptionDao {
     public int updateAll(QuestionAnswerOption... option);
 
     @Delete
-    public void delete(QuestionAnswerOption option);
+    public int delete(QuestionAnswerOption option);
+
+
+    //-------------------------------------------------
+
+    @Delete
+    int deleteAll(QuestionAnswerOption... options);
+
 
     @Query("DELETE FROM question_answer_options where id=:id")
     public int deleteById(Long id);
@@ -46,23 +54,25 @@ public interface QuestionAnswerOptionDao {
     @Query("DELETE FROM question_answer_options where id in (:ids)")
     public int deleteByIds(Long... ids);
 
+    //-------------------------------------------------
+
+    @Query("SELECT * FROM question_answer_options")
+    List<QuestionAnswerOption> getAll();
+
+    @Query("SELECT * FROM question_answer_options")
+    public LiveData<List<QuestionAnswerOption>> fetchAll();
+
+
     @Query("SELECT * FROM question_answer_options WHERE id =:id")
     public LiveData<QuestionAnswerOption> fetchById(Long id);
 
 
     @Query("SELECT * FROM question_answer_options WHERE id IN (:ids)")
-    public LiveData<QuestionAnswerOption> fetchByIds(Long... ids);
+    public LiveData<List<QuestionAnswerOption>> fetchByIds(Long... ids);
 
-
-    @Query("SELECT * FROM question_answer_options")
-    public LiveData<List<QuestionAnswerOption>> fetchAll();
-
+    //-------------------------------------------------
     @Query("SELECT COUNT(*) FROM question_answer_options")
     public int getCount();
-
-
-    //------------------------------
-    @Query("SELECT * FROM question_answer_options ORDER BY text asc")
-    public LiveData<List<QuestionAnswerOption>> fetchAllSortByText();
-
 }
+
+

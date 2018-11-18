@@ -1,12 +1,49 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="csc472.depaul.edu.micvalmoy.QuizListFragment">
+    tools:context="QuizListFragment">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/quizListRecyclerView"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/quizListFrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:context="QuizListFragment">
+        >
+
+        <TextView
+            android:id="@+id/tvEmptyQuizList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_top_no_quiz"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/msg_no_quizzes"
+            android:textColor="@color/msg_no_quizzes"
+            android:textSize="@dimen/msg_no_quizzes" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/quizListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="40dp"
+            app:layout_constraintTop_toTopOf="parent">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAddNewQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right|end"
+        android:layout_marginRight="32dp"
+        app:srcCompat="@drawable/ic_add_24dp" />
+
+</android.support.design.widget.CoordinatorLayout>

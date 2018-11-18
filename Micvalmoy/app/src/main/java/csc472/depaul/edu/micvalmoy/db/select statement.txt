@@ -57,45 +57,43 @@ JOIN question_answer_options qao on (qao.question_id = qq.question_id)
 
 
 -- //----------- questions and answers ---------------------------------------------
+// SQLite does not have a separate Boolean storage class. Instead, Boolean values are stored as integers
+// 0 (false)
+// 1 (true)
+
 
 -- get all questions all possible answers
 SELECT ques.id, ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qao.id as "answer_option_id" ,qao.text as "answer_text"   
 FROM questions ques 
-JOIN question_answer_options qao on (qao.question_id = ques.id);
+JOIN question_answer_options qao on (qao.question_id = ques.id)
+;
 
 
 -- get all questions and all their correct answers
-SELECT ques.id, ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qca.option_id as "answer_option_id" , qao.text as "answer_text"  
-FROM questions ques 
-JOIN question_correct_answers qca on (qca.question_id = ques.id)
-JOIN question_answer_options qao on (qao.id = qca.option_id);
-
-
--- get correct answers,answer text, question id
-SELECT qca.option_id, text, qca.question_id 
-FROM question_correct_answers qca
-JOIN question_answer_options qao on (qao.id = qca.option_id)
-;
-
--- get question and all possible answers by question id 
-SELECT ques.id, ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qao.id as "answer_option_id" ,qao.text as "answer_text"   
-FROM questions ques 
+SELECT ques.id, ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qao.id as "answer_option_id" ,qao.text as "answer_text"
+FROM questions ques
 JOIN question_answer_options qao on (qao.question_id = ques.id)
-WHERE qao.question_id  = 2
-;
+WHERE is_enabled = 1;
 
 
--- get question and all correct answers by question id 
-SELECT qca.option_id, text, qca.question_id 
-FROM question_correct_answers qca
-JOIN question_answer_options qao on (qao.id = qca.option_id)
+
+
+-- get a question and all possible answers by question id
+SELECT ques.id, , ques.text,ques.hint,ques.type,ques.nonce,ques.createdAt,ques.updatedAt ,qao.id as "answer_option_id" ,qao.text as "answer_text"
+FROM questions ques
+JOIN question_answer_options qao on (qao.question_id = ques.id)
 WHERE qca.question_id  = 2
 ;
 
 
 
--- get correct answers by question id 
-SELECT qca.option_id, text, qca.question_id 
+-- get a question and all correct answers by question id
+
+
+
+
+-- get correct answers by question id
+SELECT qca.option_id, text, qca.question_id
 FROM question_correct_answers qca
 JOIN question_answer_options qao on (qao.id = qca.option_id)
 WHERE qca.question_id  = 2

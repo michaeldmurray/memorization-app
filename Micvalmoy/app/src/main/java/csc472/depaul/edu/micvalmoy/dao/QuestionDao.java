@@ -11,6 +11,17 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.Question;
+import csc472.depaul.edu.micvalmoy.entity.QuestionAnswerOption;
+
+
+/**
+ * Using Ellipsis to Accept Variable Number of Arguments (Var args)
+ * https://www.quora.com/Why-does-3-dot-symbol-is-used-in-varargs-Java
+ * Accepts a comma separated list of Quiz objects
+ * updateAll(q1,q2)
+ */
+
+
 
 @Dao
 public interface QuestionDao {
@@ -18,11 +29,8 @@ public interface QuestionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public Long insert(Question question);
 
-/*    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Question> questions);*/
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public List<Long> insertAll(Question... question);
+    List<Long> insertAll(Question... question);
 
     @Update
     public int update(Question question);
@@ -31,7 +39,14 @@ public interface QuestionDao {
     public int updateAll(Question... question);
 
     @Delete
-    public void delete(Question question);
+    public int delete(Question question);
+
+
+    //-------------------------------------------------
+
+    @Delete
+    int deleteAll(Question... questions);
+
 
     @Query("DELETE FROM questions where id=:id")
     public int deleteById(Long id);
@@ -39,28 +54,46 @@ public interface QuestionDao {
     @Query("DELETE FROM questions where id in (:ids)")
     public int deleteByIds(Long... ids);
 
+    //-------------------------------------------------
+
+    @Query("SELECT * FROM questions")
+    List<Question> getAll();
+
+    @Query("SELECT * FROM questions")
+    public LiveData<List<Question>> fetchAll();
+
+
     @Query("SELECT * FROM questions WHERE id =:id")
     public LiveData<Question> fetchById(Long id);
 
 
     @Query("SELECT * FROM questions WHERE id IN (:ids)")
-    public LiveData<Question> fetchByIds(Long... ids);
+    public LiveData<List<Question>> fetchByIds(Long... ids);
 
-
-    @Query("SELECT * FROM questions")
-    public LiveData<List<Question>> fetchAll();
-
+    //-------------------------------------------------
     @Query("SELECT COUNT(*) FROM questions")
     public int getCount();
 
-    //------------------------------
-    @Query("SELECT * FROM questions ORDER BY text asc")
-    public LiveData<List<Question>> fetchAllSortByText();
+    //-------------------------------------------------
+    //-------------------------------------------------
+    @Query("SELECT " +
+            "qao.id , " +
+            "qao.question_id , " +
+            "qao.text , " +
+            "qao.is_answer " +
+            "FROM questions quest " +
+            "LEFT JOIN question_answer_options qao on (qao.question_id = quest.id) " +
+            "WHERE qao.is_answer = 1 AND quest.id = (:id)")
+    List<QuestionAnswerOption> getCorrectAnswersByQuestionId(Long id);
 
-    @Query("SELECT * FROM questions")
-    public List<Question> getAll();
 
-    @Query("SELECT * FROM questions WHERE id IN (:ids)")
-    public List<Question> getByIds(Long... ids);
-
+    @Query("SELECT " +
+            "qao.id , " +
+            "qao.question_id , " +
+            "qao.text , " +
+            "qao.is_answer " +
+            "FROM questions quest " +
+            "LEFT JOIN question_answer_options qao on (qao.question_id = quest.id) " +
+            "WHERE quest.id = (:id)")
+    List<QuestionAnswerOption> getAllAnswerOptionsById(Long id);
 }

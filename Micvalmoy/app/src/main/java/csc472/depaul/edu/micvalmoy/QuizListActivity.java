@@ -37,7 +37,7 @@ public class QuizListActivity extends AppCompatActivity implements QuizListEditD
 
 
 
-        Toast.makeText(getApplicationContext(), "Please wait ... loading quizzes", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Please wait ... loading quizzes", Toast.LENGTH_LONG).show();
 
         // Set up your view model
 

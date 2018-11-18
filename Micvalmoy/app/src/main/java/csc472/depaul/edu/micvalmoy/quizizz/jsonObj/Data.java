@@ -8,16 +8,35 @@ import java.util.List;
 
 public class Data {
 
- @SerializedName("hits")
- @Expose
- private List<Hit> hits = new ArrayList< Hit >();
+    @SerializedName("hits")
+    @Expose
+    private List<QuizData> searchResultQuizLists = new ArrayList<QuizData>();
 
- public List <Hit> getHits() {
-  return hits;
- }
+    @SerializedName("quiz")
+    QuizData quizData;
 
- public void setHits(List < Hit > hits) {
-  this.hits = hits;
- }
+    public List<QuizData> getSearchResultQuizLists() {
+        return searchResultQuizLists;
+    }
 
+    public void setSearchResultQuizLists(List<QuizData> searchResultQuizLists) {
+        this.searchResultQuizLists = searchResultQuizLists;
+    }
+
+    public QuizData getQuizData() {
+        return quizData;
+    }
+
+    public void setQuizData(QuizData quizData) {
+        this.quizData = quizData;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Data{" +
+                "searchResultQuizLists=" + searchResultQuizLists.toString() +
+                ", quizData=" + quizData.toString() +
+                '}';
+    }
 }

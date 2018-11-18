@@ -3,7 +3,7 @@ package csc472.depaul.edu.micvalmoy.quizizz.jsonObj;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Hit {
+public class QuizData {
 
  @SerializedName("info")
  @Expose
@@ -32,4 +32,12 @@ public class Hit {
  public void setQuizId(String quizId) {
   this.quizId = quizId;
  }
+
+    @Override
+    public String toString() {
+        return "QuizData{" +
+                "quizInfo=" + quizInfo.toString() +
+                ", quizId='" + quizId + '\'' +
+                '}';
+    }
 }

@@ -2,7 +2,10 @@ package csc472.depaul.edu.micvalmoy.quizizz;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,16 +25,23 @@ import timber.log.Timber;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //** Moya - https://guides.codepath.com/android/creating-and-using-fragments
 
-public class QuizizzSearchFragment extends Fragment implements View.OnClickListener{
+public class QuizizzSearchFragment extends Fragment implements View.OnClickListener, QuizizzRecyclerViewAdapter.OnClickItemAdapterListener {
 
     private QuizizzViewModel viewModel;
+
+
+    RecyclerView recyclerView;
+    QuizizzRecyclerViewAdapter mAdapter;
+
     QuizizzRepository quizizzRepository = QuizizzRepository.getInstance();
 
 
     String quizizzSearchParm = null;
+
 
 
     /**
@@ -85,6 +95,9 @@ public class QuizizzSearchFragment extends Fragment implements View.OnClickListe
         return inflater.inflate(R.layout.fragment_quizizz_search, parent, false);
     }
 
+
+
+
     // This event is triggered soon after onCreateView().
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
@@ -92,30 +105,30 @@ public class QuizizzSearchFragment extends Fragment implements View.OnClickListe
 
         if(quizizzSearchParm != null) {
 
-            Toast.makeText(getActivity().getApplicationContext(), "Please wait ... loading quizzes", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Please wait ...", Toast.LENGTH_SHORT).show();
 
 
             // Set up your view model
             viewModel = ViewModelProviders.of(this).get(QuizizzViewModel.class);
 
+
+            recyclerView    = (RecyclerView) view.findViewById(R.id.quizizzRecyclerView);
+
+            mAdapter = new QuizizzRecyclerViewAdapter (getActivity(),this);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(mAdapter);
+
+            Toast.makeText(getActivity(), getString(R.string.load_quiz), Toast.LENGTH_SHORT).show();
+
             //**************************************************************************************
             // Observe the view model
-            viewModel.getQuizizzByTermLiveData().observe(this, new Observer<ArrayList<QuizInfo>>() {
+            viewModel.getQuizizzByTermLiveData(quizizzSearchParm).observe(this, new Observer<List<QuizInfo>>() {
                 @Override
-                public void onChanged(ArrayList<QuizInfo> quizzes) {
-
-                    /**
-                     * work with the data provided through the view model here,delivering UI updates.
-                     * load custom list adapter to show the list of quizzes found on quizizz.com
-                     */
-
-                    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.quizizzRecyclerView);
-                    RecyclerView.LayoutManager quizizzRecyclerLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-                    recyclerView.setLayoutManager(quizizzRecyclerLayoutManager);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-                    QuizizzRecyclerViewAdapter quizizzRecyclerViewAdapter = new QuizizzRecyclerViewAdapter(quizzes);
-                    recyclerView.setAdapter(quizizzRecyclerViewAdapter);
+                public void onChanged(@Nullable List<QuizInfo> quizInfos) {
+                    mAdapter.submitList(quizInfos);
 
                     Timber.d("listing the quizzes found on quizizz.com");
                 }
@@ -123,37 +136,68 @@ public class QuizizzSearchFragment extends Fragment implements View.OnClickListe
 
 
 
-            /**
-             * Start Background process
-             * This will start the Background off-the-UI-thread work to search quizizz.com based on the search parameter provided
-             */
-            quizizzRepository.findQuizizzByTerm(quizizzSearchParm);
-
 
         }
-
-
-
-
+        else{
+            Toast.makeText(getActivity(), "Sorry there was an error loading quizzes", Toast.LENGTH_SHORT).show();
+        }
 
     }
+
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-  /*          case R.id.btnCategoryEdit:
+            /*
+           case R.id.btnCategoryEdit:
 
                 Intent intent = new Intent(getActivity(), QuizizzActivity.class);
-                intent.putExtra("QuizizzSearchParameter", etQuizizzSrchParm.getText());
+                intent.putExtra(IntentUtil.EXTRA_SEARCH_PARAMETER, etQuizizzSrchParm.getText());
                 startActivity(intent);
 
-                break;*/
+                break;
+            */
             default:
                 break;
         }
 
         Timber.d("onClick -- button ="+v.getId());
     }
+
+
+    //-----------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------
+    //QuizizzRecyclerViewAdapter
+
+    @Override
+    public void onClick(String quizId, int position) {
+
+        Intent intent = new Intent(getActivity(), EditQuizizzActivity.class);
+        intent.putExtras(EditQuizizzActivity.newInstanceBundle(quizId));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLongClick(String quizId, int position) {
+
+    }
+
+    /**
+     * ---------------------------------------------------------------------------------
+     * Moya - State to handle Rotation
+     * onSaveInstanceState gets called before onStop but it is not guaranteed to be called before or after onPause.
+     * Android will also only call it when the application needs to save temporary state which includes when
+     * orientation changes occur and when the Activity is killed for its memory resources.
+     * It will not be called in certain situations such as finishing an Activity normally or putting an Activity into the background
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(IntentUtil.EXTRA_SEARCH_PARAMETER, quizizzSearchParm);
+    }
+
+
 
 }

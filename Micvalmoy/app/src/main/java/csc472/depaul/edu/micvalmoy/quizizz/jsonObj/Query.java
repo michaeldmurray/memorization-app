@@ -17,4 +17,10 @@ public class Query {
   this.text = text;
  }
 
+    @Override
+    public String toString() {
+        return "Query{" +
+                "text='" + text + '\'' +
+                '}';
+    }
 }

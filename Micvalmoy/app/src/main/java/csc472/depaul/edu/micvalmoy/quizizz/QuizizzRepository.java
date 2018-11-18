@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Quizizz;
@@ -22,8 +22,6 @@ public class QuizizzRepository {
 
     // Note the use of MutableLiveData, this allows changes to be made
 
-    @NonNull
-    private MutableLiveData<ArrayList<QuizInfo>> quizizzByTermLiveData = new MutableLiveData<>();
 
     private static QuizizzRepository instance;
     public static QuizizzRepository getInstance() {
@@ -38,11 +36,12 @@ public class QuizizzRepository {
     }
 
     // The getter upcasts to LiveData, this ensures that only the repository can cause a change
-    public LiveData<ArrayList<QuizInfo>> getQuizizzByTermLiveData(){
-        return quizizzByTermLiveData;
-    }
 
-    public LiveData<ArrayList<QuizInfo>> findQuizizzByTerm(final String quizizzSearchParm) {
+
+
+    public LiveData<List<QuizInfo>> findQuizizzByTerm(final String quizId) {
+        final MutableLiveData<List<QuizInfo>> quizizzLiveData = new MutableLiveData<>();
+
         Runnable runnableTask = new Runnable() {
             @Override
             public void run() {
@@ -51,21 +50,52 @@ public class QuizizzRepository {
 
                 // Making a request to url and getting response
 
-                Quizizz qz = quizizzJson.getJsonResponse(quizizzSearchParm);
+                Quizizz qz = quizizzJson.getJsonResponseBySearchTerm(quizId);
 
 
-                ArrayList<QuizInfo> quizzes = qz.getQuizzes();
+                List<QuizInfo> quizzes = qz.getQuizzes();
 
                 Timber.d("json dataobject %s", quizzes.toString());
 
                 //add data to be used
-                quizizzByTermLiveData.postValue(quizzes);
+                quizizzLiveData.postValue(quizzes);
             }
         };
 
 
         new Thread(runnableTask).start();
 
-        return quizizzByTermLiveData;
+        return quizizzLiveData;
     }
+
+
+    public LiveData<List<QuizInfo>> findQuizizzById(final String quizId) {
+        final MutableLiveData<List<QuizInfo>> quizizzLiveData = new MutableLiveData<>();
+
+        Runnable runnableTask = new Runnable() {
+            @Override
+            public void run() {
+
+           /*     QuizizzJson quizizzJson = new QuizizzJson();
+
+                // Making a request to url and getting response
+
+                Quizizz qz = quizizzJson.getJsonResponseById(quizId);
+
+
+                List<QuizInfo> quizzes = qz.getQuizzes();
+
+                Timber.d("json dataobject %s", quizzes.toString());
+
+                //add data to be used
+                quizizzLiveData.postValue(quizzes);*/
+            }
+        };
+
+
+        new Thread(runnableTask).start();
+
+        return quizizzLiveData;
+    }
+
 }

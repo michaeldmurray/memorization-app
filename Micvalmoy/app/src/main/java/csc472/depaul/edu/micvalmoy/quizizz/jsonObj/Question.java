@@ -53,4 +53,14 @@ public class Question {
   this.id = id;
  }
 
+
+ @Override
+ public String toString() {
+  return "Question{" +
+          "type='" + type + '\'' +
+          ", structure=" + structure.toString() +
+          ", createdAt='" + createdAt + '\'' +
+          ", id='" + id + '\'' +
+          '}';
+ }
 }

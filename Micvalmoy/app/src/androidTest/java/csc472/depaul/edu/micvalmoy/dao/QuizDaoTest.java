@@ -8,15 +8,15 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.Question;
@@ -27,12 +27,17 @@ import csc472.depaul.edu.micvalmoy.mock.LiveDataTestUtil;
 import csc472.depaul.edu.micvalmoy.db.AppDatabase;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 import csc472.depaul.edu.micvalmoy.mock.FakeQuizData;
+import csc472.depaul.edu.micvalmoy.quizizz.JsonStructureDeserializer;
+import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Quizizz;
+import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Structure;
 import csc472.depaul.edu.micvalmoy.repository.CategoryRepository;
 import csc472.depaul.edu.micvalmoy.repository.CourseRepository;
 import csc472.depaul.edu.micvalmoy.repository.ExamRepository;
 import csc472.depaul.edu.micvalmoy.repository.QuizRepository;
 import csc472.depaul.edu.micvalmoy.repository.UserAnswerRepository;
 import csc472.depaul.edu.micvalmoy.repository.UserRepository;
+import csc472.depaul.edu.micvalmoy.tools.HttpHandler;
+import timber.log.Timber;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
@@ -410,5 +415,55 @@ public class QuizDaoTest {
         List<QuestionAnswerOption> answersFromDB = questionDao.getCorrectAnswersByQuestionId(question_id);
         assertEquals(2, answersFromDB.size());
     }
+
+
+    @Test
+    public void testing_gson (){
+        //https://quizizz.com/quiz/5941b23760c0a411002859f0
+        //https://quizizz.com/api/kilim1/search?query=php
+        //"https://quizizz.com/api/kilim1/search?from=0&sortKey=_score&filterList={%22grade_type.aggs%22%3A[]%2C%22occupation%22%3A[%22teacher_school%22%2C%22teacher_university%22%2C%22other%22%2C%22teacher%22]%2C%22cloned%22%3A"[false]%2C%22subjects.aggs%22%3A[]}&queryId=5bc37369f2292f001b141f31-1539574984208&source=MainHeader&page=QuizPage&query=";
+
+        String url ;
+        String searchIdUrl ="https://quizizz.com/quiz/";
+        String searchQuizId = "5941b23760c0a411002859f0";
+        url =  searchIdUrl + searchQuizId;
+
+        String searchTermUrl = "https://quizizz.com/api/kilim1/search?query=";
+        String searchTermParameter = "php";
+
+        //url =  searchTermUrl + searchTermParameter;
+
+                //The Url of the json content, the search parameter is a part of the url
+
+
+        HttpHandler sh = new HttpHandler();
+
+        //** connect to the quizizz website, and download the json content
+        String jsonStr = sh.makeServiceCall(url);
+
+        Timber.d("Response from url: %s", jsonStr);
+        if (jsonStr != null) {
+            try {
+                // DATA as root
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.registerTypeAdapter(Structure.class, new JsonStructureDeserializer());
+
+                Gson gson = gsonBuilder.create();
+                //QuizizzQuiz qz  = gson.fromJson(jsonStr, QuizizzQuiz.class);
+                Quizizz qz  = gson.fromJson(jsonStr, Quizizz.class);
+                Timber.d("Quizziz GSON parsed java object: %s" , qz.toString());
+
+                Timber.d("parsed data");
+                Timber.d("parsed data");
+
+            } catch (Exception e) {
+                Timber.e(e,"Json parsing error");
+            }
+        } else {
+            Timber.d("Couldn't get json from server.");
+        }
+
+    }
+
 
 }

@@ -198,11 +198,10 @@ public class Question{
         this.correctAnswers = correctAnswers;
     }
 
-
     @Override
     public String toString() {
         return "Question{" +
-                "id=" + id +
+                " id=" + id +
                 ", quizId=" + quizId +
                 ", text='" + text + '\'' +
                 ", hint='" + hint + '\'' +

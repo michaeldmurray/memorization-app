@@ -21,24 +21,45 @@ public class Quizizz {
   this.data = data;
  }
 
- public  ArrayList<QuizInfo> getQuizzes(){
+ public  List<QuizInfo> getQuizzes(){
 
-  ArrayList<QuizInfo> quizes = new ArrayList<>();
+  List<QuizInfo> quizzes = new ArrayList<>();
 
-  //** get the Question Information from the list of search hits
-  List<Hit> quizizzSearchHits =  this.data.getHits();
-  for (Hit hit: quizizzSearchHits){
-   QuizInfo quizInfo = hit.getQuizInfo();
+  //** get the Question Information from the list of search quizzes
+  List<QuizData> quizizzSearchQuizLists =  this.data.getSearchResultQuizLists();
+  for (QuizData quizData: quizizzSearchQuizLists){
+   QuizInfo quizInfo = quizData.getQuizInfo();
 
    //The ID of the quiz is on this level, not sure if it like this all the time,
    // but for now we will store the id with the quiz info
-   String quizId = hit.getQuizId();
+   String quizId = quizData.getQuizId();
 
 
    quizInfo.setId(quizId);
-   quizes.add(quizInfo);
+   quizzes.add(quizInfo);
   }
-  return quizes;
+  return quizzes;
  }
 
+ public  QuizInfo getQuizz(){
+  QuizData quizData =  this.data.getQuizData();
+
+   QuizInfo quizInfo = quizData.getQuizInfo();
+
+   //The ID of the quiz is on this level, not sure if it like this all the time,
+   // but for now we will store the id with the quiz info
+   String quizId = quizData.getQuizId();
+
+   quizInfo.setId(quizId);
+
+  return quizInfo;
+ }
+
+
+    @Override
+    public String toString() {
+        return "Quizizz{" +
+                "data=" + data.toString() +
+                '}';
+    }
 }

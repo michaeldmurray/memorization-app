@@ -29,7 +29,7 @@ import java.util.List;
 
 //** Moya - https://guides.codepath.com/android/creating-and-using-fragments
 
-public class QuizListFragment extends Fragment implements View.OnClickListener, QuizListRecyclerViewAdapter.QuizAdapterListener {
+public class QuizListFragment extends Fragment implements View.OnClickListener, QuizListRecyclerViewAdapter.OnClickItemAdapterListener {
     public static final String TAG = QuizListFragment.class.getSimpleName();
 
     private QuizViewModel viewModel;
@@ -43,13 +43,13 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
 
     FloatingActionButton fabAddNewQuiz;
 
-
+    //-----------------------------------------------------------------------------------------
     public static QuizListFragment newInstance() {
         QuizListFragment fragment = new QuizListFragment();
         return fragment;
     }
 
-
+    //-----------------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,17 +68,17 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
         return inflater.inflate(R.layout.fragment_quiz_list, parent, false);
     }
 
-
+    //-----------------------------------------------------------------------------------------
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = ViewModelProviders.of(getActivity()).get(QuizViewModel.class);
-        recyclerView    = (RecyclerView) view.findViewById(R.id.quizListRecyclerView);
+
         tvEmptyQuizList = (TextView) view.findViewById(R.id.tvEmptyQuizList);
         fabAddNewQuiz   = (FloatingActionButton) view.findViewById(R.id.fabAddNewQuiz);
 
-
+        viewModel = ViewModelProviders.of(getActivity()).get(QuizViewModel.class);
+        recyclerView    = (RecyclerView) view.findViewById(R.id.quizListRecyclerView);
 
         mAdapter = new QuizListRecyclerViewAdapter(getActivity(),this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -90,6 +90,8 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
         Toast.makeText(getActivity(), getString(R.string.load_quiz), Toast.LENGTH_SHORT).show();
     }
 
+
+    //-----------------------------------------------------------------------------------------
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -113,7 +115,7 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
 
 
 
-
+    //-----------------------------------------------------------------------------------------
 
     @Override
     public void onClick(View v) {
@@ -147,7 +149,7 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
         }
         Timber.d("onClick -- button ="+v.getId());
     }
-
+    //-----------------------------------------------------------------------------------------
 
 
 
@@ -217,7 +219,8 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
         });
     }
 
-
+    //-----------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------
     /**
      *     QuizAdapterListener
      */

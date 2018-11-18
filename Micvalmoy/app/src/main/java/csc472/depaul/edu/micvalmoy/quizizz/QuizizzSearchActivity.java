@@ -10,6 +10,7 @@ import android.widget.EditText;
 import csc472.depaul.edu.micvalmoy.BuildConfig;
 import csc472.depaul.edu.micvalmoy.R;
 import csc472.depaul.edu.micvalmoy.TimberDebugTree;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
 public class QuizizzSearchActivity extends AppCompatActivity {
@@ -36,16 +37,11 @@ public class QuizizzSearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText etQuizizzSrchParm = (EditText) findViewById(R.id.etQuizizzSrchParm);
                 Intent intent = new Intent(QuizizzSearchActivity.this, QuizizzActivity.class);
-                intent.putExtra("QuizizzSearchParameter", etQuizizzSrchParm.getText());
+                intent.putExtra(IntentUtil.EXTRA_SEARCH_PARAMETER, etQuizizzSrchParm.getText());
                 startActivity(intent);
 
             }
         });
-
-
-
-
-
     }
 }
 

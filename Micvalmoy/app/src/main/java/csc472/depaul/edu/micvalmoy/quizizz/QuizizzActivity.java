@@ -13,7 +13,7 @@ package csc472.depaul.edu.micvalmoy.quizizz;
         import timber.log.Timber;
 
 
-public class QuizizzActivity extends AppCompatActivity  implements QuizizzRecyclerViewAdapter.ActionCallback {
+public class QuizizzActivity extends AppCompatActivity  {
 
     String quizizzSearchParm = null;
 
@@ -44,14 +44,9 @@ public class QuizizzActivity extends AppCompatActivity  implements QuizizzRecycl
                 quizizzSearchParm = (String) bd.get(IntentUtil.EXTRA_SEARCH_PARAMETER).toString();
 
             }
-            /*
-
-            if (intent.hasExtra(IntentUtil.EXTRA_SEARCH_PARAMETER)) {
-                quizizzSearchParm =  intent.getStringExtra(IntentUtil.EXTRA_SEARCH_PARAMETER);
-            }*/
         }
 
-        Timber.d("quizizzSearchParm");
+        Timber.d(IntentUtil.EXTRA_SEARCH_PARAMETER);
 
         //** moya-  Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -61,12 +56,44 @@ public class QuizizzActivity extends AppCompatActivity  implements QuizizzRecycl
         ft.commit();
     }
 
+
+
+    /**
+     * ---------------------------------------------------------------------------------
+     * Moya - State to handle Rotation
+     * onSaveInstanceState gets called before onStop but it is not guaranteed to be called before or after onPause.
+     * Android will also only call it when the application needs to save temporary state which includes when
+     * orientation changes occur and when the Activity is killed for its memory resources.
+     * It will not be called in certain situations such as finishing an Activity normally or putting an Activity into the background
+     * @param outState
+     */
     @Override
-    public void onEdit(QuizInfo quizInfo) {
-        Intent intent = new Intent(this, EditQuizizzActivity.class);
-        intent.putExtras(EditQuizizzActivity.newInstanceBundle(quizInfo.getId()));
-        startActivity(intent);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(IntentUtil.EXTRA_SEARCH_PARAMETER, quizizzSearchParm);
     }
+
+
+    /**
+     * called after OnStart() has completed
+     * The savedInstanceState Bundle is same as the one used in onCreate()
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            //** Restore  data after rotation from the savedInstanceState bundle
+            quizizzSearchParm = savedInstanceState.getString(IntentUtil.EXTRA_SEARCH_PARAMETER);
+
+            //** populate title with the name of the Investment
+            setTitle("Quizzizz search term:" + quizizzSearchParm);
+        }
+    }
+
+
+
+
 }
 
 

@@ -2,11 +2,18 @@ package csc472.depaul.edu.micvalmoy.entity;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import java.sql.Date;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 /*
 
@@ -24,14 +31,28 @@ CREATE TABLE questions (
 
 
  */
-
-
-@Entity(tableName = "questions")
+@Entity(
+        tableName="questions",
+        foreignKeys={
+                @ForeignKey(
+                        entity=Quiz.class,
+                        parentColumns="id",
+                        childColumns="quiz_id",
+                        onDelete=CASCADE
+                )
+        },
+        indices={
+                @Index(value="quiz_id")
+        }
+)
 public class Question{
-    
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
-    Long id;
+    private Long id;
+
+    @NonNull
+    @ColumnInfo(name = "quiz_id")
+    private Long quizId;
 
     @NonNull
     @ColumnInfo
@@ -53,6 +74,11 @@ public class Question{
     @ColumnInfo
     private OffsetDateTime updatedAt;
 
+    @ColumnInfo(name = "sort_index")
+    private Integer sortIndex;
+
+    @NonNull
+    private boolean enabled;
 
     public Question() {
         OffsetDateTime date = OffsetDateTime.now();
@@ -60,15 +86,33 @@ public class Question{
         this.updatedAt = date;
     }
 
+    @Ignore
+    public List<QuestionAnswerOption> options = new ArrayList<>();
+
+    @Ignore
+    public List<QuestionAnswerOption> correctAnswers = new ArrayList<>();
+
+
     /**
      * Basic getters /setters
      */
+
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @NonNull
+    public Long getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(@NonNull Long quizId) {
+        this.quizId = quizId;
     }
 
     @NonNull
@@ -121,17 +165,54 @@ public class Question{
         this.updatedAt = updatedAt;
     }
 
+    public Integer getSortIndex() {
+        return sortIndex;
+    }
+
+    public void setSortIndex(Integer sortIndex) {
+        this.sortIndex = sortIndex;
+    }
+
+    @NonNull
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(@NonNull boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<QuestionAnswerOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<QuestionAnswerOption> options) {
+        this.options = options;
+    }
+
+    public List<QuestionAnswerOption> getCorrectAnswers() {
+        return correctAnswers;
+    }
+
+    public void setCorrectAnswers(List<QuestionAnswerOption> correctAnswers) {
+        this.correctAnswers = correctAnswers;
+    }
 
     @Override
     public String toString() {
         return "Question{" +
-                "id=" + id +
+                " id=" + id +
+                ", quizId=" + quizId +
                 ", text='" + text + '\'' +
                 ", hint='" + hint + '\'' +
                 ", type='" + type + '\'' +
                 ", nonce='" + nonce + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", sortIndex=" + sortIndex +
+                ", enabled=" + enabled +
+                ", options=" + options.toString() +
+                ", correctAnswers=" + correctAnswers.toString() +
                 '}';
     }
 }

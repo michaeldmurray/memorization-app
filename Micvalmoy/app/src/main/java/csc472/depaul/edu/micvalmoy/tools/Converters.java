@@ -1,4 +1,4 @@
-package csc472.depaul.edu.micvalmoy.db;
+package csc472.depaul.edu.micvalmoy.tools;
 
 import android.arch.persistence.room.TypeConverter;
 

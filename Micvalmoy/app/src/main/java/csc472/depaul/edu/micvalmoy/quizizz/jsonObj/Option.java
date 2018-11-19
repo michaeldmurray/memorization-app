@@ -16,7 +16,7 @@ public class Option {
  private boolean hasMath;
  @SerializedName("media")
  @Expose
- private List< Object > media = new ArrayList< Object >();
+ private List<Object> media = new ArrayList< Object >();
  @SerializedName("text")
  @Expose
  private String text;
@@ -53,4 +53,14 @@ public class Option {
   this.text = text;
  }
 
+
+ @Override
+ public String toString() {
+  return "Option{" +
+          "type='" + type + '\'' +
+          ", hasMath=" + hasMath +
+          ", media=" + media +
+          ", text='" + text + '\'' +
+          '}';
+ }
 }

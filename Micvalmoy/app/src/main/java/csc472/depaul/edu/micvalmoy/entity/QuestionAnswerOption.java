@@ -4,6 +4,7 @@ package csc472.depaul.edu.micvalmoy.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -16,7 +17,8 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 CREATE TABLE question_answer_options (
     id INTEGER primary key AUTOINCREMENT,
     question_id INTEGER NOT NULL references questions(id),
-    text varchar(150) NOT NULL
+    text varchar(150) NOT NULL,
+    is_answer INTEGER  NOT NULL,
 );
 
 
@@ -51,17 +53,26 @@ public class QuestionAnswerOption{
     @NonNull
     private String text;
 
+    @NonNull
+    @ColumnInfo(name = "is_answer")
+    boolean isAnswer;
 
+    //By default all options are not the answer
+    public QuestionAnswerOption() {
+        this.isAnswer = false;
+    }
 
     /**
      * Basic getters /setters
      */
 
+
+    @NonNull
     public Long getId() {
         return id;
     }
-    @NonNull
-    public void setId(Long id) {
+
+    public void setId(@NonNull Long id) {
         this.id = id;
     }
 
@@ -81,5 +92,13 @@ public class QuestionAnswerOption{
 
     public void setText(@NonNull String text) {
         this.text = text;
+    }
+
+    public boolean isAnswer() {
+        return isAnswer;
+    }
+
+    public void setAnswer(boolean answer) {
+        isAnswer = answer;
     }
 }

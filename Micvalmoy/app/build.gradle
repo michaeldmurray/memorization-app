@@ -74,8 +74,6 @@ dependencies {
 
 
 
-
-
     // 20181016 - custom dependencies
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.apache.commons:commons-lang3:3.8.1'
@@ -94,5 +92,9 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
 
     //2018112 - Test helpers for LiveData
-    androidTestImplementation "android.arch.core:core-testing:1.1.0"
+    androidTestImplementation "android.arch.core:core-testing:$lifecycle_version"
+
+    // 20181117 - junit nested test
+    testImplementation  'de.bechte.junit:junit-hierarchicalcontextrunner:4.12.1'
+
 }

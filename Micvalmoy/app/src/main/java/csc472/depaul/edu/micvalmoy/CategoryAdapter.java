@@ -32,7 +32,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             Category category = new Category();
 
             String catName = getContext().getString(R.string.create_new_category);
-            category.setName("moya cat name");
+            category.setName("");
             return category;
         }
         return super.getItem(position - 1);

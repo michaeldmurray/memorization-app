@@ -11,169 +11,261 @@ import csc472.depaul.edu.micvalmoy.dao.CategoryDao;
 import csc472.depaul.edu.micvalmoy.dao.CourseDao;
 import csc472.depaul.edu.micvalmoy.dao.ExamDao;
 import csc472.depaul.edu.micvalmoy.dao.QuestionAnswerOptionDao;
-import csc472.depaul.edu.micvalmoy.dao.QuestionCorrectAnswerDao;
+
 import csc472.depaul.edu.micvalmoy.dao.QuestionDao;
 import csc472.depaul.edu.micvalmoy.dao.QuizCategoryDao;
 import csc472.depaul.edu.micvalmoy.dao.QuizCourseDao;
-import csc472.depaul.edu.micvalmoy.dao.QuizQuestionDao;
+import csc472.depaul.edu.micvalmoy.dao.QuizDao;
 import csc472.depaul.edu.micvalmoy.dao.UserAnswerDao;
 import csc472.depaul.edu.micvalmoy.dao.UserDao;
 import csc472.depaul.edu.micvalmoy.db.AppDatabase;
 
-import csc472.depaul.edu.micvalmoy.entity.QuizWithCategory;
-import csc472.depaul.edu.micvalmoy.entity.Category;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
-import csc472.depaul.edu.micvalmoy.dao.QuizDao;
+import timber.log.Timber;
 
 
-public class QuizRepository {
+public class QuizRepository implements Repository<Quiz>{
     private AppDatabase appDatabase;
-    // Note the use of MutableLiveData, this allows changes to be made
 
-    CategoryDao categoryDao;
-    CourseDao courseDao;
-    UserDao userDao;
-    QuestionDao questionDao;
-    QuestionAnswerOptionDao questionAnswerOptionDao;
-    QuestionCorrectAnswerDao questionCorrectAnswerDao;
-    QuizDao                  quizDao;
-    QuizCategoryDao quizCategoryDao;
-    QuizCourseDao quizCourseDao;
-    QuizQuestionDao quizQuestionDao;
-    UserAnswerDao userAnswerDao;
-    ExamDao examDao;
+    QuizDao quizDao;
 
-    public QuizRepository(Context context) {
-        appDatabase = AppDatabase.getDatabase(context);
+    /*
+    public CategoryDao categoryDao;
+    public CourseDao courseDao;
+    public UserDao userDao;
+    public QuestionDao questionDao;
+    public QuestionAnswerOptionDao questionAnswerOptionDao;
+    public QuestionCorrectAnswerDao questionCorrectAnswerDao;
 
+    public QuizCategoryDao quizCategoryDao;
+    public QuizCourseDao quizCourseDao;
+    public UserAnswerDao userAnswerDao;
+    public ExamDao examDao;
+    */
+
+
+    public QuizRepository(Context context, AppDatabase appDatabase) {
+        this.appDatabase         = appDatabase;
+        quizDao                  = appDatabase.QuizDao();
+
+        /*
         courseDao                = appDatabase.CourseDao();
         categoryDao              = appDatabase.CategoryDao();
 
 
         questionDao              = appDatabase.QuestionDao();
         questionAnswerOptionDao  = appDatabase.QuestionAnswerOptionDao();
-        questionCorrectAnswerDao = appDatabase.QuestionCorrectAnswerDao();
-        quizDao                  = appDatabase.QuizDao();
+
         quizCategoryDao          = appDatabase.QuizCategoryDao();
         quizCourseDao            = appDatabase.QuizCourseDao();
-        quizQuestionDao          = appDatabase.QuizQuestionDao();
 
         userDao                  = appDatabase.UserDao();
         userAnswerDao            = appDatabase.UserAnswerDao();
         examDao                  = appDatabase.ExamDao();
-
+        */
     }
 
+
     private static QuizRepository instance;
-    public static QuizRepository getInstance(Context context) {
+    public static QuizRepository getInstance(Context context, AppDatabase appDatabase) {
         if (instance == null) {
             synchronized (QuizRepository.class) {
                 if (instance == null) {
-                    instance = new QuizRepository(context);
+                    instance = new QuizRepository(context,appDatabase);
                 }
             }
         }
         return instance;
     }
 
+    @Override
+    public LiveData<Quiz> fetchById(Long id) {
+        return quizDao.fetchById(id);
+    }
 
+    //@Override
+    public LiveData<List<Quiz>> fetchAll() {
+        return quizDao.fetchAll();
+    }
 
-    public  LiveData<Long> insertQuiz(final Quiz quiz) {
-        final MutableLiveData<Long> longMutableLiveData = new MutableLiveData<>();
-        new AsyncTask<Void, Void, Long>() {
+    /**
+     * Takes in a Quiz
+     * returns live data --- LiveData<Long>
+     */
+    @Override
+    public LiveData<Long> insert(final Quiz quiz) {
+        final MutableLiveData<Long> mutableLiveData = new MutableLiveData<>();
+
+        new AsyncTask<Quiz, Void, Long>() {
             @Override
-            protected Long doInBackground(Void... voids) {
-
-                return appDatabase.QuizDao().insert(quiz);
+            protected Long doInBackground(Quiz... quiz) {
+                return quizDao.insert(quiz[0]);
             }
 
             @Override
             protected void onPostExecute(Long aLong) {
                 super.onPostExecute(aLong);
-                longMutableLiveData.setValue(aLong);
+                mutableLiveData.postValue(aLong);
             }
-        }.execute();
+        }.execute(quiz);
 
-        return longMutableLiveData;
+        return mutableLiveData;
     }
 
-    public LiveData<Integer> deleteQuizByIds(final Long... id) {
-        final MutableLiveData<Integer> longMutableLiveData = new MutableLiveData<>();
+    /**
+     * takes in a Quiz
+     * returns live data --- LiveData<Long>
+     */
+    @Override
+    public LiveData<List<Long>> insertAll(final Quiz... quizzes) {
+        final MutableLiveData<List<Long>> mutableLiveData = new MutableLiveData<>();
 
-        new AsyncTask<Void, Void, Integer>() {
+        new AsyncTask<Quiz, Void, List<Long> >() {
 
             @Override
-            protected Integer doInBackground(Void... voids) {
-                return appDatabase.QuizDao().deleteByIds(id);
+            protected List<Long> doInBackground(Quiz... quiz) {
+                return quizDao.insertAll(quiz);
+            }
+
+            @Override
+            protected void onPostExecute(List<Long> aLongs) {
+                super.onPostExecute(aLongs);
+                mutableLiveData.postValue(aLongs);
+            }
+        }.execute(quizzes);
+
+        return mutableLiveData;
+    }
+
+
+    /**
+     * takes in a Quiz
+     * returns live data --- LiveData<Integer>
+     */
+    @Override
+    public LiveData<Integer> update(final Quiz quiz) {
+        final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
+
+        new AsyncTask<Quiz, Void, Integer>() {
+
+            @Override
+            protected Integer doInBackground(Quiz... params) {
+                return quizDao.update(params[0]);
             }
 
             @Override
             protected void onPostExecute(Integer aInteger) {
                 super.onPostExecute(aInteger);
-                longMutableLiveData.setValue(aInteger);
+                mutableLiveData.postValue(aInteger);
             }
-        }.execute();
+        }.execute(quiz);
 
-        return longMutableLiveData;
+        return mutableLiveData;
     }
 
-    public LiveData<Integer> updateQuiz(final Quiz quiz) {
-        final MutableLiveData<Integer> integerMutableLiveData = new MutableLiveData<>();
-        new AsyncTask<Void, Void, Integer>() {
+
+    /**
+     * takes in a Quiz
+     * returns live data --- LiveData<Integer>
+     */
+    @Override
+    public LiveData<Integer> updateAll(final Quiz... quizzes) {
+        final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
+
+        new AsyncTask<Quiz, Void, Integer>() {
 
             @Override
-            protected Integer doInBackground(Void... voids) {
-                return appDatabase.QuizDao().update(quiz);
+            protected Integer doInBackground(Quiz... quiz) {
+                return quizDao.updateAll(quiz);
             }
 
             @Override
             protected void onPostExecute(Integer aInteger) {
                 super.onPostExecute(aInteger);
-                integerMutableLiveData.setValue(aInteger);
+                mutableLiveData.postValue(aInteger);
+            }
+        }.execute(quizzes);
+
+        return mutableLiveData;
+    }
+
+
+    //----------------------------------------------------------------------------
+
+    /**
+     * takes in a Quiz
+     * returns live data --- LiveData<Integer>
+     */
+    @Override
+    public LiveData<Integer> delete(final Quiz quiz) {
+        final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
+
+        new AsyncTask<Quiz, Void, Integer>() {
+
+            @Override
+            protected Integer doInBackground(Quiz... params) {
+                return quizDao.delete(params[0]);
+            }
+
+            @Override
+            protected void onPostExecute(Integer aInteger) {
+                super.onPostExecute(aInteger);
+                mutableLiveData.postValue(aInteger);
+            }
+        }.execute(quiz);
+
+        return mutableLiveData;
+    }
+
+    //----------------------------------------------------------------------------
+
+    /**
+     * takes in a Long
+     * returns live data --- LiveData<Integer>
+     */
+    @Override
+    public LiveData<Integer> deleteById(final Long Id) {
+        final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
+
+        new AsyncTask<Void, Void, Integer>() {
+
+            @Override
+            protected Integer doInBackground(Void... voids) {
+                return quizDao.deleteById(Id);
+            }
+
+            @Override
+            protected void onPostExecute(Integer aInteger) {
+                super.onPostExecute(aInteger);
+                mutableLiveData.postValue(aInteger);
             }
         }.execute();
-        return integerMutableLiveData;
+
+        return mutableLiveData;
     }
 
-    //------EDIT QUIZ --------------------------------------------------------------
-    //------------------------------------------------------------------------------
 
-    public LiveData<List<Quiz>> getQuizzes( ) {
-        return appDatabase.QuizDao().fetchAll();
-    }
-    public LiveData<Quiz>  getQuizById(Long quizId) {
-        return appDatabase.QuizDao().fetchById(quizId);
-    }
+    /**
+     * takes in a string
+     */
+    @Override
+    public LiveData<Integer> deleteAll() {
+        final MutableLiveData<Integer> mutableLiveData = new MutableLiveData<>();
 
-    public LiveData<List<Category>> getCategories( ) {
-        return appDatabase.CategoryDao().fetchAll();
-    }
+        new AsyncTask<Void, Void, Integer>() {
 
- /*   public void saveQuiz(Quiz quiz){
+            @Override
+            protected Integer doInBackground(Void... voids) {
+                return quizDao.deleteAll();
+            }
 
-        //long quizId = appDatabase.QuizDao().insert(quiz);
+            @Override
+            protected void onPostExecute(Integer aInteger) {
+                super.onPostExecute(aInteger);
+                mutableLiveData.postValue(aInteger);
+            }
+        }.execute();
 
-    }*/
-
-
-    public Long saveQuiz(Quiz quiz) {
-        Long quizId = null;
-        if (quiz.getId() > 0) {
-           appDatabase.QuizDao().update(quiz);
-
-        } else {
-            quizId = appDatabase.QuizDao().insert(quiz);
-        }
-        return quizId;
-    }
-
-    public Long saveCategory(Category category) {
-        Long categoryId = null;
-        if (category.getId() > 0) {
-            appDatabase.CategoryDao().update(category);
-        } else {
-            categoryId = appDatabase.CategoryDao().insert(category);
-        }
-        return categoryId;
+        return mutableLiveData;
     }
 }

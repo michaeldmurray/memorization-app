@@ -80,6 +80,11 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
         {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        Timber.d("initialing  selected items");
+       // selectView(position, itemsList.get(position).isSelected());
+
+
         /**
          * check position , if position is zero we put space on top of list of spinner
          */
@@ -100,14 +105,7 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
          *//*
         else
         {
-            if (itemsList.get(position).isSelected())
-            {
-                text = "  " + String.valueOf((char) tikMark) + " " + itemsList.get(position).getName();
-            }
-            else
-            {
-                text = "  " + String.valueOf(dash) + " " + itemsList.get(position).getName();
-            }
+            //mark as selected
         }*/
 
         text = itemsList.get(position).getName();
@@ -126,7 +124,7 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
                 int getPosition = (Integer) v.getTag();
 
                 toggleSelection(getPosition);
-                itemsList.get(getPosition).setSelected(!itemsList.get(getPosition).isSelected());
+
 
                 notifyDataSetChanged();
 
@@ -158,9 +156,9 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
      */
     public void clearList()
     {
-        for (Category items : itemsList)
+        for (Category item : itemsList)
         {
-            items.setSelected(false);
+            item.setSelected(false);
         }
         notifyDataSetChanged();
     }
@@ -170,9 +168,9 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
      */
     public void fillList()
     {
-        for (Category items : itemsList)
+        for (Category item : itemsList)
         {
-            items.setSelected(true);
+            item.setSelected(true);
         }
         notifyDataSetChanged();
     }
@@ -198,13 +196,23 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
         }
         return super.getItem(position - 1);
     }
+    //----------------------------------------------------------------------------
 
+
+    //bad code ,,, delete sobnn
+    public void  initSelectedItems(int position) {
+
+/*        for(int i=0; i < itemsList.size(); i++){
+            selectView(i, itemsList.get(i).isSelected());
+        }*/
+    }
 
     public List<Category> getItemsList() {
         return itemsList;
     }
 
     public void toggleSelection(int position) {
+        itemsList.get(position).setSelected(!itemsList.get(position).isSelected());
         selectView(position, !mSelectedItemsIds.get(position));
     }
 
@@ -214,10 +222,16 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
     }
 
     public void selectView(int position, boolean value) {
-        if (value)
+        String text = "";
+
+        if (value) {
+            text = "  " + String.valueOf((char) tikMark) + " " + itemsList.get(position).getName();
             mSelectedItemsIds.put(position, value);
-        else
+        }
+        else{
+            text = "  " + String.valueOf(dash) + " " + itemsList.get(position).getName();
             mSelectedItemsIds.delete(position);
+        }
         notifyDataSetChanged();
     }
 
@@ -243,15 +257,7 @@ public class AdapterCategorySpinnerItem extends ArrayAdapter<Category>
         }
         return items;
     }
-
-
-
-
-
-
-
-
-
+    //------------------------------------------------------------------------
 
 
 

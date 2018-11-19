@@ -42,4 +42,12 @@ public class Structure {
   this.answer = answer;
  }
 
+ @Override
+ public String toString() {
+  return "Structure{" +
+          "options=" + options.toString() +
+          ", query=" + query.toString() +
+          ", answer=" + answer.toString() +
+          '}';
+ }
 }

@@ -18,7 +18,7 @@ public class QuizInfo {
  private String id;
  @SerializedName("questions")
  @Expose
- private List< Question > questions = new ArrayList< Question >();
+ private List<Question> questions = new ArrayList<>();
 
  public String getName() {
   return name;
@@ -44,4 +44,13 @@ public class QuizInfo {
   this.questions = questions;
  }
 
+
+ @Override
+ public String toString() {
+  return "QuizInfo{" +
+          "name='" + name + '\'' +
+          ", id='" + id + '\'' +
+          ", questions=" + questions.toString() +
+          '}';
+ }
 }

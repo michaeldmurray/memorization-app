@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins -->
+    <dimen name="activity_screen_margin">16dp</dimen>
+
+
+    <dimen name="dialog_title">15dp</dimen>
+    <dimen name="dialog_field_default_margin">4dp</dimen>
+    <dimen name="dialog_field_margin_right">4dp</dimen>
+    <dimen name="dialog_title_bottom_margin">20dp</dimen>
+    <dimen name="dialog_description_margin_bottom">16dp</dimen>
+    <dimen name="dialog_name_margin_top">16dp</dimen>
+
+    <dimen name="default_text_size">14dp</dimen>
+    <dimen name="margin_top_no_quiz">4dp</dimen>
+    <dimen name="msg_no_quizzes">4dp</dimen>
+
+    <!-- Dot -->
+    dot_height
+    <dimen name="dot_height">16dp</dimen>
+    <dimen name="dot_text_size">16dp</dimen>
+    <dimen name="dot_margin_top">8dp</dimen>
+    <dimen name="dot_margin_right">8dp</dimen>
+    <dimen name="dot_margin_bottom">8dp</dimen>
+    <dimen name="dot_margin_left">8dp</dimen>
+    <!-- Quiz -->
+    <dimen name="input_quiz_data">15dp</dimen>
+
+
+    <dimen name="quiz_toolbar_extra_view">80dp</dimen>
+    <dimen name="quiz_choice_container_margin_default">55dp</dimen>
+    <dimen name="quiz_choice_container_margin_selected">40dp</dimen>
+    <dimen name="quiz_bottom_navigation_padding">8dp</dimen>
+    <dimen name="quiz_close_button_size">40dp</dimen>
+    <dimen name="quiz_close_button_padding">8dp</dimen>
+    <dimen name="quiz_question_card_margin_top">30dp</dimen>
+    <dimen name="quiz_question_card_margin_bottom">15dp</dimen>
+    <dimen name="quiz_content_general">55dp</dimen>
+    <dimen name="quiz_category_margin_bottom">10dp</dimen>
+    <dimen name="quiz_choices_container_padding_bottom">8dp</dimen>
+    <dimen name="quiz_result_icon_size">60dp</dimen>
+
+
+
+</resources>

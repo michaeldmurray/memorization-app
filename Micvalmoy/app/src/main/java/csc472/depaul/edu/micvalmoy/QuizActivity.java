@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import csc472.depaul.edu.micvalmoy.entity.Question;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
+import csc472.depaul.edu.micvalmoy.question.QuestionActivity;
 import csc472.depaul.edu.micvalmoy.stub.StubQuiz;
 import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
@@ -46,7 +47,7 @@ public class QuizActivity extends DescendantActivity {
         quiz = StubQuiz.getQuiz(quizId);
 
         // Set up header
-        this.setTitle("Quiz " + quizId + ": " + quiz.getName());
+        this.setTitle(quiz.getName());
         setQuestionCount(quiz.getQuestionList().size());
 
 
@@ -63,8 +64,9 @@ public class QuizActivity extends DescendantActivity {
             Log.d("Quiz", "onClickListener is set for Results button");
             attemptsButton.setOnClickListener(onClickAttempts);}
 
-        final TableRow classRow = findViewById(R.id.row_class);
-        if (classRow != null) { takeQuizButton.setOnClickListener(onClickClass);}
+        // NOT supported for MVP
+//        final TableRow classRow = findViewById(R.id.row_class);
+//        if (classRow != null) { takeQuizButton.setOnClickListener(onClickClass);}
 
     }
 
@@ -77,9 +79,9 @@ public class QuizActivity extends DescendantActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.change_class:
-                // TODO set up "change class" behavior
-                return true;
+            // NOT supported for MVP
+//            case R.id.change_class:
+//                return true;
             case R.id.delete_quiz:
                 // TODO set up "delete quiz" behavior
                 return true;
@@ -91,10 +93,14 @@ public class QuizActivity extends DescendantActivity {
     private View.OnClickListener onClickTake = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), QuestionActivity.class);
+
+            startActivity(intent);
             //TODO launch Quiz mode
         }
     };
 
+    //NOT supported for MVP
 //    private View.OnClickListener onClickPractice = new View.OnClickListener() {
 //        @Override
 //        public void onClick(View view) {
@@ -111,12 +117,12 @@ public class QuizActivity extends DescendantActivity {
         }
     };
 
-    private View.OnClickListener onClickClass = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            //TODO launch Class view
-        }
-    };
+    // NOT supported for MVP
+//    private View.OnClickListener onClickClass = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//        }
+//    };
 
 
     private void setQuestionCount(int count) {

@@ -72,8 +72,9 @@ public class QuestionActivity extends DescendantActivity {
         if (savedInstanceState != null) { return;}
 
         // set question ID and mode
+
         questionBundle = getIntent().getExtras();
-        if (!questionBundle.containsKey(ID) || !questionBundle.containsKey(MODE)) {
+        if (questionBundle == null || !questionBundle.containsKey(ID) || !questionBundle.containsKey(MODE)) {
             Log.e("QuestionActivity","Missing question data");
             return;
         }

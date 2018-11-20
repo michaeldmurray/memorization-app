@@ -5,37 +5,11 @@
     android:layout_height="wrap_content">
 
     <RadioGroup
+        android:id="@+id/ma_options"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <CheckBox
-            android:id="@+id/D"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:saveEnabled="true"
-            android:text="D"
-            android:textIsSelectable="true" />
-
-        <CheckBox
-            android:id="@+id/E"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:saveEnabled="true"
-            android:text="E"
-            android:textIsSelectable="true" />
-
-        <CheckBox
-            android:id="@+id/F"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:saveEnabled="true"
-            android:text="F"
-            android:textIsSelectable="true" />
     </RadioGroup>
 </android.support.constraint.ConstraintLayout>

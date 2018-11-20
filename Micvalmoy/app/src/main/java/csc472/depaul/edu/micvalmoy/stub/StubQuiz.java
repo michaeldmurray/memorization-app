@@ -20,9 +20,9 @@ public class StubQuiz {
     //I think these should just be question IDs, which can be built when needed.
     private static List<Question> buildQuestionList() {
         List<Question> questionList = new ArrayList<>();
-        questionList.add(StubQuestion.getQuestion(1));
-        questionList.add(StubQuestion.getQuestion(2));
-        questionList.add(StubQuestion.getQuestion(3));
+        questionList.add(StubQuestion.getQuestion((long) 1));
+        questionList.add(StubQuestion.getQuestion((long) 2));
+        questionList.add(StubQuestion.getQuestion((long) 3));
         return questionList;
     }
 }

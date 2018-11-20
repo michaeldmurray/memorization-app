@@ -12,6 +12,7 @@ public class IntentUtil {
     public static final String EXTRA_QUIZ_ID             = "EXTRA_QUIZ_ID";    
     public static final String EXTRA_QUIZ_LIST_ID        = "EXTRA_QUIZ_LIST_ID";
 
+    public static final String EXTRA_QUIZ_MODE           = "EXTRA_QUIZ_MODE";
 
     public static final String EXTRA_QUIZ_MODE_EXAM      = "EXTRA_QUIZ_MODE_EXAM"; 
     public static final String EXTRA_QUIZ_MODE_PRACTICE  = "EXTRA_QUIZ_MODE_PRACTICE"; 

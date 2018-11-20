@@ -94,7 +94,8 @@ public class QuizActivity extends DescendantActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), QuestionActivity.class);
-
+            intent.putExtra(IntentUtil.EXTRA_QUIZ_ID, quiz.getId());
+            intent.putExtra(IntentUtil.EXTRA_QUIZ_MODE, IntentUtil.EXTRA_QUIZ_MODE_EXAM);
             startActivity(intent);
             //TODO launch Quiz mode
         }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TableRow;
 
 import csc472.depaul.edu.micvalmoy.question.QuestionActivity;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 
 public class QuizResultActivity extends DescendantActivity {
     @Override
@@ -30,10 +31,10 @@ public class QuizResultActivity extends DescendantActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), QuestionActivity.class);
-                Bundle questionBundle = new Bundle();
-                questionBundle.putString(QuestionActivity.MODE, QuestionActivity.Mode.RESULT.name());
-                questionBundle.putInt(QuestionActivity.ID, questionID);
-                intent.putExtras(questionBundle);
+                // TODO add quiz reference to QuizResultActivity and pass to QuestionActivity
+//                intent.putExtra(IntentUtil.EXTRA_QUESTION_ID, 7);
+                intent.putExtra(IntentUtil.EXTRA_QUIZ_MODE,IntentUtil.EXTRA_QUIZ_MODE_RESULT);
+                intent.putExtra(IntentUtil.EXTRA_QUESTION_ID, questionID);
                 startActivity(intent);
             }
         };

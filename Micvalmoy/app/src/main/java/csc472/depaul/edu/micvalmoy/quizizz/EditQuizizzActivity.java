@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.quizizz;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -56,7 +60,6 @@ public class EditQuizizzActivity extends AppCompatActivity {
         }
 
 
-        Timber.d("quizizz quiz id:  %s", quizInfoId);
 
 
         //------------
@@ -64,22 +67,27 @@ public class EditQuizizzActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(QuizizzViewModel.class);
 
         //**************************************************************************************
-        // Observe the view model
-        viewModel.getQuizizzByIdLiveData(quizInfoId).observe(this, new Observer<List<QuizInfo>>() {
-            @Override
-            public void onChanged(@Nullable List<QuizInfo> quizInfos) {
-                //mAdapter.submitList(quizInfos);
 
-                Timber.d("listing the quizzes found on quizizz.com");
-            }
-        });
 
 
         /**
          * Start Background process
          * This will start the Background off-the-UI-thread work to search quizizz.com based on the search parameter provided
          */
-        quizizzRepository.findQuizizzByTerm(quizInfoId);
+
+        // Observe the view model
+        viewModel.getQuizizzByIdLiveData(quizInfoId).observe(this, new Observer<QuizInfo>() {
+            @Override
+            public void onChanged(@Nullable QuizInfo quizInfos) {
+                //mAdapter.submitList(quizInfos);
+
+                Timber.d("quizizz quiz id:  %s", quizInfoId);
+                Timber.d(" quizizz.com quiz selected %s",quizInfos);
+            }
+        });
+
+
+        //quizizzRepository.findQuizizzByTerm(quizInfoId);
     }
     /**
      * ---------------------------------------------------------------------------------

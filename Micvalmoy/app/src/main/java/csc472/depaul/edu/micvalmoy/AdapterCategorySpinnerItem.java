@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy;
 
+/**
+ * @author mrichards
+ */
+
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.SparseBooleanArray;

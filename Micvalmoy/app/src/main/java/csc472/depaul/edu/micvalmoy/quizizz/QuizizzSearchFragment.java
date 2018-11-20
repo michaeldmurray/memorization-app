@@ -1,5 +1,10 @@
 package csc472.depaul.edu.micvalmoy.quizizz;
 
+/**
+ * @author mrichards
+ */
+
+
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -17,7 +22,7 @@ import android.view.ViewGroup;
 import csc472.depaul.edu.micvalmoy.BuildConfig;
 import csc472.depaul.edu.micvalmoy.R;
 import csc472.depaul.edu.micvalmoy.TimberDebugTree;
-import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
+import csc472.depaul.edu.micvalmoy.entity.Quiz;
 import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
@@ -125,17 +130,14 @@ public class QuizizzSearchFragment extends Fragment implements View.OnClickListe
 
             //**************************************************************************************
             // Observe the view model
-            viewModel.getQuizizzByTermLiveData(quizizzSearchParm).observe(this, new Observer<List<QuizInfo>>() {
+            viewModel.getQuizListFromQuizizzByTermLiveData(quizizzSearchParm).observe(this, new Observer<List<Quiz>>() {
                 @Override
-                public void onChanged(@Nullable List<QuizInfo> quizInfos) {
-                    mAdapter.submitList(quizInfos);
+                public void onChanged(@Nullable List<Quiz> quizlist) {
+                    mAdapter.submitList(quizlist);
 
                     Timber.d("listing the quizzes found on quizizz.com");
                 }
             });
-
-
-
 
         }
         else{

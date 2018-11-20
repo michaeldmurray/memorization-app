@@ -1,3 +1,8 @@
+-- /**
+--  * @author mrichards
+--  */
+
+
 SELECT * FROM users;
 
 SELECT * FROM courses;

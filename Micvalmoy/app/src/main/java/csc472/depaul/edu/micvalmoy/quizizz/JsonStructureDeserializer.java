@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.quizizz;
 
+/**
+ * @author mrichards
+ */
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

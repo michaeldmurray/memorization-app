@@ -1,4 +1,8 @@
 package csc472.depaul.edu.micvalmoy;
+/**
+ * @author mrichards
+ */
+
 
 //** https://android.jlelse.eu/my-timber-setup-493a8ec7a10c
 

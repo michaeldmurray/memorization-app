@@ -1,4 +1,7 @@
 package csc472.depaul.edu.micvalmoy.quizizz;
+/**
+ * @author mrichards
+ */
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -19,7 +22,8 @@ import java.util.List;
 
 
 import csc472.depaul.edu.micvalmoy.R;
-import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
+import csc472.depaul.edu.micvalmoy.entity.Quiz;
+
 
 import static android.text.Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH;
 
@@ -32,7 +36,7 @@ public class QuizizzRecyclerViewAdapter extends RecyclerView.Adapter<QuizizzRecy
     private OnClickItemAdapterListener listener;
 
     private final LayoutInflater mInflater;
-    private List<QuizInfo> listItems = new ArrayList<>(); // Cached copy of quizzes
+    private List<Quiz> listItems = new ArrayList<>(); // Cached copy of quizzes
 
 
     //-----------------------------------------------------------------------------------------
@@ -54,25 +58,29 @@ public class QuizizzRecyclerViewAdapter extends RecyclerView.Adapter<QuizizzRecy
         // Lookup view to populate data
         TextView tvQuizName;
         TextView tvQuizId;
+        //TextView tvQuizNonce;
+        //TextView tvQuizDescription;
 
 
         public ItemViewHolder(View view) {
             super(view);
 
-            tvQuizName   = (TextView) itemView.findViewById(R.id.tvQuizName);
-            tvQuizId     = (TextView) itemView.findViewById(R.id.tvQuizId);
+            tvQuizName         = (TextView) itemView.findViewById(R.id.tvQuizName);
+            tvQuizId           = (TextView) itemView.findViewById(R.id.tvQuizId);
+            //tvQuizNonce        = (TextView) itemView.findViewById(R.id.tvQuizNonce);
+            //tvQuizDescription  = (TextView) itemView.findViewById(R.id.tvQuizDescription);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onClick(getListItemAtPosition(getLayoutPosition()).getId(), getLayoutPosition());
+                    listener.onClick(getListItemAtPosition(getLayoutPosition()).getQuizzizz_id(), getLayoutPosition());
                 }
             });
 
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    listener.onLongClick(getListItemAtPosition(getLayoutPosition()).getId(), getLayoutPosition());
+                    listener.onLongClick(getListItemAtPosition(getLayoutPosition()).getQuizzizz_id(), getLayoutPosition());
                     return true;
                 }
             });
@@ -127,12 +135,12 @@ public class QuizizzRecyclerViewAdapter extends RecyclerView.Adapter<QuizizzRecy
     //-----------------------------------------------------------------------------------------
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int position) {
-        QuizInfo current = listItems.get(position);
+        Quiz current = listItems.get(position);
 
 
-        if (current != null && current.getId() != null) {
+        if (current != null && current.getQuizzizz_id() != null) {
 
-            itemViewHolder.tvQuizId.setText("" + current.getId());
+            itemViewHolder.tvQuizId.setText("" + current.getQuizzizz_id());
             itemViewHolder.tvQuizName.setText(current.getName());
         }
     }
@@ -151,7 +159,7 @@ public class QuizizzRecyclerViewAdapter extends RecyclerView.Adapter<QuizizzRecy
     //-----------------------------------------------------------------------------------------
 
 
-    public QuizInfo getListItemAtPosition(int position) {
+    public Quiz getListItemAtPosition(int position) {
         return listItems.get(position);
     }
 
@@ -160,13 +168,13 @@ public class QuizizzRecyclerViewAdapter extends RecyclerView.Adapter<QuizizzRecy
 
     //-----------------------------------------------------------------------------------------
     //Load data into the recycle view
-/*    void submitList(List<QuizInfo> quizzes) {
+/*    void submitList(List<Quiz> quizzes) {
         listItems = quizzes;
         notifyDataSetChanged();
     }*/
 
 
-    public void submitList(List<QuizInfo> newQuiz) {
+    public void submitList(List<Quiz> newQuiz) {
         ItemDiffUtil itemDiffUtil =new ItemDiffUtil(listItems,newQuiz);
         DiffUtil.DiffResult diffResult=DiffUtil.calculateDiff(itemDiffUtil);
         listItems.clear();
@@ -176,9 +184,9 @@ public class QuizizzRecyclerViewAdapter extends RecyclerView.Adapter<QuizizzRecy
 
     public class ItemDiffUtil extends DiffUtil.Callback {
 
-        private List<QuizInfo> oldList, newList;
+        private List<Quiz> oldList, newList;
 
-        public ItemDiffUtil(List<QuizInfo> oldList, List<QuizInfo> newList) {
+        public ItemDiffUtil(List<Quiz> oldList, List<Quiz> newList) {
             this.oldList = oldList;
             this.newList = newList;
         }
@@ -195,7 +203,7 @@ public class QuizizzRecyclerViewAdapter extends RecyclerView.Adapter<QuizizzRecy
 
         @Override
         public boolean areItemsTheSame(int i, int i1) {
-            if (oldList.get(i).getId() == newList.get(i1).getId())
+            if (oldList.get(i).getQuizzizz_id() == newList.get(i1).getQuizzizz_id())
                 return true;
             else
                 return false;

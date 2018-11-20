@@ -1,5 +1,8 @@
 package csc472.depaul.edu.micvalmoy;
 
+/**
+ * @author mrichards
+ */
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;

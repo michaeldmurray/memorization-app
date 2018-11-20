@@ -1,4 +1,7 @@
 package csc472.depaul.edu.micvalmoy.question;
+/**
+ * @author mrichards
+ */
 
 import android.content.Intent;
 import android.os.Bundle;

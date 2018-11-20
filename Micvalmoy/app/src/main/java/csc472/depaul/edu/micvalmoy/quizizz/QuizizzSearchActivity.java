@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.quizizz;
 
+/**
+ * @author mrichards
+ */
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

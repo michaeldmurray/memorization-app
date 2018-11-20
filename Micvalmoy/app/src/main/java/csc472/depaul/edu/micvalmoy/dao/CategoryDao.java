@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.dao;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -7,6 +11,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+
+import org.parceler.Parcel;
 
 import java.util.List;
 
@@ -78,7 +84,9 @@ public interface CategoryDao {
     @Query("SELECT COUNT(*) FROM categories")
     public int getCount();
 
-
+    //-------------------------------------------------
+    @Query("SELECT * FROM categories WHERE name =:id COLLATE NOCASE")
+    public Category getCategoryByName(String id);
 
 
 

@@ -1,16 +1,21 @@
 package csc472.depaul.edu.micvalmoy.quizizz;
 
-        import android.content.Intent;
-        import android.support.v4.app.FragmentTransaction;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
+/**
+ * @author mrichards
+ */
 
-        import csc472.depaul.edu.micvalmoy.BuildConfig;
-        import csc472.depaul.edu.micvalmoy.R;
-        import csc472.depaul.edu.micvalmoy.TimberDebugTree;
-        import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
-        import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
-        import timber.log.Timber;
+
+import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+import csc472.depaul.edu.micvalmoy.BuildConfig;
+import csc472.depaul.edu.micvalmoy.R;
+import csc472.depaul.edu.micvalmoy.TimberDebugTree;
+import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
+import timber.log.Timber;
 
 
 public class QuizizzActivity extends AppCompatActivity  {

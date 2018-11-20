@@ -20,7 +20,13 @@ import csc472.depaul.edu.micvalmoy.dao.UserAnswerDao;
 import csc472.depaul.edu.micvalmoy.dao.UserDao;
 import csc472.depaul.edu.micvalmoy.db.AppDatabase;
 
+import csc472.depaul.edu.micvalmoy.entity.Category;
+import csc472.depaul.edu.micvalmoy.entity.Course;
+import csc472.depaul.edu.micvalmoy.entity.Question;
+import csc472.depaul.edu.micvalmoy.entity.QuestionAnswerOption;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
+import csc472.depaul.edu.micvalmoy.entity.QuizCategory;
+import csc472.depaul.edu.micvalmoy.entity.QuizCourse;
 import timber.log.Timber;
 
 
@@ -29,40 +35,34 @@ public class QuizRepository implements Repository<Quiz>{
 
     QuizDao quizDao;
 
-    /*
     public CategoryDao categoryDao;
     public CourseDao courseDao;
     public UserDao userDao;
     public QuestionDao questionDao;
     public QuestionAnswerOptionDao questionAnswerOptionDao;
-    public QuestionCorrectAnswerDao questionCorrectAnswerDao;
 
-    public QuizCategoryDao quizCategoryDao;
     public QuizCourseDao quizCourseDao;
+    public QuizCategoryDao quizCategoryDao;
     public UserAnswerDao userAnswerDao;
     public ExamDao examDao;
-    */
 
 
     public QuizRepository(Context context, AppDatabase appDatabase) {
         this.appDatabase         = appDatabase;
         quizDao                  = appDatabase.QuizDao();
 
-        /*
         courseDao                = appDatabase.CourseDao();
         categoryDao              = appDatabase.CategoryDao();
-
 
         questionDao              = appDatabase.QuestionDao();
         questionAnswerOptionDao  = appDatabase.QuestionAnswerOptionDao();
 
-        quizCategoryDao          = appDatabase.QuizCategoryDao();
         quizCourseDao            = appDatabase.QuizCourseDao();
+        quizCategoryDao          = appDatabase.QuizCategoryDao();
 
         userDao                  = appDatabase.UserDao();
         userAnswerDao            = appDatabase.UserAnswerDao();
         examDao                  = appDatabase.ExamDao();
-        */
     }
 
 
@@ -268,4 +268,94 @@ public class QuizRepository implements Repository<Quiz>{
 
         return mutableLiveData;
     }
+
+
+    public MutableLiveData<String> SaveQuizData(final Quiz quiz) {
+        final MutableLiveData<String> mutableLiveData = new MutableLiveData<>();
+
+        new AsyncTask<Quiz, Void, String>() {
+
+            @Override
+            protected String doInBackground(Quiz... params) {
+
+
+            //Add Quiz into database - Insert into database table "quizzes" -
+            Long quizID = quizDao.insert(quiz);
+
+            List<Course> arr_courses = quiz.getCourseList();
+
+            if (arr_courses.size() > 0) {
+                for (Course course : arr_courses) {
+
+                    Long courseId = course.getId();
+
+                    Course savedCourse = courseDao.getCourseByName(course.getName());
+                    if (courseId == null && savedCourse == null) {
+                        courseId = courseDao.insert(course);
+                    } else {
+                        courseDao.insert(course);
+                    }
+
+                    if (courseId != null) {
+                        QuizCourse qcat = new QuizCourse(courseId, quizID);
+                        quizCourseDao.insert(qcat);
+                    }
+                }
+            }
+
+
+            List<Category>  arr_categories = quiz.getCategoryList();
+                if(arr_categories.size() > 0) {
+                for (Category category : arr_categories) {
+
+                    Long categoryId = category.getId();
+
+                    Category savedCategory = categoryDao.getCategoryByName(category.getName());
+                    if (categoryId == null && savedCategory == null) {
+                        categoryId = categoryDao.insert(category);
+                    } else {
+                        categoryDao.insert(category);
+                    }
+
+                    if (categoryId != null) {
+                        QuizCategory qcat = new QuizCategory(categoryId, quizID);
+                        quizCategoryDao.insert(qcat);
+                    }
+                }
+            }
+
+
+
+                List<Question> arr_questions = quiz.getQuestionList();
+
+                if(arr_questions.size() > 0){
+                    for (Question question: arr_questions) {
+
+                        question.setQuizId(quizID);
+
+                        Long insertedQuestionId = questionDao.insert(question);
+
+                        List<QuestionAnswerOption> arr_options = question.getOptions();
+
+                        for (QuestionAnswerOption option: arr_options) {
+                            option.setQuestionId(insertedQuestionId);
+                            Long optID =  questionAnswerOptionDao.insert(option);
+                        }
+                    }
+                }
+
+                return "ok";
+            }
+
+            @Override
+            protected void onPostExecute(String aString) {
+                super.onPostExecute(aString);
+                mutableLiveData.postValue(aString);
+            }
+        }.execute(quiz);
+
+        return mutableLiveData;
+    }
+
+
 }

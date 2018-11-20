@@ -1,3 +1,7 @@
+--   /**
+--    * @author mrichards
+--    */
+
 
 -- http://sqlfiddle.com/#!5/c8a94
 -- https://sqliteonline.com/#fiddle-5be2de947493f51ljo75q3d7

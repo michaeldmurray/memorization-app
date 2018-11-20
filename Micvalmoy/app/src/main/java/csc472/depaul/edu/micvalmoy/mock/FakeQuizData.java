@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.mock;
 
+/**
+ * @author mrichards
+ */
+
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;

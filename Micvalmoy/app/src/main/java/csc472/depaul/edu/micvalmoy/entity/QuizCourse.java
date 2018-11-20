@@ -1,11 +1,17 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.support.annotation.NonNull;
+
+import org.parceler.Parcel;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -19,7 +25,7 @@ CREATE  TABLE quiz_courses (
 
  */
 
-
+@Parcel
 @Entity(
         tableName="quiz_courses",
         primaryKeys={ "quiz_id","course_id"},
@@ -45,12 +51,16 @@ CREATE  TABLE quiz_courses (
 public class QuizCourse {
         @NonNull
         @ColumnInfo(name = "course_id")
-        public final Long courseId;
+        public  Long courseId;
 
         @ColumnInfo(name = "quiz_id")
-        @NonNull public final Long quizId;
+        @NonNull public  Long quizId;
 
-        public QuizCourse( Long quizId,Long courseId) {
+    @Ignore
+    public QuizCourse() {
+    }
+
+    public QuizCourse(Long quizId, Long courseId) {
                 this.courseId=courseId;
                 this.quizId=quizId;
         }
@@ -68,6 +78,7 @@ public class QuizCourse {
                 return quizId;
         }
 
+
         @Override
         public String toString() {
                 return "QuizCourse{" +
@@ -75,4 +86,5 @@ public class QuizCourse {
                         ", quizId=" + quizId +
                         '}';
         }
+
 }

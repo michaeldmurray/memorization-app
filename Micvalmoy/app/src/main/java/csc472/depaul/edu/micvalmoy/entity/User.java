@@ -1,8 +1,14 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+
+import org.parceler.Parcel;
 
 /*
 
@@ -16,22 +22,25 @@ CREATE TABLE users(
 
 */
 
-
+@Parcel
 @Entity(tableName = "users")
 public class User {
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
-    private Long id;
+    public Long id;
 
     @ColumnInfo
-    private String username;
+    public String username;
 
     @ColumnInfo
-    private String password;
+    public String password;
 
     @ColumnInfo
-    private Boolean enabled;
+    public Boolean enabled;
 
+
+    public User() {
+    }
 
     /**
      * Basic getters /setters
@@ -66,5 +75,15 @@ public class User {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                '}';
     }
 }

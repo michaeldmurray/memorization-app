@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.db;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;

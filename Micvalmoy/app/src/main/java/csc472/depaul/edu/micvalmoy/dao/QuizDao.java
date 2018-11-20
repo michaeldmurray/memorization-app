@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.dao;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -88,6 +92,7 @@ public interface QuizDao {
             "q.description   as q_description, " +
             "q.createdAt     as q_createdAt, " +
             "q.updatedAt     as q_updatedAt, " +
+            "q.quizzizz_id   as q_quizzizz_id, " +
             "quest.id        as quest_id, " +
             "quest.quiz_id   as quest_quiz_id, " +
             "quest.text      as quest_text , " +
@@ -95,7 +100,7 @@ public interface QuizDao {
             "quest.type      as quest_type, " +
             "quest.nonce     as quest_nonce, " +
             "quest.sort_index as quest_sort_index, " +
-            "quest.enabled     as quest_enabled, " +
+            "quest.enabled   as quest_enabled, " +
             "quest.createdAt as quest_createdAt, " +
             "quest.updatedAt as quest_updatedAt " +
             "FROM quizzes q " +
@@ -104,22 +109,24 @@ public interface QuizDao {
     public List<QuizWithQuestion> getQuizQuestionByQuizId(Long quizId);
 
 
-/*
+
 
     //___________________________________________________
     //QuizWithCourse
     //Get all the courses for a quiz
     //___________________________________________________
 
+
     @Query("SELECT " +
-            "q.id, " +
-            "q.name, " +
-            "q.description, " +
-            "q.createdAt, " +
-            "q.updatedAt updatedAt, " +
+            "q.id             as q_id, " +
+            "q.name           as q_name, " +
+            "q.description    as q_description, " +
+            "q.createdAt      as q_createdAt, " +
+            "q.updatedAt      as q_updatedAt, " +
+            "q.quizzizz_id    as q_quizzizz_id, " +
             "crse.id as crse_id, " +
-            "qcrse.quiz_id as quiz_id, " +
             "crse.name as crse_name, " +
+            "qcrse.quiz_id as quiz_id, " +
             "qcrse.course_id as course_id " +
             "FROM quizzes q " +
             "JOIN quiz_courses qcrse on (qcrse.quiz_id = q.id) " +
@@ -129,14 +136,15 @@ public interface QuizDao {
 
 
     @Query("SELECT " +
-            "q.id, " +
-            "q.name, " +
-            "q.description, " +
-            "q.createdAt, " +
-            "q.updatedAt updatedAt, " +
+            "q.id             as q_id, " +
+            "q.name           as q_name, " +
+            "q.description    as q_description, " +
+            "q.createdAt      as q_createdAt, " +
+            "q.updatedAt      as q_updatedAt, " +
+            "q.quizzizz_id    as q_quizzizz_id, " +
             "crse.id as crse_id, " +
-            "qcrse.quiz_id as quiz_id, " +
             "crse.name as crse_name, " +
+            "qcrse.quiz_id as quiz_id, " +
             "qcrse.course_id as course_id " +
             "FROM quizzes q " +
             "JOIN quiz_courses qcrse on (qcrse.quiz_id = q.id) " +
@@ -146,32 +154,42 @@ public interface QuizDao {
 
 
 
+
+
+
     //___________________________________________________
     //QuizWithCategory
     //Get all the courses for a quiz
     //___________________________________________________
 
     @Query("SELECT " +
-            "q.id, " +
-            "q.name, " +
-            "q.description, " +
-            "q.createdAt, " +
-            "q.updatedAt updatedAt, " +
+            "q.id            as q_id, " +
+            "q.name          as q_name, " +
+            "q.description   as q_description, " +
+            "q.createdAt     as q_createdAt, " +
+            "q.updatedAt     as q_updatedAt, " +
+            "q.quizzizz_id   as q_quizzizz_id, " +
+            "cat.id          as cat_id, " +
+            "cat.name        as cat_name, " +
             "qcat.quiz_id as quiz_id, " +
             "qcat.category_id as category_id " +
             "FROM quizzes q " +
             "JOIN quiz_categories qcat on (qcat.quiz_id = q.id) " +
             "JOIN categories cat on (cat.id = qcat.category_id) " +
             "WHERE q.id = :quizId")
-    public QuizWithCategory getQuizCategoryByQuizId(Long quizId);
+    public List<QuizWithCategory> getQuizCategoryByQuizId(Long quizId);
+
 
 
     @Query("SELECT " +
-            "q.id, " +
-            "q.name, " +
-            "q.description, " +
-            "q.createdAt, " +
-            "q.updatedAt updatedAt, " +
+            "q.id            as q_id, " +
+            "q.name          as q_name, " +
+            "q.description   as q_description, " +
+            "q.createdAt     as q_createdAt, " +
+            "q.updatedAt     as q_updatedAt, " +
+            "q.quizzizz_id   as q_quizzizz_id, " +
+            "cat.id          as cat_id, " +
+            "cat.name        as cat_name, " +
             "qcat.quiz_id as quiz_id, " +
             "qcat.category_id as category_id " +
             "FROM quizzes q " +
@@ -179,5 +197,4 @@ public interface QuizDao {
             "JOIN categories cat on (cat.id = qcat.category_id) " +
             "WHERE cat.id = :category_id")
     public QuizWithCategory getQuizCategoryByCategoryID(Long category_id);
-    */
 }

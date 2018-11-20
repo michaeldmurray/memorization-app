@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.dao;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;

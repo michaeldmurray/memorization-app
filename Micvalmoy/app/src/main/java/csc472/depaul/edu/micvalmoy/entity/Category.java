@@ -1,9 +1,15 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+
+import org.parceler.Parcel;
 
 /*
 CREATE TABLE categories (
@@ -13,18 +19,24 @@ id INTEGER primary key AUTOINCREMENT,
 
 
  */
-
+@Parcel
 @Entity(tableName = "categories")
 public class Category {
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
-    private Long id;
+    public Long id;
 
     @ColumnInfo
-    private String name;
+    public String name;
 
     @Ignore
-    private boolean selected;
+    public boolean selected;
+
+    /**
+     * Basic getters /setters
+     */
+
+
 
     public Long getId() {
         return id;
@@ -50,9 +62,8 @@ public class Category {
         this.selected = selected;
     }
 
-    /**
-     * Basic getters /setters
-     */
+    public Category() {
+    }
 
 
 

@@ -1,5 +1,8 @@
 package csc472.depaul.edu.micvalmoy;
 
+/**
+ * @author mrichards
+ */
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;

@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.dao;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -77,5 +81,9 @@ public interface CourseDao {
 
     @Query("SELECT COUNT(*) FROM courses")
     public int getCount();
+
+    @Query("SELECT * FROM courses WHERE name =:id COLLATE NOCASE")
+    public Course getCourseByName(String id);
+
 
 }

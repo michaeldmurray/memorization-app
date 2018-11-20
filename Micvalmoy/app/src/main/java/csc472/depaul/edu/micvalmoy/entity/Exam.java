@@ -1,5 +1,8 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -9,8 +12,15 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelPropertyConverter;
+
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import csc472.depaul.edu.micvalmoy.tools.OffsetDateTimeParcelConverter;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -31,7 +41,7 @@ CREATE TABLE exam_details (
 
  */
 
-
+@Parcel
 @Entity(
         tableName="exams",
         foreignKeys={
@@ -57,28 +67,32 @@ CREATE TABLE exam_details (
 public class Exam {
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
-    private Long id;
+    public Long id;
 
     @ColumnInfo(name = "user_id")
-    private Long userId;
+    public Long userId;
 
     @ColumnInfo(name = "quiz_id")
-    private Long quizId;
+    public Long quizId;
 
+
+    @ParcelPropertyConverter(OffsetDateTimeParcelConverter.class)
     @ColumnInfo(name = "start_date")
-    private OffsetDateTime startDate;
+    public OffsetDateTime startDate;
 
+
+    @ParcelPropertyConverter(OffsetDateTimeParcelConverter.class)
     @ColumnInfo(name = "end_date")
-    private OffsetDateTime endDate;
+    public OffsetDateTime endDate;
 
     @ColumnInfo(name = "duration")
-    private int duration;
+    public int duration;
 
     @ColumnInfo(name = "exam_result")
-    private int examResult;
+    public int examResult;
 
     @ColumnInfo(name = "exam_score")
-    private int examScore;
+    public int examScore;
 
     public Exam() {
         this.startDate = startDate;
@@ -91,6 +105,8 @@ public class Exam {
         this.endDate = endDate;
     }
 
+    @Ignore
+    public List<UserAnswer> userAnswer = new ArrayList<>();
 
 
     /**

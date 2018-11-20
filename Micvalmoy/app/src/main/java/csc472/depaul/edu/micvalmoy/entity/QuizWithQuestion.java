@@ -1,13 +1,21 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
-public class QuizWithQuestion{
+
+@Parcel
+public class QuizWithQuestion {
 /*
     @NonNull
     @ColumnInfo(name = "question_id")
@@ -23,6 +31,9 @@ public class QuizWithQuestion{
     @Embedded(prefix = "quest_")
     public Question question;
 
+
+    public QuizWithQuestion() {
+    }
 
     public Quiz getQuiz() {
         return quiz;
@@ -40,19 +51,17 @@ public class QuizWithQuestion{
         this.question = question;
     }
 
+
     /**
      * Basic getters /setters
      */
-
-
-
-    //------------------------------------
-
     @Override
     public String toString() {
         return "QuizWithQuestion{" +
-                "question=" + question.toString() +
-                ", Quiz=" + super.toString() +
+                "quiz=" + quiz +
+                ", question=" + question +
                 '}';
     }
+
+
 }

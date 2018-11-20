@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.mock;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;

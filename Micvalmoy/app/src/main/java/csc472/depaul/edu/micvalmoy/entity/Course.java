@@ -1,8 +1,14 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+
+import org.parceler.Parcel;
 
 /*
 
@@ -14,16 +20,18 @@ id INTEGER primary key AUTOINCREMENT,
 */
 
 
-
+@Parcel
 @Entity(tableName = "courses")
 public class Course {
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
-    private Long id;
+    public Long id;
 
     @ColumnInfo
-    private String name;
+    public String name;
 
+    public Course() {
+    }
 
     /**
      * Basic getters /setters

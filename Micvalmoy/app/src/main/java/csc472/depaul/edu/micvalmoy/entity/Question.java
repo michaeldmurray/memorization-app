@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
@@ -8,10 +12,18 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelClass;
+import org.parceler.ParcelPropertyConverter;
+
 import java.sql.Date;
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+
+import csc472.depaul.edu.micvalmoy.tools.OffsetDateTimeParcelConverter;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -31,6 +43,11 @@ CREATE TABLE questions (
 
 
  */
+
+
+
+
+@Parcel
 @Entity(
         tableName="questions",
         foreignKeys={
@@ -48,40 +65,45 @@ CREATE TABLE questions (
 public class Question{
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
-    private Long id;
+    public Long id;
 
     @NonNull
     @ColumnInfo(name = "quiz_id")
-    private Long quizId;
+    public Long quizId;
 
     @NonNull
     @ColumnInfo
-    private String text;
+    public String text;
 
     @ColumnInfo
-    private String hint;
+    public String hint;
 
     @NonNull
     @ColumnInfo
-    private String type;
+    public String type;
 
     @ColumnInfo
-    private String nonce;
+    public String nonce;
 
-    @ColumnInfo
-    private OffsetDateTime createdAt;
 
+    @ParcelPropertyConverter(OffsetDateTimeParcelConverter.class)
     @ColumnInfo
-    private OffsetDateTime updatedAt;
+    public OffsetDateTime createdAt;
+
+
+
+    @ParcelPropertyConverter(OffsetDateTimeParcelConverter.class)
+    @ColumnInfo
+    public OffsetDateTime updatedAt;
 
     @ColumnInfo(name = "sort_index")
-    private Integer sortIndex;
+    public Integer sortIndex;
 
     @NonNull
-    private boolean enabled;
+    public boolean enabled;
 
     public Question() {
-        OffsetDateTime date = OffsetDateTime.now();
+        OffsetDateTime date = Instant.now().atOffset( ZoneOffset.UTC );
         this.createdAt = date;
         this.updatedAt = date;
     }

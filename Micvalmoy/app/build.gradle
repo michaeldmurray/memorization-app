@@ -97,4 +97,14 @@ dependencies {
     // 20181117 - junit nested test
     testImplementation  'de.bechte.junit:junit-hierarchicalcontextrunner:4.12.1'
 
+    //http://mobiledevhub.com/2017/11/30/android-fundamentals-parceler-overview/
+    // 20181119 - I got really tired of handling the parcelable boilerplace code
+    implementation "org.parceler:parceler-api:$org_parceler_version"
+    annotationProcessor "org.parceler:parceler:$org_parceler_version"
+
+    // 20181119 -
+
+    implementation             "com.google.auto.value:auto-value-annotations:1.6.2"
+  annotationProcessor "com.google.auto.value:auto-value:1.6.2"
+
 }

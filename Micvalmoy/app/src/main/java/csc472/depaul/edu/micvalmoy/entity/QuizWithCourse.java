@@ -1,14 +1,22 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
+
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Ignore;
 import android.support.annotation.NonNull;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuizWithCourse{
+
+@Parcel
+public class QuizWithCourse {
     @NonNull
     @ColumnInfo(name = "course_id")
     public Long courseId;
@@ -23,6 +31,8 @@ public class QuizWithCourse{
     public Course course;
 
 
+    public QuizWithCourse() {
+    }
 
     /**
      * Basic getters /setters
@@ -58,5 +68,16 @@ public class QuizWithCourse{
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+
+    @Override
+    public String toString() {
+        return "QuizWithCourse{" +
+                "courseId=" + courseId +
+                ", quizId=" + quizId +
+                ", quiz=" + quiz +
+                ", course=" + course +
+                '}';
     }
 }

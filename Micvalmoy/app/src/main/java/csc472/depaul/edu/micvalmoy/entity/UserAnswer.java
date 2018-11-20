@@ -1,11 +1,17 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+
+
+import org.parceler.Parcel;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -23,7 +29,7 @@ CREATE TABLE user_answers (
  */
 
 
-
+@Parcel
 @Entity(
         tableName="user_answers",
         foreignKeys={
@@ -63,26 +69,28 @@ CREATE TABLE user_answers (
         }
 )
 
-public class UserAnswer{
+public class UserAnswer {
     @ColumnInfo
     @PrimaryKey(autoGenerate=true)
-    private Long id;
+    public Long id;
 
     @ColumnInfo(name = "user_id")
-    private Long userId;
+    public Long userId;
 
 
     @ColumnInfo(name = "exam_id")
-    private Long examId;
+    public Long examId;
   
 
     @ColumnInfo(name = "question_id")
-    private Long questionId;
+    public Long questionId;
 
 
     @ColumnInfo(name = "option_id")
-    private Long optionId;
+    public Long optionId;
 
+    public UserAnswer() {
+    }
 
 
     /**
@@ -127,4 +135,17 @@ public class UserAnswer{
     public void setOptionId(Long optionId) {
         this.optionId = optionId;
     }
+
+
+    @Override
+    public String toString() {
+        return "UserAnswer{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", examId=" + examId +
+                ", questionId=" + questionId +
+                ", optionId=" + optionId +
+                '}';
+    }
+
 }

@@ -1,5 +1,8 @@
 package csc472.depaul.edu.micvalmoy;
 
+/**
+ * @author mrichards
+ */
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;

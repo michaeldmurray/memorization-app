@@ -1,5 +1,8 @@
 package csc472.depaul.edu.micvalmoy.quizizz.jsonObj;
 
+/**
+ * @author mrichards
+ */
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,57 +12,52 @@ import java.util.List;
 
 public class Quizizz {
 
- @SerializedName("data")
- @Expose
- private Data data;
+    @SerializedName("data")@Expose
+    private Data data;
 
- public Data getData() {
-  return data;
- }
+    public List < QuizInfo > getQuizInfoList() {
 
- public void setData(Data data) {
-  this.data = data;
- }
+        List < QuizInfo > quizzes = new ArrayList < >();
 
- public  List<QuizInfo> getQuizzes(){
+        //** get the Question Information from the list of search quizzes
+        List < QuizData > quizDataList = this.data.getQuizDataList();
+        for (QuizData quizData: quizDataList) {
+            QuizInfo quizInfo = quizData.getQuizInfo();
 
-  List<QuizInfo> quizzes = new ArrayList<>();
+            //The ID of the quiz is on this level, not sure if it like this all the time,
+            // but for now we will store the id with the quiz info
+            String quizId = quizData.getQuizId();
 
-  //** get the Question Information from the list of search quizzes
-  List<QuizData> quizizzSearchQuizLists =  this.data.getSearchResultQuizLists();
-  for (QuizData quizData: quizizzSearchQuizLists){
-   QuizInfo quizInfo = quizData.getQuizInfo();
+            quizInfo.setId(quizId);
+            quizzes.add(quizInfo);
+        }
+        return quizzes;
+    }
 
-   //The ID of the quiz is on this level, not sure if it like this all the time,
-   // but for now we will store the id with the quiz info
-   String quizId = quizData.getQuizId();
+    public QuizInfo getQuizInfo() {
+        QuizData quizData = this.data.getQuizData();
 
+        QuizInfo quizInfo = quizData.getQuizInfo();
 
-   quizInfo.setId(quizId);
-   quizzes.add(quizInfo);
-  }
-  return quizzes;
- }
+        //The ID of the quiz is on this level, not sure if it like this all the time,
+        // but for now we will store the id with the quiz info
+        String quizId = quizData.getQuizId();
 
- public  QuizInfo getQuizz(){
-  QuizData quizData =  this.data.getQuizData();
+        quizInfo.setId(quizId);
 
-   QuizInfo quizInfo = quizData.getQuizInfo();
+        return quizInfo;
+    }
 
-   //The ID of the quiz is on this level, not sure if it like this all the time,
-   // but for now we will store the id with the quiz info
-   String quizId = quizData.getQuizId();
+    public Data getData() {
+        return data;
+    }
 
-   quizInfo.setId(quizId);
-
-  return quizInfo;
- }
-
+    public void setData(Data data) {
+        this.data = data;
+    }
 
     @Override
     public String toString() {
-        return "Quizizz{" +
-                "data=" + data.toString() +
-                '}';
+        return "Quizizz{" + "data=" + data + '}';
     }
 }

@@ -1,4 +1,7 @@
 package csc472.depaul.edu.micvalmoy.quizizz.jsonObj;
+/**
+ * @author mrichards
+ */
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,17 +11,16 @@ import java.util.List;
 
 public class Option {
 
- @SerializedName("type")
- @Expose
+ @SerializedName("type")@Expose
  private String type;
- @SerializedName("hasMath")
- @Expose
+
+ @SerializedName("hasMath")@Expose
  private boolean hasMath;
- @SerializedName("media")
- @Expose
- private List<Object> media = new ArrayList< Object >();
- @SerializedName("text")
- @Expose
+
+ @SerializedName("media")@Expose
+ private List < Object > media = new ArrayList < Object > ();
+
+ @SerializedName("text")@Expose
  private String text;
 
  public String getType() {
@@ -53,14 +55,8 @@ public class Option {
   this.text = text;
  }
 
-
  @Override
  public String toString() {
-  return "Option{" +
-          "type='" + type + '\'' +
-          ", hasMath=" + hasMath +
-          ", media=" + media +
-          ", text='" + text + '\'' +
-          '}';
+  return "Option{" + "type='" + type + '\'' + ", hasMath=" + hasMath + ", media=" + media + ", text='" + text + '\'' + '}';
  }
 }

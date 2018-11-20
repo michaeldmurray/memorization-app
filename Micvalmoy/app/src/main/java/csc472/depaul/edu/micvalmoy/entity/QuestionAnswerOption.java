@@ -1,5 +1,9 @@
 package csc472.depaul.edu.micvalmoy.entity;
 
+/**
+ * @author mrichards
+ */
+
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -8,6 +12,8 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+
+import org.parceler.Parcel;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -39,19 +45,19 @@ CREATE TABLE question_answer_options (
                 @Index(value="question_id")
         }
 )
-
+@Parcel
 public class QuestionAnswerOption{
     @NonNull
     @PrimaryKey(autoGenerate = true)
-    private Long id;
+    public Long id;
 
 
     @NonNull
     @ColumnInfo(name = "question_id")
-    private Long questionId;
+    public Long questionId;
 
     @NonNull
-    private String text;
+    public String text;
 
     @NonNull
     @ColumnInfo(name = "is_answer")

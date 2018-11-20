@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "fdee274e46e21e679de3d566c90f592b",
+    "identityHash": "c814b0ac2b75dce9738a9bbd6425c753",
     "entities": [
       {
         "tableName": "categories",
@@ -322,7 +322,7 @@
       },
       {
         "tableName": "quizzes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `description` TEXT, `createdAt` TEXT, `updatedAt` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `description` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `quizzizz_id` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -351,6 +351,12 @@
           {
             "fieldPath": "updatedAt",
             "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "quizzizz_id",
+            "columnName": "quizzizz_id",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -661,7 +667,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"fdee274e46e21e679de3d566c90f592b\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c814b0ac2b75dce9738a9bbd6425c753\")"
     ]
   }
 }

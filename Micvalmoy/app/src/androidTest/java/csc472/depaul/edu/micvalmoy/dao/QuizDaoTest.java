@@ -4,6 +4,9 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -16,7 +19,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.parceler.Parcels;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.Question;
@@ -27,8 +34,13 @@ import csc472.depaul.edu.micvalmoy.mock.LiveDataTestUtil;
 import csc472.depaul.edu.micvalmoy.db.AppDatabase;
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 import csc472.depaul.edu.micvalmoy.mock.FakeQuizData;
+import csc472.depaul.edu.micvalmoy.quizizz.JsonQuizDeserializer;
 import csc472.depaul.edu.micvalmoy.quizizz.JsonStructureDeserializer;
+import csc472.depaul.edu.micvalmoy.quizizz.QuizizzJson;
+import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Data;
+import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizInfo;
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Quizizz;
+import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.QuizizzQuestion;
 import csc472.depaul.edu.micvalmoy.quizizz.jsonObj.Structure;
 import csc472.depaul.edu.micvalmoy.repository.CategoryRepository;
 import csc472.depaul.edu.micvalmoy.repository.CourseRepository;
@@ -36,13 +48,15 @@ import csc472.depaul.edu.micvalmoy.repository.ExamRepository;
 import csc472.depaul.edu.micvalmoy.repository.QuizRepository;
 import csc472.depaul.edu.micvalmoy.repository.UserAnswerRepository;
 import csc472.depaul.edu.micvalmoy.repository.UserRepository;
+import csc472.depaul.edu.micvalmoy.tools.Converters;
 import csc472.depaul.edu.micvalmoy.tools.HttpHandler;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
+import static csc472.depaul.edu.micvalmoy.tools.IntentUtil.BUNDLE_KEY_QUIZ_OBJ;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
-
 
 
 //https://www.testwithspring.com/lesson/writing-nested-unit-tests/
@@ -87,6 +101,7 @@ public class QuizDaoTest {
 
 
 
+    Context application;
 
 
 
@@ -104,7 +119,7 @@ public class QuizDaoTest {
         fakeQuizData = new FakeQuizData();
 
         //Context
-        Context application = InstrumentationRegistry.getTargetContext();
+        application = InstrumentationRegistry.getTargetContext();
         appDatabase = Room.inMemoryDatabaseBuilder(application, AppDatabase.class)
                 .allowMainThreadQueries()
                 .build();
@@ -136,11 +151,6 @@ public class QuizDaoTest {
 
         examRepository                   = ExamRepository.getInstance(application,appDatabase);
         userAnswerRepository             = UserAnswerRepository.getInstance(application,appDatabase);
-
-
-
-
-
     }
 
     @After
@@ -418,7 +428,7 @@ public class QuizDaoTest {
 
 
     @Test
-    public void testing_gson (){
+    public void testing_gson_get_search_query_from_url (){
         //https://quizizz.com/quiz/5941b23760c0a411002859f0
         //https://quizizz.com/api/kilim1/search?query=php
         //"https://quizizz.com/api/kilim1/search?from=0&sortKey=_score&filterList={%22grade_type.aggs%22%3A[]%2C%22occupation%22%3A[%22teacher_school%22%2C%22teacher_university%22%2C%22other%22%2C%22teacher%22]%2C%22cloned%22%3A"[false]%2C%22subjects.aggs%22%3A[]}&queryId=5bc37369f2292f001b141f31-1539574984208&source=MainHeader&page=QuizPage&query=";
@@ -453,6 +463,7 @@ public class QuizDaoTest {
                 Quizizz qz  = gson.fromJson(jsonStr, Quizizz.class);
                 Timber.d("Quizziz GSON parsed java object: %s" , qz.toString());
 
+
                 Timber.d("parsed data");
                 Timber.d("parsed data");
 
@@ -466,4 +477,148 @@ public class QuizDaoTest {
     }
 
 
+    @Test
+    public void testing_gson_mapping_data_to_classes(){
+        String url ;
+        String searchIdUrl ="https://quizizz.com/quiz/";
+        String searchQuizId = "5941b23760c0a411002859f0";
+        url =  searchIdUrl + searchQuizId;
+
+        String searchTermUrl = "https://quizizz.com/api/kilim1/search?query=";
+        String searchTermParameter = "php";
+
+
+
+
+
+        HttpHandler sh = new HttpHandler();
+
+        //** connect to the quizizz website, and download the json content
+        String jsonStr = sh.makeServiceCall(url);
+
+        Timber.d("Response from url: %s", jsonStr);
+        if (jsonStr != null) {
+            try {
+                // DATA as root
+                // DATA as root
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.registerTypeAdapter(Structure.class, new JsonStructureDeserializer())
+                        .excludeFieldsWithoutExposeAnnotation().create();
+
+                Gson gson = gsonBuilder.create();
+                Quizizz quizizz = gson.fromJson(jsonStr, Quizizz.class);
+
+                Timber.d("Quizziz GSON parsed java object: %s" , quizizz.toString());
+
+
+                Timber.d("Quizziz GSON parsed java object: ");
+                Timber.d("Quizziz GSON parsed java object:");
+
+               // QuizInfo SingleQuiz = qz.getQuizInfo();
+
+                //List<QuizizzQuestion> dfdg = SingleQuiz.getQuestions();
+
+
+                //QuizizzJson.convertQuizInfoListToQuizList(quizizz);
+
+
+                Timber.d("parsed data");
+                Timber.d("parsed data");
+
+            } catch (Exception e) {
+                Timber.e(e,"Json parsing error");
+            }
+        } else {
+            Timber.d("Couldn't get json from server.");
+        }
+
+    }
+
+
+    @Test
+    public void toOffsetDateTime_string__to_offset_then_back_to_string_test_ZULU_time_format(){
+
+        /**
+         * https://stackoverflow.com/a/38061562
+         *An Instant represents a moment on the timeline in UTC with a resolution of up to nanoseconds.
+         */
+
+        Instant instant = Instant.now();
+
+
+
+        String testDate = "2016-06-27T19:15:25.864Z";
+
+        String date2 = Converters.toOffsetDateTime(testDate).toString();
+
+        assertEquals(testDate,date2);
+
+        Timber.d("testing the date time.");
+    }
+    @Test
+    public void toOffsetDateTime_Instant_now_to_timestamp_then_to_string_ZULU_time_format(){
+
+        /**
+         * https://stackoverflow.com/a/38061562
+         *An Instant represents a moment on the timeline in UTC with a resolution of up to nanoseconds.
+         */
+
+        Instant instant = Instant.now();
+        OffsetDateTime odt = instant.atOffset( ZoneOffset.UTC );
+
+        //date that will be store in the database
+        String date1 = Converters.fromOffsetDateTime(odt);
+        OffsetDateTime odt2 = Converters.toOffsetDateTime(date1);
+
+        assertEquals(odt,odt2);
+
+        Timber.d("testing the current date time and format \"2016-06-27T19:15:25.864Z\"");
+    }
+
+    @Test
+    public void toOffsetDateTime_OffsetDateTime_now_to_timestamp_then_to_string_ZULU_time_format(){
+
+        /**
+         * https://stackoverflow.com/a/38061562
+         *An Instant represents a moment on the timeline in UTC with a resolution of up to nanoseconds.
+         */
+
+        OffsetDateTime date = OffsetDateTime.now();
+        //date that will be store in the database
+        String date1 = Converters.fromOffsetDateTime(date);
+        OffsetDateTime odt2 = Converters.toOffsetDateTime(date1);
+
+        assertEquals(date,odt2);
+
+
+        OffsetDateTime createdDate = Converters.toOffsetDateTime(date1);
+        OffsetDateTime UpdatedDate = Instant.now().atOffset( ZoneOffset.UTC );
+
+        Timber.d("testing the current date time and format \"2016-06-27T19:15:25.864Z\"");
+    }
+
+
+    @Test
+    public void test_Parcelable_bundle_with_Quiz_object_using_org_parceler_Parcels() {
+        //https://stackoverflow.com/questions/12829700/android-unit-testing-bundle-parcelable/14548276#14548276
+
+        //----Create quiz
+        Quiz quiz = new Quiz();
+        quiz.setName("name auto generated quiz");
+        quiz.setDescription("add_new_quiz_add_questions_for_quiz");
+
+        Bundle bundle = new Bundle();
+
+        Parcelable pQuiz = Parcels.wrap(quiz);
+        bundle.putParcelable(IntentUtil.BUNDLE_KEY_QUIZ_OBJ, pQuiz);
+
+
+        Quiz quiz_unwrapped =   Parcels.unwrap(bundle.getParcelable(BUNDLE_KEY_QUIZ_OBJ));
+
+        //Parcels.unwrap(ParcelsTestUtil.wrap(quiz));
+
+        assertEquals(quiz,quiz_unwrapped);
+
+
+    }
 }

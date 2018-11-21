@@ -120,6 +120,7 @@ public class QuestionActivity extends DescendantActivity {
                     return;
                 }
                 currentQuestion = qIn;
+                Log.d("QUESTION","Obtained id from intent: " + questionId);
                 break;
         }
         Log.d("QUESTION","currentquestionId: " + currentQuestion.getId());

@@ -15,7 +15,7 @@ import android.widget.Toast;
 import csc472.depaul.edu.micvalmoy.repository.QuizViewModel;
 import timber.log.Timber;
 
-public class QuizListActivity extends AppCompatActivity implements QuizListEditDialogFragment.NoticeDialogListener{
+public class QuizListActivity extends DescendantActivity implements QuizListEditDialogFragment.NoticeDialogListener{
     private QuizViewModel viewModel;
 
     FloatingActionButton fabAddNewQuiz;
@@ -25,6 +25,7 @@ public class QuizListActivity extends AppCompatActivity implements QuizListEditD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_list);
+        this.setTitle(R.string.quiz_list_title);
 
 
         //Enable timber for logging
@@ -47,7 +48,7 @@ public class QuizListActivity extends AppCompatActivity implements QuizListEditD
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         viewModel = ViewModelProviders.of(this).get(QuizViewModel.class);
         QuizListFragment quizListFragment = new QuizListFragment();
-        ft.replace(R.id.quizListFrameLayout, quizListFragment);
+        ft.add(R.id.quizListFrameLayout, quizListFragment);
         ft.commit();
 
         fabAddNewQuiz = findViewById(R.id.fab_new_quiz);

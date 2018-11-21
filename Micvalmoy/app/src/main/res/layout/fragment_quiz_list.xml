@@ -17,16 +17,16 @@
         tools:context="QuizListFragment">
         >
 
-        <TextView
-            android:id="@+id/tvEmptyQuizList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_top_no_quiz"
-            android:fontFamily="sans-serif-light"
-            android:text="@string/msg_no_quizzes"
-            android:textColor="@color/msg_no_quizzes"
-            android:textSize="@dimen/msg_no_quizzes" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvEmptyQuizList"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_marginTop="@dimen/margin_top_no_quiz"-->
+            <!--android:fontFamily="sans-serif-light"-->
+            <!--android:text="@string/msg_no_quizzes"-->
+            <!--android:textColor="@color/msg_no_quizzes"-->
+            <!--android:textSize="@dimen/msg_no_quizzes" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/quizListRecyclerView"

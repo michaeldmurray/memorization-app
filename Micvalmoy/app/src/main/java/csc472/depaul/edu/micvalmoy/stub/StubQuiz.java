@@ -11,10 +11,22 @@ public class StubQuiz {
     public static Quiz getQuiz(long quizId) {
         Quiz quiz = new Quiz();
         quiz.setId(quizId);
-        quiz.setName("Stub Quiz Name");
-        quiz.setDescription("stub quiz description");
+        quiz.setName("Quiz " + quizId);
+        quiz.setDescription("Quiz description example");
         quiz.setQuestionList(buildQuestionList());
         return quiz;
+    }
+
+    public static List<Quiz> getAllQuizzes() {
+        List<Quiz> quizzes = new ArrayList<>();
+        quizzes.add(getQuiz(1));
+        quizzes.add(getQuiz(2));
+        quizzes.add(getQuiz(3));
+        quizzes.add(getQuiz(4));
+        quizzes.add(getQuiz(5));
+        quizzes.add(getQuiz(6));
+        quizzes.add(getQuiz(7));
+        return quizzes;
     }
 
     //I think these should just be question IDs, which can be built when needed.

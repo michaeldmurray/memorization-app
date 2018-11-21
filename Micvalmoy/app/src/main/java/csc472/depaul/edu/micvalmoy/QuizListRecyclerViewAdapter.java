@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
+import csc472.depaul.edu.micvalmoy.stub.StubQuiz;
 
 import static android.text.Html.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH;
 
@@ -30,7 +31,8 @@ public class QuizListRecyclerViewAdapter extends RecyclerView.Adapter<QuizListRe
     private OnClickItemAdapterListener listener;
 
     private final LayoutInflater mInflater;
-    private List<Quiz> listItems = Collections.emptyList(); // Cached copy of quizzes
+    private List<Quiz> listItems = StubQuiz.getAllQuizzes();
+//    private List<Quiz> listItems = Collections.emptyList(); // Cached copy of quizzes
 
 
 
@@ -186,13 +188,13 @@ public class QuizListRecyclerViewAdapter extends RecyclerView.Adapter<QuizListRe
     }*/
 
 
-    public void submitList(List<Quiz> newQuiz) {
-        ItemDiffUtil itemDiffUtil =new ItemDiffUtil(listItems,newQuiz);
-        DiffUtil.DiffResult diffResult=DiffUtil.calculateDiff(itemDiffUtil);
-        listItems.clear();
-        listItems.addAll(newQuiz);
-        diffResult.dispatchUpdatesTo(this);
-    }
+//    public void submitList(List<Quiz> newQuiz) {
+//        ItemDiffUtil itemDiffUtil =new ItemDiffUtil(listItems,newQuiz);
+//        DiffUtil.DiffResult diffResult=DiffUtil.calculateDiff(itemDiffUtil);
+//        listItems.clear();
+//        listItems.addAll(newQuiz);
+//        diffResult.dispatchUpdatesTo(this);
+//    }
 
     public class ItemDiffUtil extends DiffUtil.Callback {
 

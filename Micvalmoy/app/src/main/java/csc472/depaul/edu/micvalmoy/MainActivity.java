@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
         // TODO remove buttons below when no longer needed
         final Button tempButton = findViewById(R.id.temp_quiz_search_button);
         if (tempButton != null) { tempButton.setOnClickListener(onClickTemp); }
-
-        final Button quizButton = findViewById(R.id.temp_quiz_button);
-        if (quizButton != null) { quizButton.setOnClickListener(onClickQuiz); }
     }
 
     @Override
@@ -88,15 +85,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(view.getContext(), QuizizzSearchActivity.class);
-            startActivity(intent);
-        }
-    };
-
-    private View.OnClickListener onClickQuiz = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(view.getContext(), QuizActivity.class);
-            intent.putExtra(IntentUtil.EXTRA_QUIZ_ID,(long) 7);
             startActivity(intent);
         }
     };

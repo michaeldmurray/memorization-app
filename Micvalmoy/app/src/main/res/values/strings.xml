@@ -140,4 +140,7 @@
     <string name="button_next_label">Next</string>
     <string name="button_finish_label">Finish</string>
     <string name="button_back_label">Back</string>
+    <string name="quiz_list_title">Quizzes</string>
+    <string name="quiz_results_title">Past Attempts</string>
+    <string name="quiz_result_title">Quiz Attempt</string>
 </resources>

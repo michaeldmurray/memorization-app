@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 
 import csc472.depaul.edu.micvalmoy.entity.Quiz;
 import csc472.depaul.edu.micvalmoy.repository.QuizViewModel;
+import csc472.depaul.edu.micvalmoy.tools.IntentUtil;
 import timber.log.Timber;
 
 
@@ -77,7 +79,7 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
         super.onViewCreated(view, savedInstanceState);
 
 
-        tvEmptyQuizList = (TextView) view.findViewById(R.id.tvEmptyQuizList);
+//        tvEmptyQuizList = (TextView) view.findViewById(R.id.tvEmptyQuizList);
         fabAddNewQuiz   = (FloatingActionButton) view.findViewById(R.id.fabAddNewQuiz);
 
         viewModel = ViewModelProviders.of(getActivity()).get(QuizViewModel.class);
@@ -99,22 +101,22 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        viewModel.fetchAllQuizzes().observe(this, new Observer<List<Quiz>>() {
-            @Override
-            public void onChanged(@Nullable List<Quiz> quizzes) {
-                mAdapter.submitList(quizzes);
-                toggleEmptyQuizzes(quizzes.size());
-            }
-        });
+//        viewModel.fetchAllQuizzes().observe(this, new Observer<List<Quiz>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Quiz> quizzes) {
+//                mAdapter.submitList(quizzes);
+//                toggleEmptyQuizzes(quizzes.size());
+//            }
+//        });
     }
-
-    private void toggleEmptyQuizzes(int size) {
-        if (size > 0) {
-            tvEmptyQuizList.setVisibility(View.GONE);
-        } else {
-            tvEmptyQuizList.setVisibility(View.VISIBLE);
-        }
-    }
+//
+//    private void toggleEmptyQuizzes(int size) {
+//        if (size > 0) {
+//            tvEmptyQuizList.setVisibility(View.GONE);
+//        } else {
+//            tvEmptyQuizList.setVisibility(View.VISIBLE);
+//        }
+//    }
 
 
 
@@ -230,7 +232,9 @@ public class QuizListFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(Long quizId, int position) {
-
+        Intent intent = new Intent(getActivity(),QuizActivity.class);
+        intent.putExtra(IntentUtil.EXTRA_QUIZ_ID,quizId);
+        startActivity(intent);
     }
 
     @Override

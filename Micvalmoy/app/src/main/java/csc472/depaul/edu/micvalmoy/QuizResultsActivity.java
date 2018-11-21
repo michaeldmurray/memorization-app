@@ -11,6 +11,7 @@ public class QuizResultsActivity extends DescendantActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_results);
+        this.setTitle(R.string.quiz_results_title);
 
         // TODO replace this with recycler for programmatic rows
         final TableRow resultsRow = findViewById(R.id.row_quiz_result);

@@ -59,13 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="to get back to Moya's original mainactivity"
-            android:text="(to quiz search)" />
+            android:text="Quiz Search" />
 
-        <Button
-            android:id="@+id/temp_quiz_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="(hardcoded quiz)" />
     </LinearLayout>
 
 </LinearLayout>
